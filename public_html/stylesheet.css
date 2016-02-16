@@ -1,0 +1,122 @@
+* {
+		font-family: URW Bookman L;
+	}
+	nav {
+		margin: 0;
+		text-align: right;
+		right: 0px;
+		background-color: hsl(50, 94%, 60%);
+		padding: 8px;
+	}
+	nav a {
+		background-color: hsl(50, 94%, 60%);
+		text-decoration: none;
+		margin: 8px;
+		padding: 8px;
+		color: hsl(50, 94%, 30%);
+	}
+	nav a:hover {
+		background-color: hsl(119, 94%, 60%);
+		color: hsl(119, 94%, 30%);
+	}
+	h2 {
+		margin: 0px;
+	}
+	body {
+		padding: 0px;
+		margin: 0px 120px;
+		background-color: hsl(50, 94%, 90%);
+		background-image: url(img/bg.png);
+	}
+	div {
+		color: hsl(50, 94%, 20%);
+		background-color: hsl(50, 94%, 80%);
+	}
+	.noticias a, em {
+		color: hsl(119, 94%, 20%);
+		text-decoration: none;
+	}
+	.noticias a em:hover {
+		color: #fff;
+	}
+	#juegos {
+		text-align: center;
+		font-size: 24px;
+	}
+	sup {
+		text-decoration: none;
+		color: red;
+		font-weight: bold;
+		font-size: 50%;
+		font-style: italic;
+		font-family: serif;
+	}
+	.noticias {
+		color: hsl(119, 94%, 20%);
+		background-color: hsl(119, 94%, 80%);
+		border-radius: 8px;
+		height: 40%;
+		padding: 8px;
+
+		box-shadow: 0 0 6px #000;
+	}
+	.juegos {
+		color: hsl(119, 94%, 20%);
+		background-color: hsl(119, 94%, 80%);
+		border-radius: 8px;
+		margin: 8px 2%;
+
+		box-shadow: 0 0 6px #000;
+	}
+	.footer {
+		height: 20%;
+	}
+	.footer img {
+		margin: 32px;
+	}
+	.header {
+		height: 30%;
+	}
+	.base {
+		padding-top: 8px;
+		height: 50%;
+	}
+	.division {
+		width: 100%;
+		height: 2px;
+		background-color: hsl(50, 94%, 50%);
+	}
+	.juegos hr {
+		border-color: hsl(119, 94%, 50%);
+	}
+	hr {
+		border-color: hsl(50, 94%, 50%);
+		background-color: hsl(50, 94%, 50%);
+		margin-top: 16px;
+		margin-bottom: 16px;
+	}
+	a {
+		color: hsl(50, 94%, 30%);
+	}
+	a:hover {
+		color: hsl(119, 94%, 40%);
+	}
+	table {
+		padding: 0px;
+		margin: 0px;
+		width: 80%;
+		background-color: hsl(50, 94%, 70%);
+	}
+	center a img {
+		border-radius: 8px;
+		margin: 8px;
+		padding: 4px;
+		border: 2px solid transparent;
+	}
+	#followUs img:hover {
+		background-color: hsl(172, 94%, 90%);
+		box-shadow: 0 0 4px #000;
+	}
+	#all {
+		box-shadow: 0 0 16px #000;
+	}

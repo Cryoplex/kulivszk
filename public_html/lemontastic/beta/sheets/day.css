@@ -1,0 +1,29 @@
+body {
+color: hsla(180, 80%, 10%, 1);
+}
+body div {
+background-color: hsla(180, 80%, 90%, 1);
+}
+body div div {
+background-color: hsla(180, 80%, 95%, 1);
+}
+body div div div {
+background-color: hsla(180, 80%, 100%, 1);
+}
+#notif, #logcillo {
+	background-color: hsla(180, 80%, 70%, 0.7);
+	color: hsl(180, 80%, 10%);
+}
+#leftHUD, #rightHUD {
+	background-color: hsla(180, 80%, 90%, 1);
+}
+.window {
+	background-color: hsl(180, 80%, 90%);
+}
+.lemonButton {
+	background-color: hsl(180, 80%, 90%);
+	color: #000;
+}
+.lemonButton:hover {
+	background-color: hsl(180, 80%, 80%);
+}

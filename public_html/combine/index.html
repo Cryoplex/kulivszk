@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Combine</title>
+
+    <link type="text/css" rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="stylesheet.css">
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <ul>
+            <!-- Tabs -->
+	          <li><a onclick="showDoc('tab_combine')">Combine</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="jumbotron game">
+      <div class="container">
+        <div class="row" id="tab_combine">
+          <div class="col-md-4">
+            <h2>Monster List</h2>
+
+              <input type="button" class="btn btn-default" onclick="getPlainMonster(10)" value="Get some Mystery monsters!">
+
+            <div id="game_monsters"></div>
+          </div>
+
+          <div class="col-md-4">
+            <h2>Combinator</h2>
+            <div id="game_combo"></div>
+          </div>
+
+          <div class="col-md-2" style="font-size: 11px">
+            <h2>=></h2>
+            <div id="game_combo2"></div>
+          </div>
+
+          <div class="col-md-2" style="font-size: 11px">
+            <h2>Known Species</h2>
+            <div id="game_known"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <script src="../common.js"></script>
+  	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  	<script src="script.js"></script>
+  </body>
+</html>

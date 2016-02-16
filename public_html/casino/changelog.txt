@@ -1,0 +1,48 @@
+0.1.0 Added changelog (Kinda late)
+0.2 Now banca money increases each tick. The max amount it can increase is 1% of current funds. Chances/tick are 10%.
+0.2.1 Changed (max) amount to 0.68%, reduced chance per tick to 7.69%.
+0.3 Now you can tip The Bank.
+0.4 Added Slot Machine. Gives 10 tokens if you align 3 reels with the same Symbol.
+0.4.1 Fixed a bug where you could deposit 0 in bank giving NaN.
+0.4.2 Fixed a bug where you could withdraw a negative amount of money, giving you infinite money.
+0.5 Added Jackpot to the slot machine. Symbol: '7'. Gives the 1% of actual casino bank in cash.
+0.6 Added Dollar Sign (M). Doubles next prize obtained in slot machine.
+0.7 Added Repeat. Gives a free spin.
+0.7.1 Fixed a bug where Jackpot gave negative money.
+0.8 Added cherry to slot machine. If the left slot is a cherry, it gives some tokens.
+If the middle slot is a cherry too, doubles that amount.
+0.8.1 Rounded cherry prizes to not show decimals in tokens.
+0.9 Now each 'symbol' gives a different prize.
+600 for Jackpot, 300 for Diamond, 150 for Moneys, 75 for Repeat, 35 for Lemon, 15 for Bell, 10 for Cherry.
+0.10 Added a table to see prizes for each symbol in the slot machine.
+0.10.1 Now the table highlights when you get a prize in the slot machine.
+0.10.2 Reduced bank growing money rate to 5.55%/tick.
+- Reduced amount modifier to stop money from growing exponentially.
+- The more money in bank, the less it grows.
+0.11 Added stealing
+0.11.1 When caught, the expell is a minimum of 10 seconds.
+0.11.2 Now there is a penalty of 10 seconds between steal attempt
+0.12 Heads or Tails revamped.
+0.12.1 HoT: No more decimals on bets/prizes.
+0.12.2 Head or Tails: Changed chances to:
+- 500 in 1001 (49.95%) Heads
+- 500 in 1001 (49.95%) Tails
+- 1 in 1001   (0.099%) Edge
+0.13 Added a fancy coin thingy in Head or Tails.
+0.13.1 Reduced coin animation time
+0.13.2 Fixed a bug where you could get NaN tokens in HoT. Now you can't bet a negative amount of tokens either.
+0.13.3 Fixed a bug where you could donate null to bank and get infinite money. (Same with loans)
+0.14 You can now buy a custom amount of lottery tickets.
+0.15 Added Higher or Lower game.
+0.16 Added Fortuneteller to Higher or Lower. The Fortuneteller can tell you whether the next card will be higher or lower, always with a HIGHER price. Don't trust her a lot, visions aren't always right.
+0.17 Added hot-bet buttons to bet in Heads or Tails for faster betting.
+0.18 Changed lottery to a fixed chance/ticket so it does not lag when you have lots of them.
+0.18.1 Reduced Jackpot prize of lottery to 300,000 tokens.
+0.18.2 Added hot-bet buttons to Lottery to buy as many tickets as you can, or 25%, 50%, 75% of your tokens.
+0.18.3 Now there is a record shown in lottery that says how many tokens do you have won playing lottery.
+0.19 Added MegaPrize & GigaPrize to lottery.
+0.19.1 MegaPrize occurs every 10 minutes. Chances for winning are 1.5x that of generic lottery. Biggest prize is 1,000,000 tokens, and each ticket costs 150 tokens.
+0.19.2 GigaPrize occurs every 1 hour. Chances are 2x that of generic lottery. Biggest prize is 10,000,000 tokens and each ticket costs 4000 tokens.
+0.20 Bank Loans Revamped!
+0.20.1 Bank loans now have to be repaid in hours rather than days. Min hours: 1, max hours: 200.
+0.20.2 Interest rate per hour is 1% now.

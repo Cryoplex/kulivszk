@@ -1,0 +1,21 @@
+body {
+	background-color: black;
+	font-family: Nimbus Mono L;
+	color: lime;
+	text-align: center;
+}
+input {
+	background-color: black;
+	border: 2px solid lime;
+	color: lime;
+}
+table {
+	width: 50%;
+	margin: 8px auto;
+}
+b {
+	color: red;
+}
+h1 {
+	font-size: 1.4em;
+}

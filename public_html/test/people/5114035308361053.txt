@@ -1,0 +1,2 @@
+Name: Hello World (ID: 5114035308361053)
+Vampires killed: undefined

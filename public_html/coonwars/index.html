@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+  <head>
+    <meta property="og:image"
+    content="../lemontactics.png" />
+    <meta charset="utf-8">
+    <link rel="icon" href="./favicon.png">
+
+    <title>Lemontactics! v1.0.1</title>
+
+    <link type="text/css" rel="stylesheet" href="../bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="stylesheet.css">
+  </head>
+
+  <body id="body">
+
+    <div id="game"></div>
+    <div id="playerinfo"></div>
+    <span id="info"></span>
+    <input type="button" onclick="newTurn()" id="newTurnButton" value="Pasar Turno">
+    <div id="moreOptions">
+      <i class="hotkeyButton weatherSprite sprite_tower" onclick="buildmode = 'tower'" title="(T)ower"></i>
+      <i class="hotkeyButton weatherSprite sprite_upgrade" onclick="upgrademode = !upgrademode; updatePanel();" title="(U)pgrade"></i>
+      <i class="hotkeyButton weatherSprite sprite_wall" onclick="buildmode = 'wall'" title="(W)all"></i>
+      <i class="hotkeyButton weatherSprite sprite_trap" onclick="buildmode = 'trap'" title="(T)rap"></i>
+      <i class="hotkeyButton weatherSprite sprite_cancel" onclick="buildmode = ''" title="(E)xit Building Mode"></i>
+    </div>
+
+    <div id="gameOptions" class="gameOptions"></div>
+
+    <div id="gameOptionsDiv">
+
+    <div id="debugOptions" style="display: none">
+      (Debug Options)<br>
+      <input type="button" onclick="aiLoop = true" value="AI Loop: Let the AI move every turn">
+      <input type="button" onclick="versusMode = 'chaos'" value="Enable all units in non-survival">
+
+      <br>
+      <br>
+      Custom options:<br>
+      <input type="number" min="1" value="30" oninput="TOWER_PRICE = this.value"> Tower price <br>
+      <input type="number" min="1" value="18" oninput="WALL_PRICE = this.value"> Wall price <br>
+      <input type="number" min="1" value="8" oninput="TRAP_PRICE = this.value"> Trap price <br>
+      <input type="number" min="1" value="8" oninput="HP_PER_LEVELUP = this.value"> HP Gained after level up <br>
+      <input type="number" min="1" value="12" oninput="MAX_COON_LEMONS = this.value - 2"> Raccoon Team: Lemons per turn.<br>
+      <input type="number" min="1" value="12" oninput="LEMON_RATE = this.value * 4"> Boy Scout Team: ç per turn.<br>
+      <input type="number" min="1" value="31" oninput="DEFAULT_WIDTH = this.value"> Map width.<br>
+      <input type="number" min="1" value="13" oninput="DEFAULT_HEIGHT = this.value"> Map height.<br>
+      <input type="number" min="1" value="10" oninput="UNIT_MAXHP = this.value"> Default unit Hit Points.<br>
+      <input type="number" min="1" value="1" oninput="AI_MAX_AGGRESSIVITY = this.value"> Artificial Intelligence aggressivity (Chances of trap suicide).<br>
+      <input type="number" min="1" value="0" oninput="survivalLevel = this.value"> Starting survival difficulty.<br>
+
+
+    </div>
+    </div>
+
+    <div id="battleground"></div>
+    <div id="unitNotification"></div>
+
+    <div id="manual"></div>
+
+    <div id="winMessageBack"></div>
+
+    <div id="winMessage">
+      <h1 id="winMessageMessage"></h1>
+      <i id="winMessageExtra"></i><br>
+      <small id="winMessageStats"></small><br>
+      <input type="button" onclick="resetGame()" value="OK" style="font-size: 12px">
+    </div>
+    <br><br>
+
+    <div id="blackCloser" onclick="closeAllStuff()"></div>
+
+
+    <div id="spawnSelector">Spawn!</div>
+
+    <div id="projectiles"></div>
+    <div id="mouseNotification" onmouseover="hideMouseNotification()"></div>
+    <div id="donateThing">
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" style="position: fixed; bottom: 8px; left: 0px">
+      <input type="hidden" name="cmd" value="_s-xclick">
+      <input type="hidden" name="hosted_button_id" value="U5C86J94HMJKL">
+      <input type="image" id="donateButton" class="sprite projectile sprite_ammoLove" title="Donate" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" border="0" name="submit">
+      <img alt="Donar" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1">
+    </form></div>
+
+    <script src="../common.js"></script>
+  	<script src="../jquery-2.1.4.min.js"></script>
+  	<script src="../jquery-ui.min.js"></script>
+  	<script src="script.js"></script>
+    <script src="manual.js"></script>
+  </body>
+</html>

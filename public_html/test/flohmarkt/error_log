@@ -1,0 +1,1 @@
+[21-Jun-2015 14:02:55 UTC] PHP Fatal error:  Call to undefined function array_explode() in /home/kulivszk/public_html/test/flohmarkt/send.php on line 21

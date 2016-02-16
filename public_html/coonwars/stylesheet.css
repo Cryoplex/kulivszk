@@ -1,0 +1,772 @@
+span, div, input {
+	color: #000;
+}
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 0px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+#battleground {
+	position: absolute;
+	top: 64px;
+
+	margin: auto;
+	background-image: url("background.png");
+	background-color: red;
+	width: 0px;
+	height: 0px;
+}
+.rangeOverlay {
+	background-color: rgba(255, 0, 0, 0.25);
+	animation: rangeOver 0.75s infinite;
+}
+@keyframes rangeOver {
+	0%, 100% {
+		background-color: rgba(192, 64, 64, 0.3);
+	}
+	50% {
+		background-color: rgba(128, 96, 96, 0.4);
+	}
+}
+.sprite {background-image: url(sprites.png); background-repeat: no-repeat; display: inline-block;   width: 32px;    height: 32px;    
+margin: 0px; padding: 0px; border: 0px; float: left;
+image-rendering: pixelated;
+}
+
+.scout_side {
+	transform: scale(-1, 1);
+}
+.sprite_empty { background-position: 0px 0px; pointer-events: none;}
+.sprite_grass { background-position: -32px 0px;}
+.sprite_flower { background-position: -32px -32px;}
+.sprite_rock { background-position: -32px -64px;}
+.sprite_dirt { background-position: -32px -96px;}
+.sprite_hole { background-position: -32px -128px;}
+.sprite_weeds { background-position: -32px -160px;}
+.sprite_nettle { background-position: -32px -192px;}
+.sprite_grasshole { background-position: -32px -224px;}
+.sprite_trap { background-position: -32px -256px;}
+.sprite_poison { background-position: -32px -288px;}
+.sprite_spikehole { background-position: -32px -320px;}
+.sprite_spikerock { background-position: -32px -352px;}
+.sprite_badberry { background-position: -32px -384px;}
+.sprite_hotsprings { background-position: -32px -416px;}
+
+.sprite_corrupt1 { background-position: -32px -448px; background-color: rgba(0, 0, 0, 0.125);}
+.sprite_corrupt2 { background-position: -32px -480px; background-color: rgba(0, 0, 0, 0.25);}
+.sprite_corrupt3 { background-position: -64px -448px; background-color: rgba(0, 0, 0, 0.5);}
+.sprite_corrupt4 { background-position: -64px -480px; background-color: rgba(0, 0, 0, 1);}
+
+.sprite_frost { background-position: 0px -32px;}
+.sprite_puddle { background-position: 0px -64px;}
+.sprite_ice { background-position: 0px -96px;}
+.sprite_mud { background-position: 0px -128px;}
+
+.sprite_blueberry { background-position: 0px -160px;}
+.sprite_bush { background-position: 0px -192px;}
+.sprite_purpleberry { background-position: 0px -224px;}
+.sprite_goldberry { background-position: 0px -256px;}
+.sprite_rainbowgrape { background-position: 0px -288px;}
+.sprite_shroom { background-position: 0px -320px;}
+
+.sprite_stand1 { background-position: -64px 0px;}
+.sprite_stand2 { background-position: -96px 0px;}
+.sprite_stand3 { background-position: -128px 0px;}
+.sprite_sage1 { background-position: -64px -64px;}
+.sprite_sage2 { background-position: -96px -64px;}
+.sprite_sage3 { background-position: -128px -64px;}
+
+.sprite_stand1_broken { background-position: -64px -32px;}
+.sprite_stand2_broken { background-position: -96px -32px;}
+.sprite_stand3_broken { background-position: -128px -32px;}
+.sprite_sage1_broken { background-position: -64px -96px;}
+.sprite_sage2_broken { background-position: -96px -96px;}
+.sprite_sage3_broken { background-position: -128px -96px;}
+
+.sprite_wall { background-position: -64px -160px;}
+.sprite_wall_broken { background-position: -64px -192px;}
+
+.sprite_tower { background-position: -96px -160px;}
+.sprite_tower_broken { background-position: -96px -192px;}
+
+.sprite_barbedWire { background-position: -128px -160px;}
+.sprite_barbedWire_broken { background-position: -128px -192px;}
+
+.sprite_cannon { background-position: -160px -160px;}
+.sprite_cannon_broken { background-position: -160px -192px;}
+
+.sprite_ammoLemon { background-position: -64px -224px;}
+.sprite_ammoPomegranate { background-position: -96px -224px;}
+.sprite_ammoShot { background-position: -128px -224px;}
+.sprite_ammoLove { background-position: -160px -224px;}
+
+.sprite_citro { background-position: -64px -256px;}
+.sprite_upgrade { background-position: -96px -256px;}
+.sprite_boyCoon { background-position: -128px -256px;}
+.sprite_cancel { background-position: -160px -256px;}
+
+.sprite_money { background-position: -64px -288px;}
+
+
+.projectile {
+	position: absolute;
+	animation: rotate 1s infinite;
+	image-rendering: pixelated;
+}
+@keyframes rotate {
+	0%, 100% {
+		transform: rotate(360deg);
+		transform: scale(0.9);
+	}
+	25, 75% {
+		transform: scale(1.1);
+	}
+	50% {
+		transform: scale(1.2);
+	}
+}
+
+.sprite_coon {
+	background-position: -160px 0px;
+	animation: playCoon 0.3s steps(3);
+}
+@keyframes playCoon {
+	100% {
+		background-position: -160px -96px;
+	}
+}
+
+.sprite_boyScout {
+	background-position: -192px 0px;
+	animation: playScout 0.3s steps(3);
+}
+i {
+	user-select: none;
+}
+
+.weatherSprite {
+	background-image: url(sprites.png); background-repeat: no-repeat;
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	image-rendering: pixelated;
+}
+
+.sprite_weatherColdWave { background-position: -192px -160px; animation: weatherA 0.5s steps(2) infinite; }
+@keyframes weatherA { 100% { background-position: -192px -224px; }}
+
+.sprite_weatherColdRain { background-position: -224px -160px; animation: weatherB 0.5s steps(2) infinite; }
+@keyframes weatherB { 100% { background-position: -224px -224px; }}
+
+.sprite_weatherCold { background-position: -256px -160px; animation: weatherC 0.5s steps(2) infinite; }
+@keyframes weatherC { 100% { background-position: -256px -224px; }}
+
+.sprite_weatherAverage { background-position: -288px -160px; animation: weatherD 0.5s steps(2) infinite; }
+@keyframes weatherD { 100% { background-position: -288px -224px; }}
+
+.sprite_weatherHotRain { background-position: -320px -160px; animation: weatherE 0.5s steps(2) infinite; }
+@keyframes weatherE { 100% { background-position: -320px -224px; }}
+
+.sprite_weatherHot { background-position: -352px -160px; animation: weatherF 0.5s steps(2) infinite; }
+@keyframes weatherF { 100% { background-position: -352px -224px; }}
+
+.sprite_weatherHotWave { background-position: -384px -160px; animation: weatherG 0.5s steps(2) infinite; }
+@keyframes weatherG { 100% { background-position: -384px -224px; }}
+
+.sprite_traitorBoyScout {
+	background-position: -224px 0px;
+}
+.sprite_traitorCoon {
+	background-position: -224px -32px;
+}
+.sprite_zombieCoon {
+	background-position: -224px -64px;
+}
+
+.sprite_vampire {
+	background-position: -256px 0px;
+}
+.sprite_priest { background-position: -288px 0px; }
+.sprite_angel { background-position: -320px 0px; }
+.sprite_demon { background-position: -352px 0px; }
+.sprite_succubus { background-position: -384px 0px; }
+
+.sprite_rppCoon { background-position: -288px -32px; }
+.sprite_sniperScout { background-position: -320px -32px; }
+.sprite_soldierCoon { background-position: -352px -32px; }
+.sprite_soldierScout { background-position: -384px -32px; }
+
+.sprite_goblin { background-position: -288px -64px; }
+.sprite_gnome { background-position: -320px -64px; }
+.sprite_fairy { background-position: -352px -64px; }
+
+.sprite_bitten {
+	background-position: -256px -32px;
+}
+.sprite_zombieScout {
+	background-position: -256px -64px;
+}
+
+.sprite_fireSage { background-position: -64px -128px;}
+.sprite_windSage { background-position: -96px -128px;}
+.sprite_earthSage { background-position: -128px -128px;}
+.sprite_waterSage { background-position: -160px -128px;}
+
+.sprite_ammoFire { background-position: -192px -128px;
+animation: fire 0.5s infinite;
+}
+.sprite_ammoWind { background-position: -224px -128px;
+animation: wind 0.1s infinite;
+}
+.sprite_ammoEarth { background-position: -256px -128px;
+animation: earth 1s infinite;
+}
+.sprite_ammoWater { background-position: -288px -128px;
+animation: water 1s infinite;
+}
+
+@keyframes earth {
+	to {
+		transform: rotate(180deg);
+	}
+}
+@keyframes wind {
+	to {
+		transform: rotate(359deg);
+	}
+}
+@keyframes water {
+	to {
+		transform: scale(5.0);
+	}
+}
+@keyframes fire {
+	0% {
+		border-radius: 50%;
+		box-shadow: 0 0 8px #f00;
+		transform: scale(1.0);
+	}
+	100% {
+		border-radius: 100%;
+		box-shadow: 0 0 16px #f80;
+		transform: scale(2.0);
+	}
+}
+
+@keyframes playScout {
+	100% {
+		background-position: -192px -96px;
+	}
+}
+
+.spriteUnit {
+	position: absolute;
+	margin: 0px;
+	z-index: 10;
+	width: 32px;
+	height: 32px;
+}
+.projectile {
+	z-index: 30;
+}
+#info {
+	color: black;
+
+	position: fixed;
+	bottom: 0;
+	left: 1%;
+
+	height: 32px;
+	width: 23%;
+	display: block;
+	opacity: 0.8;
+	font-size: 10px;
+	z-index: 99;
+	pointer-events: none;
+}
+#playerinfo {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.tileBreak {
+	clear: both;
+}
+.team {
+	height: 32px;
+	width: 44%;
+	text-align: center;
+	margin: 2px 1%;
+	clear: left;
+	display: inline-block;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-top: 0px solid transparent;
+	border-radius: 8px;
+	font-size: 10px;
+	vertical-align: super;
+}
+h3 {
+	font-size: 16px;
+	margin: 2px;
+}
+.gray {
+	opacity: 0.5;
+}
+.canMove {
+	box-shadow: 0 0 0 3px #f00;
+
+	animation: 1.5s attention infinite;
+}
+.cannotMove {
+	box-shadow: 0 0 0 3px #000;
+	opacity: 0.5;
+
+	animation: 0.75s attention infinite;
+}
+
+.focused {
+	outline: 2px solid #ff0;
+
+	animation: 0.5s focusy infinite;
+}
+.poisoned {
+	outline: 2px solid #c0c;
+	box-shadow: 0 0 0 3px #c7c;
+
+	animation: 1s poison infinite;
+}
+@keyframes poison {
+	to {
+		outline: 3px solid #e8e;
+		box-shadow: 0 0 0 2px #d0d;
+	}
+}
+.disease {
+	box-shadow: 0 0 8px 8px #080;
+}
+
+.regen {
+	box-shadow: 0 0 0 1px #6c8;
+	border-radius: 100%;
+
+	animation: 1s regen infinite;
+}
+@keyframes regen {
+	to {
+		box-shadow: 0 0 0 2px #00c;
+		border-radius: 8px;
+	}
+}
+
+@keyframes attention {
+	50% {
+		box-shadow: 0 0 0 0px #ff0;
+		border-radius: 8px;
+	}
+	100% {
+		box-shadow: 0 0 0 3px #f00;
+		border-radius: 0px;
+	}
+}
+@keyframes focusy {
+	to {
+		outline: 2px solid #fff;
+	}
+}
+
+.barContainer {
+	position: absolute;
+	font-size: 8px;
+	vertical-align: 10px;
+	poiner-events: none;
+	user-select: none;
+}
+.barContainer big {
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.commonDepleted, .commonBlack, .commonFilled {
+	color: transparent;
+	font-size: 4px;
+	padding: 0px;
+	pointer-events: none;
+}
+.commonDepleted {
+	background-color: hsla(0, 100%, 50%, 0.1);
+}
+.commonBlack {
+	background-color: #000;
+}
+.commonFilled {
+	background-color: hsl(120, 100%, 50%);
+}
+
+.coonBar {
+	background-color: #f20;
+}
+.scoutBar {
+	background-color: #0f2;
+}
+#newTurnButton {
+	position: fixed;
+	left: 26%;
+	bottom: 4px;
+	width: 23%;
+	height: 32px;
+	font-size: 18px;
+	display: none;
+	z-index: 99;
+}
+
+.es:lang(en) {
+	display: none;
+}
+.us:lang(es) {
+	display: none;
+}
+#mouseNotification {
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.9);
+	color: rgba(255, 255, 255, 0.9);
+	padding: 8px;
+	border-radius: 8px;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	display: none;
+	font-size: 10px;
+}
+.red {
+	color: red;
+}
+.yellow {
+	color: orange;
+}
+.green {
+	color: green;
+}
+.white {
+	color: white;
+}
+.highlightSquare {
+	outline: 2px solid rgba(0, 0, 0, 0.8);
+
+}
+.highlightSquareBuildMode {
+	outline: 2px dotted rgba(0, 128, 255, 0.8);
+	background-color: rgba(0, 128, 255, 0.2);
+}
+.highlightSquareOutLimits {
+	outline: 2px dotted rgba(255, 0, 0, 0.8);
+	background-color: rgba(255, 0, 0, 0.2);
+}
+.stopHighlight {
+	outline: 0px solid transparent;
+}
+.ghost {
+	opacity: 0.8;
+}
+.markerBar {
+	top: 0;
+	left: 0;
+	height: 32px;
+	font-size: 10px;
+	float: left;
+}
+.markerBarCoon {
+	color: white;
+	background-color: #80603F;
+	text-align: right;
+	clear: left;
+}
+.markerBarScout {
+	color: black;
+	background-color: #00CCCC;
+	text-align: left;
+	clear: right;
+}
+
+.markerBarZombie {
+	color: white;
+	background: linear-gradient(#283, #440);
+	text-align: right;
+	clear: right;
+}
+.markerBarVampire {
+	color: white;
+	background: linear-gradient(#a06, #602);
+	text-align: right;
+	clear: right;
+}
+.markerBarChaos {
+	color: #888;
+	background-color: #000;
+	text-align: right;
+	clear: right;
+	animation: chaos 0.5s infinite;
+}
+@keyframes chaos {
+	25% {
+		color: #eee;
+		background-color: #444;
+	}
+	75% {
+		color: #666;
+		background-color: #000;
+	}
+}
+.tempCold {
+	color: #088;
+	animation: cold 1s infinite;
+}
+@keyframes cold {
+	25% {
+		color: #088;
+	}
+	50% {
+		color: #0ff;
+	}
+	75% {
+		color: #088;
+	}
+}
+.tempHot {
+	color: #840;
+	animation: hot 1s infinite;
+}
+@keyframes hot {
+	25% {
+		color: #840;
+	}
+	50% {
+		color: #f80;
+	}
+	75% {
+		color: #840;
+	}
+}
+
+.boss {
+	transform: scale(1.5);
+}
+#spawnSelector {
+	position: absolute;
+	box-shadow: 0 0 8px #000;
+	top: 0; left: 0; right: 0; bottom: 0;
+	width: 75%;
+	height: 60%;
+	margin: auto;
+	display: none;
+	background-color: #cec;
+	z-index: 11;
+	text-align: center;
+	overflow-y: scroll;
+}
+.spawnyButton {
+	border: 1px solid black;
+	border-radius: 4px;
+	width: 23%;
+	height: 60px;
+	margin: 1%;
+	font-size: 10px;
+	background-color: #8a8;
+	float: left;
+	text-align: center;
+	padding: 15px;
+}
+.termo {
+	text-align: right;
+	position: fixed;
+	right: 1%;
+	bottom: 0;
+	width: 24%;
+	height: 32px;
+	background-color: rgba(255, 255, 255, 0.5);
+	z-index: 99;
+	pointer-events: none;
+}
+.rangeCheck {
+	background-color: rgba(255, 0, 0, 0.2);
+	pointer-events: none;
+}
+#winMessage {
+	display: none;
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+	width: 30em;
+	height: 20em;
+	background: linear-gradient(#565, #454, #343, #232, #121, #010);
+	color: #f9fd51;
+	border-radius: 8px;
+	box-shadow: 0 0 8px 8px #f9fd51;
+	text-align: center;
+	padding: auto;
+}
+#winMessage h1 {
+	font-size: 14px;
+}
+#winMessage small {
+}
+#winMessageBack, #blackCloser {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+}
+table {
+	width: 100%;
+}
+.mainButton {
+	border-radius: 2px;
+	background-color: #8c8;
+	color: #020;
+	padding: 8px;
+	width: 46%;
+	height: 48px;
+	text-align: center;
+	margin: 8px 2%;
+	font-size: 14px;
+	float: left;
+}
+.mainButtonBig {
+	width: 96%;
+	height: 64px;
+	font-size: 16px;
+}
+.mainButton:hover {
+	background-color: #cc8;
+}
+.hotkeyButton:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	border: 1px dotted black;
+}
+#moreOptions {
+	display: none;
+	width: 23%;
+	position: fixed;
+	bottom: 0px;
+	left: 51%;
+	font-size: 8px;
+	text-align: center;
+	z-index: 99;
+}
+#gameOptions {
+	display: none;
+}
+#unitNotification, .unitNotification {
+	position: fixed;
+	background-color: #eee;
+	color: #444;
+	border: 1px solid #444;
+	border-radius: 8px;
+	padding: 2px;
+	font-size: 10px;
+	display: none;
+}
+.active {
+	border: 32px solid rgb(200, 100, 0);
+	border-top: 0px solid transparent;
+	border-bottom: 0px solid transparent;
+	animation: activeAnim 0.5s infinite;
+}
+@keyframes activeAnim {
+	50% {
+		border: 32px solid rgb(128, 128, 0);
+		border-top: 0px solid transparent;
+		border-bottom: 0px solid transparent;
+		background-color: rgba(255, 128, 0, 0.2);
+		border-top: 0px solid transparent;
+	}
+}
+#manual {
+	display: none;
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	width: 800px;
+	height: 512px;
+
+	margin: auto;
+	background-color: hsl(60, 50%, 80%);
+	border: 2px solid hsl(60, 80%, 20%);
+	padding: 8px;
+	border-radius: 8px;
+	z-index: 99;
+	overflow-y: scroll;
+}
+#manual li:hover {
+	color: hsl(180, 60%, 40%);
+	cursor: pointer;
+}
+.coonGameMode {
+	background-color: #a86;
+	color: rgba(0, 0, 0, 0.8);
+}
+.scoutGameMode {
+	background-color: #2ee;
+	color: rgba(0, 0, 0, 0.8);
+}
+.manualGameMode {
+	background-color: hsl(60, 80%, 20%);
+	color: hsl(60, 50%, 80%);
+}
+.manualGameMode:hover {
+	color: black;
+	background-color: hsl(60, 50%, 40%);
+}
+.mainButtonTip {
+	color: #020;
+	width: 46%;
+	text-align: center;
+	margin: 8px 2%;
+	font-size: 14px;
+	float: left;
+}
+.noselect {
+	user-select: none;
+	pointer-events: none;
+}
+.footer {
+	text-align: center;
+	position: fixed;
+	bottom: 0px;
+	width: 100%;
+}

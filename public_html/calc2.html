@@ -1,0 +1,93 @@
+<script src="common.js"></script>
+<body lang="es">
+
+<h1>Custom NPC</h1>
+<h2>Display</h2>
+<h3>Model</h3>
+<script>
+a = [
+"Human Male "+read([
+	"Bodyguard",
+	"CamoRadio",
+	"Chef",
+	"Doctor",
+	"Mage",
+	"Mailman",
+	"McD",
+	"Miner",
+	"Pinstripes",
+	"RaggedyBard",
+	"RobesBlack",
+	"RobesBrown",
+	"RobesWhite",
+	"Roseta",
+	"Steampunk",
+	"Stephanie",
+	"Townsman",
+	"Trader",
+	"TribeElder",
+	"TribeGirl",
+	"Tribe1",
+	"Tribe2",
+	"Tribe3",
+	"Waitress",
+	"Wizard",
+	"Wounded"
+	]),
+"Human Female "+read([
+	"Arctic", "Bodyguard", "CamoRadio",
+	"CamoSpecOps", "Camo", "Casual",
+	"Chef", "Doctor", "Elderly",
+	"EvilGold", "Fire",
+	"Gangster", "Guard","Guard2",
+	"King", "Knight", "KungFu",
+	"London", "Mage", "Mailman", "McD",
+	"Mercenary", "Mercenary2", "Miner",
+	"Pinstripes", "Priest", "Prisoner",
+	"RaggedyBard", "RobesBlack",
+	"RobesBrown", "RobesWhite",
+	"Steampunk", "Steve", "Townsman",
+	"Trader", "TribeBoy", "TribeElder",
+	"TribeHunter", "TribeHunter2", "TribeKimba",
+	"TribeMan", "Tuxedo", "VillagerOld",
+	"Villager", "Villager2", "Waiter", 
+	"WhiteKnight", "WhiteKnight2",
+	"Wizard", "Wounded"
+	]),
+];
+document.write(read(a));
+</script>
+<h3>Cape</h3>
+<script>
+a = [
+read(["bacon", "bloody", "ender", "mojang", "RaggBrown", "raggDBrown", "raggDark", "raggGray", "raggPurple",
+"skull", "translator"]),
+"No cape"
+];
+document.write(read(a));
+</script>
+<h3>Overlay</h3>
+<script>
+a = [
+"None",
+read([
+	"ender", "evil", "ghost", "herobrine"
+	])
+];
+document.write(read(a));
+</script>
+<h2>Stats</h2>
+<h3>Health</h3>
+<script>document.write(rand(1,30) * 10);</script>
+<h3>Respawn</h3>No
+<h3>Creature</h3><script>document.write(red('Normal', 'Undead'));</script>
+
+Melee options
+<script>
+
+document.write('Strength: '+rand(1,7)+'<br>'+
+	'Inflicts: '+red('none', 'fire', 'poison', 'weakness', 'slowness', 'wither')+' for '+rand(1,5)+' seconds<br>'
+
+
+	);
+</script>

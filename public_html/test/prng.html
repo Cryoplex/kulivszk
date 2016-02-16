@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+Seed: <input type="number" id="seedy" value="1234567890"><br>
+<input type="button" value="Randomize!" onclick="seed = seedy.value; drawing = true"><br><br>
+
++11/7 PNRG:
+<canvas id="output" width="1000" height="100"></canvas><br><br>
+<span id="outputn"></span><br>
+
+Hour + minutes + seconds + milliseconds:
+<canvas id="outputd" width="1000" height="100"></canvas><br><br>
+<span id="outputn3"></span><br>
+
+Math.random():
+<canvas id="output2" width="1000" height="100"></canvas><br><br>
+<span id="outputn2"></span><br>
+
+<canvas id="blank" width="1000" height="100"></canvas>
+
+
+
+
+<script>
+var seed = 0;
+var pathX = 0;
+var pathY = 0;
+var drawing = false;
+
+var nummy = 0;
+var pathyX = 0;
+var pathyY = 0;
+
+var pathdX = 0;
+var pathdY = 0;
+
+var rng1 = [];
+var rng2 = [];
+var rng3 = [];
+
+function seedIt() {
+	seed = seedy.value;
+}
+function randomize() {
+	output = blank;
+	output2 = blank;
+	pathX = 0;
+	pathY = 0;
+
+	pathyX = 0;
+	pathyY = 0;
+
+
+	seedIt();
+	var minny = min.value;
+	var maxy = max.value;
+	var l = '';
+	for (var xx = 0; xx < 100; xx++) {
+		l += rand(minny, maxy)+'<br>';
+	}
+	output.innerHTML = l;
+}
+function rand(minny, maxy) {
+	seed += 11;
+	seed /= 7;
+	seed = String(seed).split("").reverse();
+	var n = 1;
+	for (var x in seed) {
+		if (!Number(seed[x])) continue;
+		n += Math.pow(seed[x], x);
+	}
+	seed = n;
+	return Number(seed % maxy) + Number(minny);
+}
+
+function path() {
+	if (pathX >= 1000) return;
+	var c = document.getElementById("output");
+	var ctx = c.getContext("2d");
+	ctx.moveTo(pathX, pathY);
+	pathX += 5;
+	pathY = rand(1,100);
+	ctx.lineTo(pathX,pathY);
+	ctx.stroke();
+	rng1[rng1.length] = pathY;
+	outputn.innerHTML = rng1;
+
+	var c2 = document.getElementById("output2");
+	var ctx2 = c2.getContext("2d");
+	ctx2.moveTo(pathyX, pathyY);
+	pathyX += 5;
+	pathyY = 1 + Math.floor((Math.random() * 100));
+
+	ctx2.lineTo(pathyX,pathyY);
+	ctx2.stroke();
+
+	rng2[rng2.length] = pathyY;
+	outputn2.innerHTML = rng2;
+
+	//Hour + Minute + Seconds
+	var c3 = document.getElementById("outputd");
+	var ctx3 = c3.getContext("2d");
+	ctx3.moveTo(pathdX, pathdY);
+	pathdX += 5;
+	var dat = new Date();
+	pathdY = 1 + (Math.sin(pathdX) + (dat.getHours() + dat.getMinutes() + dat.getSeconds() + dat.getMilliseconds()) % 100);
+	ctx3.lineTo(pathdX,pathdY);
+	ctx3.stroke();
+
+	rng3[rng3.length] = pathdY;
+	outputn3.innerHTML = rng3;
+
+}
+function draw() {
+	if (!drawing) return;
+	path();
+}
+var t = setInterval(draw, 10);
+
+</script>
+</body>
+
+</html>

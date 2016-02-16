@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head><title>Diogenesis 0.5</title>
+<link type="text/css" rel="stylesheet" href="stylesheet.css"></head>
+<body>
+<div class="black" id="black" onclick="closeAllWindows()"></div>
+<div class="dataWindow" id="dWindow"></div>
+
+<div id="topbar">
+	<h1><img src="img/diogenesisb.png"></h1>
+</div>
+<ul>
+	<li><div id="b_home" class="topButton">HOME</div></li>
+	<li><div id="b_invnt" class="topButton">INVENTORY</div></li>
+	<li><div id="b_markt" class="topButton">MARKET</div></li>
+	<li><div id="b_craft" class="topButton">CRAFTING</div></li>
+	<li><div id="b_changelog" class="topButton">CHANGELOG</div></li>
+	<li><div id="b_junk" class="topButton">JUNKYARD</div></li>
+</ul>
+<span id="yourMoney">Money: $0</span>
+
+<div id="w_home" class="window">
+	<h2>Home</h2>
+	<div id="furniture"></div>
+</div>
+
+<div id="w_invnt" class="window">
+	<h2>Your Inventory</h2>
+	<input type="button" id="button_sort0" value="Sort by price (Lower first)">
+	<input type="button" id="button_sort1" value="Sort by price (Higher first)">
+	<br>
+	<input type="checkbox" onclick="filter_ingredients.checked = false; inventory()" id="filter_final">Hide crafting ingredients
+
+
+	<div id="inv">
+
+	</div>
+
+</div>
+
+<div id="w_markt" class="window">
+	<h2>Marketplace</h2>
+
+	<input type="button" id="button_sortm0" value="Sort by price (Lower first)">
+	<input type="button" id="button_sortm1" value="Sort by price (Higher first)">
+	<br>
+	<input type="checkbox" onclick="filter_final.checked = false; inventory()" id="filter_ingredients">Show only crafting ingredients
+
+	<div id="marketplace" style="margin-bottom: 100px; display: block; clear: both"></div>
+	
+	<div id="serverplace" style="display: block; clear: both; width: 100%"></div>
+
+</div>
+
+<div id="w_craft" class="window">
+	<h2>Crafting and Uncrafting</h2>
+	Search items by name: <input type="text" id="searchy"><br>
+	<input type="checkbox" onclick="craftingInventory()" id="isCraftable">Show crafting ingredients only</input><br>
+	<input type="checkbox" onclick="craftingInventory()" id="hideUncraftable">Hide items not needed for the current crafting task<br>
+
+	<input type="button" id="button_sortq0" value="Sort by Quality (Lower first)">
+	<input type="button" id="button_sortq1" value="Sort by Quality (Higher first)">
+	<br>
+	<br>
+	<br>
+
+	<div style="width: 450px; height: 100%; background-color: #eee; display: inline; float: left">
+	Inventory<br>
+	<span id="todoCraft"></span></div>
+
+	<div style="width: 180px; height: 100%; background-color: #ccc; display: inline; float: left">
+	Crafting Cauldron<br>
+	<span id="doingCraft"></span></div>
+
+	<div style="width: 250px; height: 100%; background-color: #bbb; display: inline; float: left">
+	Output Items<br>
+	<span id="doneCraft"></span>
+
+	<div id="craftToolTip" style="width: 200px; height: 100%; background-color: #bbb; display: inline; float: left"></div>
+	</div>
+	
+
+
+</div>
+
+<div id="w_changelog" class="window" style="overflow-y: scroll; width: 100%">
+	<pre>
+	0.0.2 - Added Scrap Metal, identifying metals and a lot of metals to hunt!
+	0.0.3 - Added Changelog
+	0.0.4 - If you identify metals from scrap, the result will be either the same quality or higher
+	0.0.5 - Added save and load feature. The game autosaves every 30 seconds.
+	0.0.6 - The marketplace items now have a limit that is based on your total items + 10. Once the limit is reached, no more items will be added to the marketplace.
+	0.0.6.1 - Fixed rapid-changing-inventories that disabled opening stat window for every item.
+	0.0.7 - Removed "Get Scrap Metal" button. Added Junkdiver minigame.
+	You can get scrap by dragging around the garbage to reveal it.
+	There are bombs you can throw to explode garbage and get more scrap!
+	0.0.8 - Added a button to sell all your items of the same type at once.
+	0.0.8.1 - The button is only shown when you have 2 or more items of the same type.
+	0.0.8.2 - Now items that you cannot buy on the marketplace appear grayed out.
+	0.0.8.3 - Reduced opacity of Garbage in Junkyard.
+	0.0.8.4 - fixed price per identifying all scrap
+	0.1.0 - Added Crafting
+	0.1.1 - You can click on your items on the left side and get the output on the right side.
+	0.1.2 - Added a search function. You can type the name of the item and it automagically appears filtered.
+	0.1.3 - Added some metal alloys.
+	0.1.3.1 - Fixed "Identify this metal" button overlapping the "Sell all" button.
+	0.1.4 - Now you can refine an item by crafting 3 items of the same type. The output will have higher quality.
+	0.1.5 - Added buttons to sort items by price and by quality in INVENTORY, MARKET and CRAFTING tabs.
+	0.1.6 - Now items that can't be crafted together with already selected items to craft something new appear grayed out.
+	0.1.7 - Added a checkbox if you decide to show only items that have appear inside a crafting recipe.
+	0.2.0 - Added a Trash Bin
+	0.2.1 - You can get random items in the trash bin. 1-5 items appear every 10-100 ticks.
+	0.2.1.1 - Changed trash chance to 0-1 items at 1% chance each tick.
+	0.2.1.2 - Reduced lag caused by selling many items at once.
+	0.2.2 - Added a "previous market prices" graph on every item stat window.
+	0.2.2.1 - Previous market prices now are preserved upon saving.
+	0.2.3 - If a market price is rising or decreasing, there is a 50% chance of the price still rising or decreasing the next price change.
+	0.2.4 - Now scrap appears every 30 seconds in the Junkyard.
+	0.2.4.1 - Removed the "Dive for scrap" button in the Junkyard.
+	0.2.4.2 - Reduced chance of trash appearing in the Trash Bin.
+	0.2.4.3 - Reduced chance of garbage/scrap piling in the Junkyard, and added a limit to prevent lag.
+	0.3 - Added uncrafting - You can now uncraft some items through the item stat window.
+	0.3.0.1 - Fixed Scrap Metal duplication bug.
+	0.3.0.2 - Fixed Searchbox in Crafting.
+	0.3.1 - Fixed quality labels on items. (Quality 0 items shown no number/same as Quality 1 items. The intention was Quality 0 (I) and Quality 1 (II))
+	0.3.2 - Fixed recipe list for Crafting Cauldron items not showing properly.
+	0.3.3 - Changed Recipes in recipe list, now they only show the output item name and not the ingredients.
+	0.4.0 - Improved Crafting inventory. Now only items that can be used to make the selected recipe are shown.
+	0.4.1 - Fixed name not being properly shown on Crafting because a number was shown instead.
+	0.4.2 - Changed bomb explosion radius.
+	0.4.3 - Bombs are changed to
+		Precission Bomb   ($2),  20px radius.
+		Amateur Bomb      ($6),  80px radius.
+		Professional Bomb ($12), 180px radius.
+		Nuke              ($20), 320px radius.
+	0.4.4 - Added Paper Recycle Bin. Added 8 new paper-based items.
+	0.4.5 - Added 6 new crafting recipes and 7 uncrafting recipes with paper and cardboard as ingredients.
+	0.4.5.1 - Now identifying all scrap metal from the junkyard takes less time.
+	0.4.6 - Added Plastic Bin and new items.
+	0.4.7 - Added the Glass Recycle Bin and new items and crafting recipes.
+	0.4.8 - Added item conditions.
+		Item price changes depending of its condition.
+			The market value is added to the base price.
+			The condition modifier is added to the market value.
+			The quality is added to the condition modifier.
+		Every item starts as new, filled and unused.
+		An item from a garbage can may be dirty, wet, burned, broken, empty, used and old.
+		Every change in status negates the "new" condition.
+		Wet and burned can break the item, reducing its price.
+		You may craft items to repair them if they are broken.
+			(If two parents are broken, there is a chance the offspring will be repaired)
+	0.5.0 - Added item age.
+		Every 30 seconds, the age value is incremented.
+		When age reaches 16^2, item changes from new to used.
+		When age reaches 16^3, item changes from used to old.
+		When age reaches 16^4, item changes from old to antique.
+		Each age condition negates each other. Being antique the ultimate age condition (That increases price to 150%)
+
+	</pre>
+</div>
+
+<div id="w_junk" class="window">
+	<h2>This is the Junkyard</h2>
+	<span>You can get Scrap Metal here!</span>
+	<div class="button" id="buttonIdentify" onclick="notification(identifyAllScrap())">Identify all Scrap for </div>
+
+	<br>
+	<input type="button" onclick="addBombToJunkyard(1)" value="Purchase Precision Bomb ($2)">
+	<input type="button" onclick="addBombToJunkyard(2)" value="Purchase Amateur Bomb ($6)">
+	<input type="button" onclick="addBombToJunkyard(3)" value="Purchase Professional Bomb ($12)">
+	<input type="button" onclick="addBombToJunkyard(4)" value="Purchase Nuke ($20)">
+
+	<input type="button" onclick="addMagnetToJunkyard()" value="Purchase Magnet ($10)">
+
+	<br><br>
+
+	Items in Trash Bin: <span id="trash_bin_items"></span> <input type="button" onclick="getTrash('Trash Bin')" value="Inspect the Trash Bin"><br>
+
+	Items in Paper Recycle Bin: <span id="paper_bin_items"></span> <input type="button" onclick="getTrash('paper')" value="Inspect the Paper Recycle Bin"><br>
+
+	Items in Plastic Recycle Bin: <span id="plastic_bin_items"></span> <input type="button" onclick="getTrash('plastic')" value="Inspect the Plastic Recycle Bin"><br>
+
+	Items in Glass Recycle Bin: <span id="glass_bin_items"></span> <input type="button" onclick="getTrash('glass')" value="Inspect the Glass Recycle Bin"><br>
+
+	<br><hr><br>
+	<div id="junkMountain">
+		
+	</div>
+
+	
+
+</div>
+
+<span id="php"></span>
+
+<script src="../../common.js"></script>
+<script src="../../jquery-2.1.4.min.js"></script>
+<script src="../../jquery-ui.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

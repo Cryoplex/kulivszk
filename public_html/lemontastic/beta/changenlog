@@ -1,0 +1,197 @@
+0.9.11 Changed (again) the level up cost calculation for higher performance.
+0.9.11b Fixed some bug that didn't let promote all helpers but some of them.
+0.9.11c Fixed some bug that levelled up other helper not the current one in the screen.
+
+0.9.10e - Retiring helpers always increase the pupil stats, even if the Master is weaker.
+
+0.9.10d
+- Fixed critical errors before starting the game only when no save available, making it impossible to play.
+- Deleted that white square on Changelog
+- Changed font (back) to monospace
+- Changed level up cost for a faster calculation speed
+
+0.9.10
+- Added Fundraising Campaign skill for Girl Scouts.
+	- Makes money selling cookies.
+- Added Agility skill for Raccats. Increases lemon harvesting manually.
+- Added Free Stuff skill for Kleptomaniacs. Increases lemons stolen and randomly adds a chance of increasing lemons harvested by 50%, stackable among other Kleptos.
+- Added Loot skill for Thieves. Increases chance of stealing at other lemonade stands at night (When your stand is closed) and doubles the money income from stealing.
+- Added robberies. You can randomly get robbed at night if your stand is closed. You can lose between the 10% and 50% of your money.
+- Added "Thug Life" skill for Thugs and Delinquents.
+	- Increases chances of getting arrested on police raids at night.
+	- Decreases chances of a robbery at night.
+- Added "Run or Die" skill for Goons.
+	- Scares thieves away.
+	- Has a chance of recruiting a Thief instead of being robbed.
+- Added Mime Raccoons.
+	- Every second, they have a chance of becoming another of your helpers.
+	- Their name, rank and class changes, but they still have their own stats.
+	- Basic Mime has 0 of every stat, so it needs to become another helper in order to be useful.
+
+0.9.8
+- The helper limit is now 99.
+	- Fixed some achievements that, due to performance issues were impossible to obtain.
+- Money don't reset to zero when bigger than a trillion after reloading the page.
+- Helpers now earn experience per sale instead of every second
+- Fake Blind now increases tips by 50% instead of doubling them
+- Added Trumpeters
+	- Buyable with 10 badges
+	- Troubadour skill: Random chances of getting tips by playing music
+- Added badge refund when resetting, you'll get 1 badge per special helper you bought the last game
+- Musicians and Trumpeters now make money based on actual ÇPS and gentleness
+- Fixed Low-Normal-High-Fraud buttons, they have a lesser effect in popularity now
+- It's harder to reach 99% popularity now
+- Added Records window, where you can compare your stats with your last game
+	- Records beaten appear in bold
+- Added DELETE DATA button, you can now delete your entire save, including badges and achievements
+- If Charisma is greater than 100%, tips are even higher
+- Lemons per second and citros per second now are calculated correctly
+- Fixed some raccoon classes that shown an incorrect picture
+- Fixed Mortgage Broker skill that shown "undefined" instead of the tank upgrade name.
+- Added a new achievement to compensate a bugged one
+- Upgrading your squeezer no longer costs more money the more squeezer level it has
+- Now shows the price per liter and per glass or tank upgrade you have
+- Now you win more badges the more achievements you have completed
+
+0.9.7
+- Added Achievements
+	- 46 new achievements added (58 total achievements)
+	- You can see your percentage of achievements unlocked and the ones you haven't unlocked yet.
+- Changes in police raids
+	- Police now sets you a fine instead of decreasing your money instantly
+	- Police will come back the next night to recover the fine
+	- If you don't have money to pay the fine, an unpaid tax will be added (10% increase of price)
+- Complete rework to Popularity
+	- Minimum is now 1%
+	- Lemonade price (not low-high-fraud price) now affects popularity
+	- Two decimals are shown now on popularity percentage
+	- Boy Scouts increase popularity more than before
+	- Publicist now adds 2.5% total popularity instead of 1% (Actually was 0% because of a bug)
+- New Skill: Ecstasy (Lemonade Boy, Insurance Salesman)
+	- Increases Popularity after every sale
+- New Skill: My beloved minions (Don)
+	- Doubles Lemons/second
+- Finished adding Boy Scout skills, all Boy Scouts now have skills
+- Some changes on experience
+- Added Policemen
+	- Each police raid, they have a chance of bribing other policemen so that none of your helpers get arrested
+- Added Vampires
+	- Vampires bite other Boy Scouts at night (Usually helpers with low stats)
+	- they increase their Evil stat when doing so
+	- If one of your BS is bitten, it will be turned into a vampire from 3 to 6 nights after conversion
+	- Vampires don't earn experience during day
+- Fixed a bug causing police raids and customers appearing so fast
+- Fixed tank upgrade prices
+
+0.9.6
+- New skills
+	- Real Cheater (Cheater)
+		- Increases fraud rate by 10%.
+	- Privileged (Tax collector, IRS Agent)
+	    - Reduces fees by 10%.
+	- Veredict: Innocent (Defense Lawyer)
+	    - Reduces police raid chances by 5% (Limit: 45%)
+
+0.9.5
+- Badges!
+  - You get a badge for every record beaten. (Lemons, money, lemonade, num of helpers or total levels are greater than your last session)
+  - You get a badge for every 100 helper levels.
+  - You get a badge for every billion of lemons/money/lemonade. It's cummulative and doesn't calculates ammount lost in production or sales.
+    - You get 1 badge/billion
+- Police raids can't spawn if your money is less than 0.
+- New skills:
+	- Advertising (Publicist)
+		- Increases populairty by 1%.
+	- For the Business! (Businessman, Business Trainee)
+		- Increases CPS (citros/second) by +1
+	- I rule (Assistant Chief)
+		- Increases CPS by +2 per businessman
+		- Assistant chief, Chief, CEO and Business Trainee counts as "Businessman"
+	- Badass (Chief)
+		- Increases CPS by +4 per businessman
+	- Overlord (CEO)
+		- Doubles CPS rate obtained by businessmen/assistant chiefs/chiefs.
+	- The price isn't correct (Liar, Con Artist)
+		- 5% Chances of doubling lemonade price on a single sale. Limit: 100%
+
+0.9.3
+- Reduced customer spawn rate and police raid spawn rate.
+- You can press the L key to level up fast your helpers.
+- You can press the K/J key to promote your helpers fast.
+- Deleted level cap, now helpers can reach levels higher than 10.
+- Added level up 10 times button.
+
+0.9.2
+- Wallets no longer give negative money if your money is below 0.
+- Light/Darkness stat starts in 0% and not 50%.
+- Now police raids can occur if your Darkness stat is higher than 0% and not 50%.
+- You can change Lemon Concentration now at the supermarket.
+- First helpers earn more experience the more helpers you have.
+- Ordering your helpers with filters on keep the 1st helper bonus, etc.
+
+0.9
+- Added Girl Scouts and Raccats. You can buy them below "Achievements and Upgrades" with badges.
+- Added light and darkness. Darkness increases scam chance.
+- Added Angel Raccoons and Demon Raccoons, buyable at the upgrade shop.
+- Added new filters, now you can filter by helpers that can be promoted. Now you can reverse the order.
+- Added police raids
+	- Every second between 22:00 and 06:00 there is a chance of a police raid in your lemonade stand.
+	- Raids only take place if your Darkness level is greater than 50%.
+	- You can avoid raids sleeping or closing your lemonade stand at night.
+	- In a police raid, one of your helpers will be arrested and you will not see it anymore.
+	- And there will be a fine between 100ç and double of your money.
+	- Only one raid can happen every night.
+
+0.8.10
+- Added badges. Every time you reset the game you earn them, provided you won more than your last game.
+
+0.8.9
+- Added filter button on Helpers screen to show only Raccoons, Boy Scouts or show all.
+
+0.8.8
+- You can't buy squeezers anymore. Now you can level up your squeezer instead.
+- You can now squeeze 1 lemon to make 0.4ml lemonade. Every squeezer level adds 0.2ml lemonade per lemon squeezed.
+- Now it's possible to change the Squeezer name and level up.
+- Added Auto-squeeze function to Squeezer once it reaches level 10. (Maximum Auto-Squeeze level: 10)
+- You can upgrade your Squeezer to:
+  - Lemon Grinder. 10x lemon squeezing speed (Only for manual squeezing)
+  - Juicer. Doubled lemonade making speed (Works both manual and auto squeezing). Upgradeable up to level 10.
+- Fixed open/closed sign.
+- There is a transition now at 01:00, 08:00 and 20:00 (in-game time) and the stylesheet changes.
+
+0.8.7
+- Steal lemons button now grays out when you can't steal lemons.
+- If you get caught stealing lemons, you may not be able to steal more until some time passes. (Max 1.5 minutes).
+- After hiring a helper, you can now choose a name. If you leave the field blank, a random name will be chosen.
+
+0.8.5.3
+- Changing a helper's name without choosing any will result in its name left unchanged.
+- Fixed a bug causing popularity to reach 90% instantly when negative.
+- Fixed bugs regarding draw attention button. Now time and price affects directly bonus gained by draw attention.
+- Changed stats for helpers. Thug/Goon/Delinquent raccoon moved down in rank.
+- Thief/Pickpocket/Kleptomaniac coon moved up in rank.
+- Mastermind is now rank 10 and Don is now rank 9.
+- Squeezers no longer show on helper table.
+- Now minimum Popularity percent is 5%, max is 95%.
+
+0.8.5
+- Clicking on "Steal lemons" when that boy scout changes his face... Well... You'll just figure it up.
+- Popularity and charisma no longer goes below 0.
+- When charisma is 0% its icon changes to... Well, you'll just figure it up.
+
+0.8.4
+- Fixed NaNç price on helpers.
+- Added moar icons for buttons
+- Changed squeeze lemonade button to lemonade jar.
+- Leaving squeeze/draw attention button while pressed no longer continues squeezing/drawing attention.
+- Cost per level up is now based on just experience.
+- Experience curves have been updated.
+- Helpers now earn 1 exp/second.
+- Your first helper earns 10 exp/second, the second 5/second, third 4/second, fourth 3/second and from 5th to 9th 1/second
+- Now you can order your helpers by level, experience and such.
+- You can move to top any helper so that it earns more experience.
+- Pressing buttons from 1 to 9 moves that helper to that spot.
+
+0.8.1
+- Started changelog
+- Added icons to some buttons

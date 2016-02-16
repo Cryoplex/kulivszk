@@ -1,0 +1,33 @@
+body {
+color: black;
+}
+body div {
+background-color: hsl(200, 40%, 45%);
+}
+body div div {
+background-color: hsl(200, 40%, 50%);
+}
+body div div div {
+background-color: hsl(200, 40%, 55%);
+}
+#notif, #logcillo {
+	background-color: hsla(200, 40%, 50%, 0.7);
+	color: black;
+}
+#leftHUD, #rightHUD {
+	background-color: hsl(200, 40%, 45%);
+}
+.window {
+	background-color: hsl(200, 40%, 45%);
+}
+.lemonButton {
+	background-color: hsl(200, 40%, 50%);
+	color: black;
+}
+.lemonButton:hover {
+	background-color: hsl(200, 40%, 40%);
+	color: black;
+}
+.window div, .closeFront, a, #changelog {
+	color: black;
+}

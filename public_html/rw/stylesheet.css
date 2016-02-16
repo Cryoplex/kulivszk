@@ -1,0 +1,265 @@
+* {
+font-family: Ubuntu;
+}
+body {
+margin: 0;
+background-color: #0f000f;
+}
+#background {
+background-color: #200f20;
+height: 480px;
+color: #f0d0f0;
+position: relative;
+}
+#header {
+margin-top: 0px;
+height: 96px;
+background-color:#402040;
+color: #b090b0;
+}
+#stats {
+background-color: #806080;
+}
+#tabBar {
+margin-left:22.5px;
+margin-right:22.5px;
+height: 64px;
+background-color:#402040;
+color: #d0b0d0;
+}
+#footer {
+height: 48px;
+background-color: #402040;
+color: #b090b0;
+text-align: center;
+text-decoration: italic;
+}
+
+h1 {
+text-align:center;
+}
+#game {
+	position: absolute;
+	bottom: 2px;
+	left: 0px;
+	padding: 4px;
+	width: 30%;
+	height: 50%;
+	border-top-right-radius: 16px;
+	font: monospace;
+	font-size: 18px;
+	margin: auto;
+	text-align: center;
+	vertical-align: middle;
+
+	background-color: #f0e0f0;
+	color: #403040;
+}
+.stats {
+margin-top: 2px;
+margin-left: 4px;
+padding-left: 8px;
+padding-top: 0px;
+padding-bottom: 4px;
+width: 300px;
+font-size: 14px;
+float: left;
+background-color: #402040;
+border-radius: 8px;
+}
+th, td {
+border-left: 2px solid #402040;
+padding: 0px;
+border-collapse:collapse;
+}
+th {
+border-bottom: 2px solid #402040;
+}
+table {
+border-collapse: collapse;
+width: 100%;
+}
+.upperTabs {
+text-align:center;
+width: 178px;
+height: 34px;
+font-size: 20px;
+background-color: #503050;
+border: 2px solid #301030;
+
+}
+.upperTabs:hover {
+background-color: #806080;
+}
+img {
+margin-top: 8px;
+}
+a:hover {
+color: #10a010;
+}
+a:visited {
+color: #808020;
+}
+#expFilled {
+font-family: FreeMono;
+color: #a05030;
+background-color: #a05030;
+}
+#hpFilled {
+font-family: FreeMono;
+color: #20a060;
+background-color: #20a060;
+}
+#mpFilled {
+font-family: FreeMono;
+color: #5080a0;
+background-color: #5080a0;
+}
+.depleted {
+font-family: FreeMono;
+color: #a090a0;
+background-color: #a090a0;
+}
+#gameLog {
+opacity: 0.99;
+width: 360px;
+background-color: #b090b0;
+position: fixed;
+right: 0;
+color: #602060;
+padding: 8px;
+margin: 8px;
+font-family: FreeMono, monospace;
+border-radius: 8px;
+box-shadow: 0 0 8px #000;
+}
+#close {
+	display: none;
+	background-color: black;
+	z-index: 1000;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0.9;
+}
+.notice {
+	display: none;
+	position: absolute;
+	width: 50%;
+	margin: 0 25%;
+	top: 0;
+	left: 0;
+	background-color: #b090b0;
+	z-index: 1337;
+}
+.window {
+	text-align: left;
+	background: linear-gradient(#906090, #403040);
+	padding: 8px;
+	margin-top: 0;
+	border: none;
+}
+.window span {
+
+	font-size: 24px;
+	position: absolute;
+	right: 8px;
+}
+#helpText {
+	border: none;
+	font-family: monospace;
+	font-size: 18px;
+	padding: 8px;
+}
+.helpItem {
+	border: 2px solid #403040;
+	margin: 8px;
+	padding: 8px;
+	background-color: #906090;
+}
+.helpItem:hover {
+	border: 2px solid #403040;
+	background-color: #b080b0;
+}
+.clog {
+	width: 400px;
+	height: 800px;
+	overflow-y: scroll;
+	z-index: 9999;
+	font-size: 12px;
+	padding: 8px;
+	box-shadow: 8px 8px 8px #000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	background-color: #f0e0f0;
+}
+#enemyStats {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	background-color: #403040;
+	color: #f0e0f0;
+	width: 30%;
+	box-shadow: 8px 8px 8px #000;
+}
+#combatActions {
+	position: absolute;
+	bottom: 0;
+	left: 30%;
+	width: 35%;
+	height: 50%;
+	background-color: #100810;
+	border: 2px solid #403040;
+	border-radius: 8px;
+	opacity: 0;
+}
+.button {
+	padding: 8px;
+	margin: 4px;
+	text-align: center;
+	border-radius: 8px;
+	background-color: #222;
+	color: #fff;
+	width: 20%;
+	cursor: pointer;
+}
+.button:hover {
+	background-color: #eee;
+	color: #222;
+}
+.green {
+	background-color: hsl(120, 80%, 70%);
+	color: #222;
+}
+.green:hover {
+	background-color: hsl(120, 80%, 30%);
+	color: white;
+}
+.blue {
+	background-color: hsl(180, 80%, 70%);
+	color: #222;
+}
+.blue:hover {
+	background-color: hsl(180, 80%, 30%);
+	color: white;
+}
+.red {
+	background-color: hsl(10, 80%, 70%);
+	color: #222;
+}
+.red:hover {
+	background-color: hsl(10, 80%, 30%);
+	color: white;
+}
+.yellow {
+	background-color: hsl(30, 80%, 70%);
+	color: #222;
+}
+.yellow:hover {
+	background-color: hsl(120, 80%, 30%);
+	color: white;
+}

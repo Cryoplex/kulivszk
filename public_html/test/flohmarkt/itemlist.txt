@@ -1,0 +1,5 @@
+sell,,0,,{"id":0,"name":"Stick","desc":"A plain old stick","price":0.05000000000000002,"value":13070,"rarity":1},,Kulivszk;;
+sell,,0,,{"id":0,"name":"Stick","desc":"A plain old stick","price":0.09,"value":24671,"rarity":1},,Kulivszk
+sell,,1,,{"id":1,"name":"Rock","desc":"It rocks!","price":0.16,"value":53984,"rarity":0},,Kulivszk
+sell,,1,,{"id":1,"name":"Rock","desc":"It rocks!","price":0.13,"value":56555,"rarity":0},,Kulivszk
+sell,,0,,{"id":0,"name":"Stick","desc":"A plain old stick","price":0.02,"value":56576,"rarity":0},,Some Guy Who Sells

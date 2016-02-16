@@ -1,0 +1,174 @@
+body {
+	color: #000;
+	margin: 0;
+}
+#topbar {
+	width: 100%;
+	background-color: hsl(270, 60%, 80%);
+	height: 96px;
+	margin: 0;
+}
+.topButton {
+	border: 18px solid transparent;
+	border-image: url(img/border.png) 18 round;
+}
+li {
+	display: inline-block;
+	float: left;
+	width: 16%;
+	text-align: center;
+	background-color: hsl(270, 60%, 80%);
+}
+li:hover {
+	background-color: hsl(90, 60%, 20%);
+	color: #fff;
+}
+ul {
+	margin: 0;
+}
+#yourMoney {
+	position: fixed;
+	top: 8px;
+	right: 8px;
+	margin: 16px;
+}
+
+.window {
+	background-color: hsl(270, 60%, 90%);
+	margin: 0;
+	height: 480px;
+	padding: 8px;
+}
+h1 {
+	text-align: center;
+	margin: 0;
+}
+.item {
+	width: 192px;
+	height: 64px;
+	border: 2px solid black;
+	display: inline-block;
+	float: left;
+	margin: 2px;
+}
+.smallItem {
+	width: 120px;
+	height: 32px;
+	font-size: 2vh;
+
+	padding: 8px;
+	border: 2px solid black;
+	display: inline-block;
+	float: top;
+	margin: 2px;
+}
+.item p {
+	display: inline;
+}
+.item:hover, .smallItem:hover {
+	background-color: hsl(270, 60%, 95%);
+}
+
+.black {
+	background-color: rgba(0, 0, 0, 0.5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	display: none;
+	width: 9999px;
+	height: 9999px;
+}
+.dataWindow {
+	background-color: hsl(90, 60%, 80%);
+	position: fixed;
+	top: 25%;
+	left: 25%;
+	width: 480px;
+	height: 320px;
+	z-index: 2;
+	display: none;
+}
+.button {
+	background-color: blue;
+	color: white;
+
+	border-radius: 8px;
+	padding: 8px;
+	margin: 2px;
+	display: inline-block;
+	border: 2px solid transparent;
+}
+.button:hover {
+	background-color: orange;
+	color: black;
+	border: 2px solid blue;
+}
+.desc {
+	font-size: 10px;
+}
+.colorGreen {
+	color: teal;
+}
+.colorRed {
+	color: orange;
+}
+#junkMountain {
+	width: 500px;
+	height: 500px;
+	background-color: #eee;
+	display: inline-block;
+	position: relative;
+}
+.junk_garbage {
+	background-color: rgba(30, 30, 30, 0.7);
+	border-radius: 50%;
+	width: 50px;
+	height: 50px;
+	display: inline-block;
+	position: absolute;
+	z-index: 10000;
+}
+.junk_scrap {
+	background-color: rgba(50, 50, 100, 0.85);
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	position: absolute;
+	z-index: 9999;
+}
+.junk_bomb {
+	background-color: rgba(255, 50, 30, 0.85);
+	border-radius: 50%;
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	position: absolute;
+}
+.available {
+	opacity: 1;
+}
+.unavailable {
+	opacity: 0.5;
+}
+#php {
+	opacity: 0;
+}
+div {
+	user-select: none;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+.notshown {
+	display: none;
+}
+.junk_magnet {
+	width: 20px;
+	height: 20px;
+
+	background: linear-gradient(#f00, #00f);
+	border-radius: 50%;
+	display: inline-block;
+	position: absolute;
+}

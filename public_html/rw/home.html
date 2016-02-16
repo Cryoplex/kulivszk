@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head><title>Random World</title><link type=text/css rel="stylesheet" href="stylesheet.css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head>
+<body>
+
+<div id="header"><h1>Random World</h1>
+	<div id="tabBar">
+		<table>
+			<tr>
+				<td class="upperTabs" onclick="showDoc('help')">Help</td>
+				<td class="upperTabs" onclick="showDoc('changelog')">Changelog</td>
+				<td class="upperTabs"></td>
+				<td class="upperTabs"></td>
+				<td class="upperTabs"></td>
+				<td class="upperTabs"></td>
+				<td class="upperTabs"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<!-- Changelog -->
+<div class="clog" onclick="hideDoc('changelog')" id="changelog">
+	<h2>Alpha</h2>
+	<pre>
+	v0.0.1 - Added changelog.
+	v0.0.2 - Added Adventure Mode.
+	v0.0.3 - You can select your name and start Adventure Mode.
+	v0.0.4 - Added Level 0 (Forest)
+	v0.0.5 - Now monsters with varied stats spawn when you shake trees.
+	v0.0.6 - Monsters spawn with levels that are in a level between 90%
+	and 110% of yours
+	v0.0.7 - When a monster is spawned, the combat actions menu shows
+	up, and you are unable to continue with Adventure Mode until
+	you beat all enemies. (Actually, there is no way of beating
+	the enemies up)
+	</pre>
+</div>
+
+<!-- Help -->
+<div onclick="hideDoc('help')" id="close">
+</div>
+<div class="notice" id="help">
+<table style="width: 100%">
+	<tr>
+		<th class="window" colspan="100%">Contenidos</th>
+	</tr>
+	<tr>
+		<td class="helpItem" onclick="help(0)">Help</td>
+		<td class="helpItem" onclick="help(1)">Test #1</td>
+		<td class="helpItem" onclick="help(2)">Test #2</td>
+	</tr>
+</table>
+<p id="helpText"></p>
+</div>
+
+<div id="background">
+	<div class="stats" id="enemyStats">
+		<h3>Enemy Party</h3>
+	</div>
+
+	<div class="actions" id="combatActions">
+		<div class="button green">Attack</div>
+		<div class="button blue">Defend</div>
+		<div class="button red">Magic</div>
+		<div class="button yellow">Items</div>
+		<div class="button gray">Flee</div>
+	</div>
+
+	<div class="stats">
+		<table>
+		<tr><td><strong>Nombre</strong></td><td> | </td><td><span id="heroName">null</span></td></tr>
+		<tr><td><strong>Nivel</strong></td><td> | </td><td><span id="level">0</span></td></tr>
+		<tr><td><strong>Exp</strong><td> | </td><td class="dataBar" id="expBar"><span id="expFilled">...</span><span class="depleted" id="expDepleted">..</span></td></tr>
+		<tr><td></td><td> | </td><td style="text-align:right" id="exp">0/0</td></tr>
+		<tr><td><strong>HP</strong></td><td> | </td><td class="dataBar" id="hpBar"><span id="hpFilled">....</span><span class="depleted" id="hpDepleted">.....</span></td></tr>
+		<tr><td></td><td> | </td><td style="text-align:right" id="hp">0/0</td></tr>
+		<tr><td><strong>MP</strong></td><td> | </td><td class="dataBar" id="mpBar"><span id="mpFilled">...</span><span class="depleted" id="mpDepleted">...</span></td></tr>
+		<tr><td></td><td> | </td><td style="text-align:right" id="mp">0/0</td></tr>
+		<tr><td><strong>Ataque</strong></td><td> | </td><td><span id="atk">0</span> <em style="color:green; margin-left: 18px;">(+<span id="atkBonus">0</span>)</em></td></tr>
+		<tr><td><strong>Defensa</strong></td><td> | </td><td><span id="def">0</span> <em style="color:green; margin-left: 18px;">(+<span id="defBonus">0</span>)</em></td></tr>
+		<tr><td><strong>Ataque Magico</strong></td><td> | </td><td><span id="matk">0</span> <em style="color:green; margin-left: 18px;">(+<span id="matkBonus">0</span>)</em></td></tr>
+		<tr><td><strong>Defensa Magica</strong></td><td> | </td><td><span id="mdef">0</span> <em style="color:green; margin-left: 18px;">(+<span id="mdefBonus">0</span>)</em></td></tr>
+		<tr><td><strong>Velocidad</strong></td><td> | </td><td><span id="spe">0</span> <em style="color:green; margin-left: 18px;">(+<span id="speBonus">0</span>)</em></td></tr>
+		</table>
+	</div>
+	
+	<div id="game">
+	</div>
+</div>
+<div id="footer"><img id="image1" src="img/dice1.png"/> | <a href="../index.html">Arch Lemon Studios</a> | Otros juegos: <a href="../lemontastic/beta/home.html">Lemontastic!</a> | <img id="image2" src="img/dice1.png"/>
+
+</div>
+<script src="../common.js"></script>
+<script src="../jquery-2.1.4.min.js"></script>
+<script src="../jquery-ui.min.js"></script>
+<script src="vb.js"></script>
+</body>
+</html>

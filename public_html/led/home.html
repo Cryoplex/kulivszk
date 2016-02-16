@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>LED Sign Generator</title>
+	</head>
+	<style>
+	body {
+		margin: 0;
+		padding: 0;
+	}
+	.ledPoint {
+		background-color: #111;
+	}
+	.ledDeadPoint {
+		background-color: transparent;
+	}
+	.ledLightPoint {
+	margin: 8px;
+		background-color: red;
+		box-shadow: 0 0 2em red;
+	}
+	.ledLightBlue {
+	margin: 8px;
+	background-color: lightblue;
+	box-shadow: 0 0 2em lightblue;
+	}
+	.ledLightGreen {
+	margin: 8px;
+	background-color: lime;
+	box-shadow: 0 0 2em lime;
+	}
+	
+	.ledPoint, .ledLightPoint, .ledLightBlue, td {
+		border: 1px solid transparent;
+		border-radius: 100%;
+		color: transparent;
+		font-family: monospace;
+		width: 4vh;
+		height: 4vh;
+	}
+	</style>
+	<body>
+		
+
+		<div style="width: 100%; height: 5vh; background-color: black; text-align: center">LED Sign Generator</div>
+		<div style="width: 100%; height: 90vh; background-color: black">
+			<div style="width: 50%; margin: 0 25%; padding: 8vh 20vh">
+			<table id="led">
+			</table>
+			<!--
+			<table id="back">
+				<tr>
+					<td class="ledPoint" id="bg1" onclick="backGround(1)"></td>
+					<td class="ledPoint" id="bg2" onclick="backGround(2)"></td>
+					<td class="ledPoint" id="bg3" onclick="backGround(3)"></td>
+					<td class="ledPoint" id="bg4" onclick="backGround(4)"></td>
+					<td class="ledPoint" id="bg5" onclick="backGround(5)"></td>
+					<td class="ledPoint" id="bg6" onclick="backGround(6)"></td>
+					<td class="ledPoint" id="bg7" onclick="backGround(7)"></td>
+				</tr>
+			</table>
+		-->
+			</div>
+
+			<div style="display: none">
+			<audio controls src="s/00.wav" id="aud_0"></audio>
+			<audio controls src="s/01.wav" id="aud_0b"></audio>
+			<audio controls src="s/02.wav" id="aud_1"></audio>
+			<audio controls src="s/03.wav" id="aud_1b"></audio>
+			<audio controls src="s/04.wav" id="aud_2"></audio>
+			<audio controls src="s/05.wav" id="aud_2b"></audio>
+			<audio controls src="s/06.wav" id="aud_3"></audio>
+			<audio controls src="s/07.wav" id="aud_3b"></audio>
+			<audio controls src="s/08.wav" id="aud_4"></audio>
+			<audio controls src="s/09.wav" id="aud_4b"></audio>
+			<audio controls src="s/10.wav" id="aud_5"></audio>
+			<audio controls src="s/11.wav" id="aud_5b"></audio>
+			<audio controls src="s/12.wav" id="aud_6"></audio>
+			<audio controls src="s/13.wav" id="aud_6b"></audio>
+			<audio controls src="s/14.wav" id="aud_7"></audio>
+			<audio controls src="s/15.wav" id="aud_7b"></audio>
+
+			<audio controls src="s/bg1.wav" id="bg_1"></audio>
+			<audio controls src="s/bg2.wav" id="bg_2"></audio>
+			<audio controls src="s/bg3.wav" id="bg_3"></audio>
+			<audio controls src="s/bg4.wav" id="bg_4"></audio>
+			<audio controls src="s/bg5.wav" id="bg_5"></audio>
+			<audio controls src="s/bg6.wav" id="bg_6"></audio>
+			<audio controls src="s/bg7.wav" id="bg_7"></audio>
+		</div>
+		</div>
+		<div style="width: 100%; height: 5vh; background-color: black; text-align: center">Arch Lemon Studios</div>
+
+
+
+		<script>
+		var lights = [
+
+		];
+		var lastID = 1;
+		function backGround(id) {
+			var ct = document.getElementById('bg_'+lastID).currentTime;
+
+			document.getElementById('bg_'+id).currentTime = (ct - 0.01);
+			document.getElementById('bg_'+id).play();
+			document.getElementById('bg_'+lastID).pause();
+			document.getElementById('bg_'+lastID).currentTime = 0;
+
+			lastID = id;
+		}
+		function light(x, y) {
+			if (lights[x][y] == '0') {
+				lights[x][y] = '1';
+			}
+			else {
+				lights[x][y] = '0';
+			}
+
+			popLED();
+		}
+		function popLED() {
+			var lz = "";
+
+			for (iz = 0; iz < 8; iz++) {
+				if (lights[iz] == undefined) {
+					lights[iz] = '0000000000000000';
+					lights[iz] = lights[iz].split("");
+				}
+				var l = "<tr>";
+				for (i = 0; i < 16; i++) {
+						var cl = 'ledPoint';
+						extra = "";
+						if (lights[iz][i] == '1') {
+						cl = 'ledLightPoint';
+						if (iz >= 0 && iz < 3) cl = 'ledLightBlue';
+						if (iz > 4 && iz <= 8) cl = 'ledLightGreen';
+						
+						
+						}
+						if (i == z) extra = 'border: 1px solid #444';
+						
+						l+="<td class='"+cl+"' style='"+extra+"' onmouseleave='light("+iz+","+i+")' id='led"+iz+"_"+i+"'>.</td>";
+				}
+				l += "</tr>";
+
+				lz += l;
+			}
+
+
+			document.getElementById('led').innerHTML = lz;
+		}
+		var z = 0;
+		function playSound() {
+			for (a = 0; a < 8; a++) {
+				if (lights[a][z] == 1) {
+					aa = "";
+					if (z % 2 == 0) aa = 'b';
+					var aud = 'aud_'+a+aa;
+					document.getElementById(aud).play();
+				}
+			}
+		}
+		function shiftImage() {
+		var rand = Math.floor(Math.random()*10);
+		if (rand == 1) {
+		var xx = Math.floor(Math.random()*16);
+		var yy = Math.floor(Math.random()*16);
+		
+		light(xx, yy);
+		}
+		
+		popLED();
+		for (zz = 0; zz <= 8; zz++) {
+			if (zz == 8) break;
+			var el = 'led'+zz+'_'+z;
+			document.getElementById(el).style.border = '1px solid #444';
+
+		}
+		playSound();
+		z++;
+		if (z >= 16) z = 0;
+		}
+		function stringFromArray(arr, index) {
+			var l = "";
+			for (i = 0; i < arr.length; i++) {
+				var rand = Math.floor(Math.random()*1000);
+				if (rand == 44) arr[i] = 1;
+				l+=arr[i];
+			}
+			return l;
+		}
+		popLED();
+		var t = setInterval(shiftImage, 250);
+		
+		</script>
+	</body>
+</html>

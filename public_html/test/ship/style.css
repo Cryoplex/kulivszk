@@ -1,0 +1,179 @@
+#container {
+	-webkit-transition: background-color 0.5s;
+
+	background-color: #001;
+	border: 2px solid black;
+	width: 640px;
+	height: 480px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	-moz-user-select: none;
+}
+body {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.spaceship {
+	background-image: url(img/ship.png);
+	height: 32px;
+	width: 32px;
+	top: 440px;
+	left: 0px;
+	position: fixed;
+}
+.enemyShip {
+	/* background-image: url(img/enemy.png); */
+	height: 32px;
+	width: 32px;
+	top: 8px;
+	left: 320px;
+	position: fixed;
+	font-size: 6px;
+}
+.enemyShip span {
+	opacity: 0.5;
+}
+.allyBullet {
+	background-color: #0f0;
+	border-radius: 100%;
+	height: 4px;
+	width: 4px;
+	position: fixed;
+	box-shadow: 0 0 8px #0f0;
+}
+.chargedAllyBullet {
+	background-color: #8f8;
+	border-radius: 100%;
+	height: 8px;
+	width: 8px;
+	position: fixed;
+	box-shadow: 0 0 16px #8f8;
+}
+.superChargedAllyBullet {
+	background-color: #fff;
+	border-radius: 100%;
+	height: 16px;
+	width: 16px;
+	position: fixed;
+	box-shadow: 0 0 64px #fff;
+}
+.nightmareAllyBullet, .nightmareAllyBullet {
+	background-color: #000;
+	border-radius: 100%;
+	height: 8px;
+	width: 8px;
+	position: fixed;
+	box-shadow: 0 0 16px #f00;
+}
+.enemyBullet {
+	background-color: #f00;
+	border-radius: 100%;
+	height: 4px;
+	width: 4px;
+	position: fixed;
+	box-shadow: 0 0 8px #f00;
+}
+#energy {
+	font-size: 14px;
+	color: white;
+}
+.explosion {
+	-webkit-transition: all 1s;
+	opacity: 0.1;
+	width: 32px;
+	height: 32px;
+	box-shadow: 0 0 1px #f80;
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-radius: 100%;
+	background-color: #f80;
+}
+.explosionFireball {
+	opacity: 0.5;
+	box-shadow: 0 0 8px #f80;
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-radius: 100%;
+	background-color: #f80;
+}
+.ambientStar {
+	width: 2px;
+	height: 2px;
+	box-shadow: 0 0 4px #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	border-radius: 100%;
+	background-color: #fff;
+}
+#gameover {
+	top: 0; left: 0;
+	position: fixed;
+	background-color: #000;
+	opacity: 0.9;
+	display: none;
+	width: 640px;
+	height: 480px;
+	border: 2px solid black;
+	z-index: 9999;
+}
+.commonBlack {
+	display: none;
+	background-color: black;
+	color: transparent;
+}
+.commonFilled {
+	background-color: #0f8;
+	color: transparent;
+	box-shadow: 0 2px 2px #0f8;
+}
+.commonDepleted {
+	background-color: #022;
+	color: transparent;
+}
+.button {
+	background-color: rgba(0, 255, 128, 0.5);
+	border: 2px solid #0ff;
+	color: #fff;
+	padding: 2px;
+	border-top-right-radius: 8px;
+	text-align: center;
+	font-size: 12px;
+	margin: 2px;
+}
+.button:hover {
+	background-color: rgba(0, 255, 192, 0.9);
+	color: #000;
+	z-index: 10000;
+}
+.powerup {
+	top: 0; left: 0;
+	position: fixed;
+	width: 16px;
+	height: 16px;
+}
+#extra {
+	color: white;
+	font-size: 14px;
+}
+h1, h2, h2 *, ul {
+	color: #8fe;
+}
+ul {
+	font-size: 12px;
+}
+body {
+	background-color: #000;
+}
+mark {
+	font-size: 10px;
+	background-color: transparent;
+	color: white;
+}

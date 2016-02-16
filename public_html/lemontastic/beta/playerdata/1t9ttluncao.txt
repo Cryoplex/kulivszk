@@ -1,0 +1,10 @@
+_-_name=blargh_-_limones=24_-_dollars=7000_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=24_-_dollars=7000_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=24_-_dollars=7000_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=24_-_dollars=7000_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=24_-_dollars=7000_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=129_-_dollars=5600_-_pic=img/scout2.png_-_level=0_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=129_-_dollars=5600_-_pic=img/coons/coon.png_-_level=5_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=129_-_dollars=5600_-_pic=img/coons/coon.png_-_level=5_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=129_-_dollars=5600_-_pic=img/coons/coon.png_-_level=5_-_id=1t9ttluncao_-_
+_-_name=blargh_-_limones=129_-_dollars=5600_-_pic=img/coons/coon.png_-_level=5_-_id=1t9ttluncao_-_

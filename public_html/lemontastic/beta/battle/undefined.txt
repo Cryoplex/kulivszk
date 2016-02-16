@@ -1,0 +1,1 @@
+{"squeezer":{"name":"Pleiades-4","level":0,"upgrades":{},"autoSqueezeLevel":0,"speed":0},"badges":1,"gameTime":{"number":960126600000,"day":4,"hour":15,"mins":49,"month":6,"year":2000,"cpsBonus":0},"mvh":["img/coons/coon5a.png",[0,5,24]],"ident":"2675xkqzuo0","leftTo":462764774000,"lastRaid":4,"policeFee":3900000000000000,"resetted":4}

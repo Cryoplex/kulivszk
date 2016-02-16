@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html><head><title>Hello World</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<style>
+.spanish:lang(en) {
+	display: none;
+}
+.english:lang(es) {
+	display: none;
+}
+h1 {
+	text-align: center;
+}
+big {
+	color: orange;
+}
+
+small {
+	font-size: 30%;
+	color: #aaa;
+}
+.log {
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 256px;
+	height: 100vh;
+	background-color: rgba(180, 140, 100, 0.5);
+}
+#chatWindow {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+body {
+	background-color: black;
+}
+
+.notif {
+	width: 128px;
+	background: #fff;
+	border-radius: 8px;
+	text-align: center;
+	padding: 8px;
+}
+#tooltipwr {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 9999;
+	box-shadow: 0 0 8px #000;
+	opacity: 0;
+}
+</style>
+</head>
+
+<body>
+	<h1><big>L</big><small>oners</small> 
+		<big>O</big><small>nly</small> 
+		<big>D</big><small>rink</small> 
+		<big>O</big><small>rangeade</small></h1>
+	<table id="board"></table>
+	<pre class="log" id="log"></pre>
+
+	<div id="chatWindow"> <!-- chat -->
+		<input type="textbox" id="chat">
+		<input class="spanish" type="button" value="Enviar" onclick="toLog('default')">
+		<input class="english" type="button" value="Send" onclick="toLog('default')">
+	</div>
+
+	<center>
+	<div class="notif" id="tooltipwr">hi</div>
+
+	<input type="button" onmouseover="notify('test', this)" onmouseleave="notify('hide')" value="Random">
+	</center>
+
+	<script src="http://www.archlemon.com/common.js"></script>
+	<script>
+	var maxSquares = 2;
+	var squares = [];
+	var start = 0;
+	function getSquareData(num) {
+		return [
+		//Names
+		[
+		//Special square
+		['Salida|Start', 'Meta|Goal'],
+		//Regular square
+		'Casilla Blanca|White Square', 'Casilla Negra|Black Square', 'Casilla Desconocida|Unknown Square'],
+
+		//Pics
+		[
+		//Special square
+		['img/squares/start.png', 'img/squares/end.png'],
+		//Regular square
+		'img/squares/white.png', 'img/squares/black.png', 'img/squares/undefined.png'],
+
+		][num];
+	}
+	function square(posi) {
+		this.typ = rand(1,maxSquares);
+		this.special = undefined;
+		this.position = posi;
+	}
+	function genBoard(len) {
+		if (len < 32 || !len) len = 32;
+		for (i = 0; i < len; i++) {
+			squares[i] = new square(i);
+			console.log('DEBUG created square');
+			if (i == 0) {
+				squares[i].typ = 0;
+				squares[i].special = 0;
+			}
+			if (i == (len-1)) {
+				squares[i].typ = 0;
+				squares[i].special = 1;
+			}
+			console.log('DEBUG special test passed');
+		}
+		getTable();
+	}
+	function getTable() {
+		var extra = "<td><img src='img/arleft.png' onclick='start--; getTable()'></td>";
+		if (start <= 0) extra = "<td width='64px'></td>";
+		var l = "<tr>"+extra;
+		if (start < 0) start = 0;
+		var end = start+16;
+		for (i = start; i < end; i++) {
+			if (!squares[i]) continue;
+			var numba = squares[i].typ;
+			var name = getSquareData(0)[numba];
+			var img = getSquareData(1)[numba];
+
+			if (squares[i].typ == 0) {
+				var spec = squares[i].special;
+				name = name[spec];
+				img = img[spec];
+			}
+
+			l += "<td title='"+translate(name)+"'><img src='"+img+"'></td>";
+		}
+		var extra = "<td><img src='img/arright.png' onclick='start++; getTable()'>";
+		if (start >= (squares.length - 16)) extra = "<td width='64px'></td>";
+		l += extra+"</tr>";
+		echo('board', l);
+	}
+	function updateShit() {
+		$('#log').load('lodo.php');
+	}
+	function toLog(text) {
+		if (text == 'default') text = doc('chat').value;
+		var me = 'someone';
+		document.cookie = 'me='+me;
+		document.cookie = 'text='+text;
+		$('#log').load('lodo.php?action=send');
+	}
+
+	var us = setInterval(updateShit, 100);
+
+	</script>
+</body>
+</html>

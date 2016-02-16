@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+	<link type=text/css rel="stylesheet" href="crypt.css"/>
+	
+	<style>
+	/* CSS */
+	</style>
+</head>
+<body style="margin-top: 6em">
+<h2 id="cryptGame"></h2>
+<table style="width: 100%; font-size: 1.6em; font-weight: bolder">
+	<tr>
+		<td id="anim" style="display: none">Encriptado:</td><td id="cryptAnim"></td>
+	</tr>
+	<tr id="sup" style="display: none">
+		<td>Suposición:</td><td id="cryptSolve"></td>
+	</tr>
+</table>
+<h3 id="hints"></h3>
+<center>
+	<input id="playbtn" type="button" onclick="help()" value="Instrucciones"/>
+
+	<input style="display: none" id="butHints" type="button" onclick="hints()" value="Pista"/>
+	<input style="display: none" id="butGuess" type="button" onclick="guess()" value="Hacer suposición"/>
+	<input style="display: none" id="butSolve" type="button" onclick="solve()" value="Resolver"/>
+</center>
+<table id="guesses">
+	
+</table>
+
+<script src="../common.js"></script>
+<script src="crypt.js"></script>
+<script src="cryptdb.js"></script>
+</body>
+</html>

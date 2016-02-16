@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html><head>
+<script src="../../jquery.min.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Lemontastic! | Lemonade Business Simulator</title>
+<link REL="SHORTCUT ICON" HREF="img/lemonIcon.png">
+<link id="timeSheet" type="text/css" rel="stylesheet" href="sheets/day.css">
+<link type="text/css" rel="stylesheet" href="sheets/base.css">
+<link rel="image_src" href="img/lemonIconS.png">
+</head>
+<body lang="es" style="margin: 0px; padding: 0px; opacity: 0">
+<div class="windos" id="notif">Hello World</div>
+
+<!-- Temporizador izq -->
+<div id="leftHUD" style="overflow-y: scroll">
+	<p id="time" style="position: fixed; left: 0; top: 0; z-index: 81; display: inline; font-size: 2em; font-weight: bolder">
+		<span id="timeHours">--</span><span id="timePoints">:</span><span id="timeMinutes">--</span>
+		-
+		<span class="spanish"> Día</span>
+		<span class="english"> Day</span> <span id="days">0</span>
+	</p>
+	<br><br><br>
+	<p style="font-size: 14px; text-align: center">
+		<!-- TODO Fecha y tiempo meteorologico
+		<span class="spanish">Fecha</span>
+		<span class="english">Date</span>
+		<br><span id="gameTime"></span><br>
+		-->
+		<h3>
+			<span class="spanish">Puesto de Limonada de </span>
+			<span id="lstandName"></span>
+			<span class="english">'s Lemonade Stand</span>
+		</h3>
+		<input class="spanish" type="button" onclick="newName()" value="Cambiar Nombre"/><br>
+		<input class="english" type="button" onclick="newName()" value="Change Name"/><br>
+
+		<span class="spanish">Tiempo jugado:</span>
+		<span class="english">Time played:</span>
+	<span id="playedTime"></span></p>
+	<center><img alt="cartel abierto" onclick="openClose()" id="shopSign" src="img/ocOpen.png"></center>
+
+<!-- Game text -->
+<div id="logcillo">
+		<p id="log0"></p>
+		<p id="log1"></p>
+		<p id="log2"></p>
+		<p id="log3"></p>
+		<p id="log4"></p>
+		<p></p>
+		</div>
+		<div style="padding: 8px">
+		<h4 class="spanish">Opciones</h4>
+		<h4 class="english">Options</h4>
+		<img alt="deposito limonada" style="width: 32px; border-radius: 2px" id="actualDeposit"/>
+		<h5 style="display: inline"></h5><br>
+		<b class="spanish">Precios:</b>
+		<b class="english">Prices:</b>
+		<br>
+
+		<span class="spanish">Litro: </span>
+		<span class="english">Litre: </span>
+		<span id="lemonadePrice"></span>ç
+		<br>
+
+		<span id="lemonadeDepositName">?: </span>
+		<span id="lemonadePricePerDeposit">?</span>ç
+		<span id="moreDepositStuff"></span>
+
+		<br>
+		<span class="spanish">Tasa de Engaño: </span>
+		<span class="english">Fraud Rate: </span>
+		<span id="fraudRate"></span>%
+
+		<br>
+		<form class="spanish">
+		<input type="button" onclick="changeLemonadePrice('lowest')" value="Bajo"/>
+		<input type="button" onclick="changeLemonadePrice('low')" value="Normal"/>
+		<input type="button" onclick="changeLemonadePrice('high')" value="Alto"/>
+		<input type="button" onclick="changeLemonadePrice('highest')" value="Estafa"/>
+		</form>
+		<form class="english">
+		<input type="button" onclick="changeLemonadePrice('lowest')" value="Low"/>
+		<input type="button" onclick="changeLemonadePrice('low')" value="Normal"/>
+		<input type="button" onclick="changeLemonadePrice('high')" value="High"/>
+		<input type="button" onclick="changeLemonadePrice('highest')" value="Fraud"/>
+		</form>
+		 
+		<h5 class="spanish">Guardar/Borrar datos</h5>
+		<h5 class="english">Save/Delete data</h5>
+
+		<form class="spanish">
+		<input type="button" onclick="saveGame()" value="Guardar partida"/><br>
+		<input type="button" onclick="resetGame()" value="Resetear partida"/><br>
+		<input type="button" onclick="hardReset()" value="BORRAR DATOS"/><br>
+		<input type="button" onclick="showChangelog()" value="Mostrar Cambios"/><br>
+		</form>
+		<form class="english">
+		<input type="button" onclick="saveGame()" value="Save Game"/><br>
+		<input type="button" onclick="resetGame()" value="Reset Game"/><br>
+		<input type="button" onclick="hardReset()" value="DELETE DATA"/><br>
+		<input type="button" onclick="showChangelog()" value="Show Changelog"/><br>
+		</form>
+
+		<br><br><br>
+
+		<h2 class="spanish">Puesto de Limonada del Día</h2>
+		<h2 class="english">Lemonade Stand of the Day</h2>
+		<table>
+			<tr><td id="lsotdNameTag">?</td><td id="lsotdNameValue">?</td></tr>
+			<tr><td id="lsotdLemonTag">?</td><td id="lsotdLemonValue">?</td></tr>
+			<tr><td id="lsotdMoneyTag">?</td><td id="lsotdMoneyValue">?</td></tr>
+			<tr><td id="lsotdMVHTag">?</td><td id="lsotdMVHValue">?</td></tr>
+		</table>
+		<hr>
+		<!-- Adspace -->
+		<!-- TODO add ads
+		<div onclick="getGift()">
+			<script type="text/javascript" src="http://srvpub.com/adServe/banners?tid=KULIVSZK_27107_4&size=300x250" ></script>
+		</div>
+		-->
+		</div>
+	
+</div>
+
+<!-- Dinerillo -->
+<div id="rightHUD">
+<table><tr>
+<td style="width: 5%" onmouseover="notif(1, true, this)" class="calcImg">
+	<i class="sprite coon"></i></td>
+<td style="width: 5%" class="calcScreen" id="raccoons">100</td>
+
+<td style="width: 5%" onmouseover="notif(2, true, this)" class="calcImg">
+	<img alt="citros" id="citroStuff" src="img/citroMoney.png">
+</td>
+
+<td style="width: 85%" class="calcScreen" id="dollarsWrapper">
+	<span id="dollars"></span>
+</td>
+
+</tr>
+<td style="width: 5%" onmouseover="notif('Boy Scouts', true)" class="calcImg"><img alt="boy scouts" id="scoutImg" src="img/scout.png"></td>
+<td style="width: 5%" class="calcScreen" id="boyScouts">100</td>
+
+<td style="width: 5%" onmouseover="notif(4, true, this)" class="calcImg">
+	<img alt="limones" src="img/lemonIconS.png">
+</td>
+
+<td style="width: 45%" class="calcScreen" id="limonesWrapper">
+	<span id="limones"></span>
+</td>
+
+<tr>
+</tr>
+
+<td style="width: 5%" onmouseover="notif(3, true, this)" class="calcImg"><img alt="exprimidoras" src="img/exprim.png"></td>
+<td style="width: 5%" class="calcScreen" id="exprimators">100</td>
+
+<td style="width: 5%" onmouseover="notif(5, true)" class="calcImg"><img alt="limonada" src="img/lemonade.png"></td>
+<td style="width: 45%" class="calcScreen" id="limonada"></td>
+
+<table>
+	<tr>
+		<td style="width: 5%" onmouseover="notif(15, true)" class="calcImg">
+			<i class="sprite badge"></i></td>
+		<td style="width: 5%" class="calcScreen" id="badges"></td>
+
+		<td style="width: 5%" onmouseover="notif(6, true); notify('Hello World', this)" class="calcImg">
+		<i class="sprite attention"></i>
+		</td>
+		<td style="width: 40%" class="calcScreen" id="pop"></td>
+
+		<td style="width: 5%" onmouseover="notif(16, true)" class="calcImg">
+		<img alt="carisma" id="charismaPic" src="img/charisma.png"></td>
+		<td style="width: 40%" class="calcScreen" id="charisma">0%</td>
+	</tr>
+</table>
+
+<table>
+	<tr>
+		<td style="width: 5%" onmouseover="notif(26, true)" class="calcImg"><img alt="maldad" src="img/gentle.png"></td>
+		<td style="width: 28%" class="calcScreen" id="gentleStat"></td>
+
+		<td style="width: 5%" onmouseover="notif(27, true)" class="calcImg"><img alt="business" src="img/coons/coon3e.png"></td>
+		<td style="width: 28%" class="calcScreen" id="goodStat"></td>
+
+		<td style="width: 5%" onmouseover="notif(28, true)" class="calcImg"><img alt="mafia" src="img/coons/coon4e.png"></td>
+		<td style="width: 28%" class="calcScreen" id="badStat"></td>
+	</tr>
+</table>
+
+
+</table>
+		<br>
+		<div onmouseover="notif(7, true)" class="lemonButton" id="stealLemonsButton" onclick="stealButton()">
+			<img src="img/coons/coon3b.png">
+			<span class="spanish">Robar Limones</span>
+			<span class="english">Steal lemons</span>
+		</div>
+
+		<div onmouseover="notif(8, true)" class="lemonButton" onclick="changeText()" id="buttHarvest">
+			<img src="img/lemonIconS.png">
+			<span class="spanish">Recolectar limones</span>
+			<span class="english">Harvest lemons</span>
+		</div>
+
+		<div onmouseover="notif(9, true)" id="makelem" class="lemonButton"
+		onmousedown="makin = true; makeLemonade()" onmouseup="makin = false" onmouseleave="makin = false">
+			<img src="img/lemonade.png">
+			<span class="spanish">Hacer limonada</span>
+			<span class="english">Make lemonade</span>
+		</div>
+
+		<div id="popButtonInactive" onmouseover="notif(10, true)" class="lemonButton" style="display: none">
+			<img src="img/charisma2.png">
+			<span class="spanish">Tu puesto está CERRADO</span>
+			<span class="english">Your stand is CLOSED</span>
+		</div>
+
+		<div id="popButtonActive" onmouseover="notif(11, true)" class="lemonButton"
+		onmousedown="doingShit = true"; onmouseup="doingShit = false" onmouseleave="doingShit = false">
+			<i class="sprite attention"></i>
+			<span class="spanish">Llamar la atencion</span>
+			<span class="english">Draw attention</span>
+		</div>
+
+		<div class="lemonButton" onclick="showWindow('windowHelpers'); getHelperList()" id="helperButton">
+		<p>
+			<img src="img/scouts/scout.png">
+			<span class="spanish">Ayudantes</span>
+			<span class="english">Helpers</span>
+			<sup>BETA</sup></p>
+		</div>
+
+		<div class="lemonButton" onclick="showWindow('windowSqueezer')">
+		<p>
+			<img src="img/exprim.png">
+			<span class="spanish">Exprimidora</span>
+			<span class="english">Squeezer</span>
+			<sup>BETA</sup></p>
+		</div>
+
+		<hr>
+
+		<div class="lemonButton" onclick="showWindow('windowShop')">
+		<p>
+			<img src="img/shop.png">
+			<span class="spanish">Ir al Supermercado</span>
+			<span class="english">Go to Supermarket</span>
+			<sup>BETA</sup></p>
+		</div>
+
+		<div class="lemonButton" onclick="showWindow('windowHome')">
+		<p>
+			<img src="img/haus.png">
+			<span class="spanish">Ir a Casa</span>
+			<span class="english">Go Home</span>
+			<sup>BETA</sup></p>
+		</div>
+
+		<div class="lemonButton" onclick="getAchievement(0); showWindow('windowAch')">
+		<p>
+			<i class="sprite badge"></i>
+			<span class="spanish">Logros y Mejoras</span>
+			<span class="english">Achievements and Upgrades</span>
+		</p>
+		</div>
+
+		<div class="lemonButton" onclick="showWindow('windowRecords')">
+		<p>
+			<img src="img/trophy.png">
+			<span class="spanish">Récords</span>
+			<span class="english">Records</span>
+			<sup>BETA</sup></p>
+		</div>
+
+		<!-- TODO Re-add yup.php to the src of this iframe once I get a new webpage kkthx -->
+		<iframe src="" style="display: none"></iframe>
+		
+		<br><hr><br>
+		<!-- Adspace -->
+		<!-- Add ads
+		<div onclick="getGift()">
+			<script type="text/javascript" src="http://srvpub.com/adServe/banners?tid=KULIVSZK_27107_0&size=300x250" ></script>
+		</div>
+		-->
+		
+
+</div>
+
+<div id="notifAch" onclick="this.display = 'none'">
+	<p class="border">
+		<h2 class="spanish">¡LOGRO OBTENIDO!</h2>
+
+		<h2 class="english">ACHIEVEMENT UNLOCKED!</h2>
+	</p>
+
+	<div class="center" id="notifAchText">
+
+		<img src="img/badges/1.png" id="achImage"></img><br>
+		<h3 id="achTitle">Medalla Honorífica al buen usuario</h3><br>
+
+		<em id="achText">Recibida por ser un señor muy amable y jugar mucho.</em>
+
+	</div>
+	<br>
+</div>
+
+<div class="window" id="windowSqueezer" style="overflow-y: scroll">
+	<p class="border">
+		<span class="spanish">Exprimidora</span>
+		<span class="english">Squeezer</span>
+		<sup>BETA</sup>
+	</p>
+	<img id="squeezerImg" src="img/squeezers/squeezer1.png" style="display: inline">
+	<table style="width: 100%">
+		<caption><span id="squeezerName"></span> <span id="squeezerClass"></span><hr></caption>
+		<tr>
+			<td><span class="spanish">Nivel</span>
+			    <span class="english">Level</span>
+			</td><td id="squeezerLevel">0</td>
+		</tr>
+		<tr>
+			<td><span class="spanish">Nivel de Auto-Exprimir</span>
+			    <span class="english">Auto-Squeeze Level</span>
+			</td><td id="squeezerAutoSqueezeLevel">0</td>
+		</tr>
+		<tr>
+			<td><span class="spanish">Velocidad de Exprimido</span>
+			    <span class="english">Squeeze Speed</span>
+			</td><td id="squeezerSpeed">0</td>
+		</tr>
+	</table>
+
+	<span id="squeezerErrorMessages"></span>
+	<div class="lemonButton" onclick="reChangeName('exprimator')">
+		<span class="spanish">Cambiar Nombre</span>
+		<span class="english">Change Name</span>
+	</div>
+	<div class="lemonButton" onclick="echo('squeezerErrorMessages',buySqueezerUpgrade(1))">
+		<span class="spanish">Subir de nivel</span>
+		<span class="english">Level Up</span> (<span id="squeezerLevelUpCost"></span> ç)
+	</div>
+	<div class="lemonButton" id="autoSqueezeUpgrade" style="display: none" onclick="echo('squeezerErrorMessages',buySqueezerUpgrade(2))">
+		<span class="spanish">Mejora Auto-Exprimir</span>
+		<span class="english">Auto-Squeeze Upgrade</span> (<span id="squeezerAutoSqueezeLevelUpCost"></span> ç)
+	</div>
+
+	<div class="lemonButton" id="squeezerSpeedUpgrade" style="display: none" onclick="echo('squeezerErrorMessages',buySqueezerUpgrade(5))">
+		<span class="spanish">Aumentar Potencia</span>
+		<span class="english">Increase Power</span> (<span id="squeezerSpeedCost"></span> ç)
+	</div>
+
+	<div class="lemonButton" id="squeezerUpdate1" style="display: none" onclick="echo('squeezerErrorMessages',buySqueezerUpgrade(3))">
+		<span class="spanish">Mejorar a Picadora de Limones</span>
+		<span class="english">Update to Lemon Grinder</span> (<span id="squeezerUpdateCost1"></span> ç)
+	</div>
+
+	<div class="lemonButton" id="squeezerUpdate2" style="display: none" onclick="echo('squeezerErrorMessages',buySqueezerUpgrade(4))">
+		<span class="spanish">Mejorar a Licuadora</span>
+		<span class="english">Update to Juicer</span> (<span id="squeezerUpdateCost2"></span> ç)
+	</div>
+</div>
+
+<div class="window" id="windowRecords" style="overflow-y: scroll">
+	<p class="border">
+		R<span class="spanish">é</span><span class="english">e</span>cords
+		<sup>BETA</sup>
+	</p>
+
+	<span id="recordStats"></span>
+
+	<br><hr><br>
+	<div style="width: 80%; margin: 0 10%">
+		<span class="es">Estadísticas</span><span class="en">Statistics</span>
+		<span class="es">Has reseteado </span>
+		<span class="en">You resetted the game </span>
+		<span id="recordReset"></span>
+		<span class="es"> veces</span><span class="en">times</span>
+	</div>
+	<br><hr><br>
+</div>
+
+<div class="window" id="windowMentor"
+style="overflow-y: scroll; width: auto; z-index: 99999">
+	<p class="border">
+		<span class="es" onmouseover="notif('Jubila a este ayudante cuando alcance el nivel 100', 1, 1)">Jubilar</span>
+		<span class="en" onmouseover="notif('Retire this helper once it reaches level 100', 1, 1)">Retire</span>
+	</p>
+	<div class="cool">
+		<span class="es">
+			Puedes jubilar a un ayudante cuando llegue al nivel 100, si lo haces, este abandonará para siempre tu empresa.
+			<br><br>
+			Puedes elegir a alguien de tu lista que no sea Veterano para que reciba clases de este ayudante, este aprenderá todo lo que le enseñen y será más eficiente ayudando.
+		</span>
+		<span class="en">
+			You can retire one of your helpers once it reaches level 100, if you do, it will leave your business forever.
+			<br><br>
+			Anyways, you can select someone on your list that is not a Veteran so that gets taught everything and become a better helper.
+		</span>
+
+		<div id="chooseAHelper"></div>
+	</div>
+</div>
+<div class="window" id="windowCasino" style="width: 640px; height: 480px">
+	<iframe src="casino/" style="width: 640px; height: 480px"></iframe>
+</div>
+
+<div class="window" id="windowAch" style="overflow-y: scroll">
+	<p class="border">
+		<span class="spanish">Logros y Mejoras</span>
+		<span class="english">Achievements and Upgrades</span>
+	</p>
+
+	<h2 class="center">
+		<span class="spanish">Logros Desbloqueados: </span>
+		<span class="english">Achievements Unlocked: </span>
+		<span id="totalAchievementsUnlocked">???.??%</span></h2>
+
+	<table id="achievementsTable">
+	</table>
+
+	<br><hr><br>
+
+	<div class="lemonButton" onclick="buySpecialHelper('upgrade', 0, 1)">
+		<img src="img/lemonIconS.png">
+		<span class="spanish">Aumentar limones/citros por segundo un 1% (1 insignia)</span>
+		<span class="english">Increase 1% lemons/citros per second (1 badge)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 1, 2)">
+		<img src="img/scouts/scout1s.png">
+		<span class="spanish">Contratar Girl Scout (2 insignias)</span>
+		<span class="english">Hire Girl Scout (2 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('raccoon', 1, 4)">
+		<img src="img/coons/coon2e.png">
+		<span class="spanish">Contratar Gatache (4 insignias)</span>
+		<span class="english">Hire Raccat (4 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 2, 6)">
+		<img src="img/scouts/scout4e.png">
+		<span class="spanish">Contratar Becario (6 insignias)</span>
+		<span class="english">Hire Business Trainee (6 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 9, 8)">
+		<img src="img/scouts/scout13.png">
+		<span class="spanish">Contratar Mafioso (8 insignias)</span>
+		<span class="english">Hire Gangster (8 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 5, 9)">
+		<img src="img/scouts/scout7e.png">
+		<span class="spanish">Contratar Policía (9 insignias)</span>
+		<span class="english">Hire Policeman (9 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('raccoon', 2, 10)">
+		<img src="img/coons/coon3e.png">
+		<span class="spanish">Contratar Mapache Angel (10 insignias)</span>
+		<span class="english">Hire Angel Raccoon (10 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('raccoon', 3, 10)">
+		<img src="img/coons/coon4e.png">
+		<span class="spanish">Contratar Mapache Demonio (10 insignias)</span>
+		<span class="english">Hire Demon Raccoon (10 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 8, 12)">
+		<img src="img/scouts/scout12.png">
+		<span class="spanish">Contratar Hombre Mapache (12 insignias)</span>
+		<span class="english">Hire Werecoon (12 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('raccoon', 4, 14)">
+		<img src="img/coons/coon11.png">
+		<span class="spanish">Contratar Trompetista (14 insignias)</span>
+		<span class="english">Hire Trumpeter (14 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('raccoon', 5, 16)">
+		<img src="img/coons/mime.png">
+		<span class="spanish">Contratar Mimo (16 insignias)</span>
+		<span class="english">Hire Mime (16 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 10, 18)">
+		<img src="img/scouts/scout15.png">
+		<span class="spanish">Contratar Súcubo (18 insignias)</span>
+		<span class="english">Hire Succubus (18 badges)</span>
+	</div>
+
+	<div class="lemonButton" onclick="buySpecialHelper('boyScout', 3, 21)">
+		<img src="img/scouts/scout2e.png">
+		<span class="spanish">Contratar Vampiro (21 insignias)</span>
+		<span class="english">Hire Vampire (21 badges)</span>
+	</div>
+
+
+
+</div>
+<div class="window" id="windowHome" style="overflow-y: scroll">
+	<p class="border">
+		<span class="spanish">Tu casa</span>
+		<span class="english">Your home</span>
+		<sup>BETA</sup>
+	</p>
+	<div class="lemonButton" onclick="talk('mom')" style="height: 64px">
+		<img src="img/people/mom.png">
+		<span id="talkMom">
+			<span class="spanish"> Hablar con Mamá</span>
+			<span class="english"> Talk with Mom</span>
+		</span></div>
+	<div class="lemonButton" onclick="talk('dad')" style="height: 64px">
+		<img src="img/people/dad.png">
+		<span id="talkDad">
+			<span class="spanish"> Hablar con Papá</span>
+			<span class="english"> Talk with Dad</span>
+		</span></div>
+	<div class="lemonButton" onclick="stealButton('fridge')">
+		<span class="spanish">Coger limones de la nevera.</span>
+		<span class="english">Take lemons from the fridge.</span>
+		<span id="fridgeLemons"></span>
+	</div>
+	<div class="lemonButton" onclick="sleep()">
+		<span class="spanish">Ir a dormir</span>
+		<span class="english">Go to sleep</span>
+	</div>
+</div>
+
+<!-- Tienda provisional -->
+<div id="windowBack" onclick="hideWindow()">
+</div>
+
+<div id="black"></div>
+<div class="window" id="windowShop" style="overflow-y: scroll">
+	<p class="border">
+		<span class="spanish">Supermercado</span>
+		<span class="english">Supermarket</span>
+		<sup>BETA</sup></p>
+	<div style="margin: 16px">
+		<div style="margin: 0.5em">
+			<table style="width: 100%" class="mixTable">
+				<caption class="spanish">Calidad de la limonada: <span id="lemonMix"></span><sup>BETA</sup></caption>
+				<caption class="english">Lemonade quality: <span id="lemonMix"></span><sup>BETA</sup></caption>
+				<tr>
+					<th><img src="img/minifruit/lemon.png"> x<span id="addedLemons">?</span></th>
+					<th><img src="img/minifruit/orange.png"> x<span id="addedOranges">?</span></th>
+					<th><img src="img/minifruit/grapefruit.png"> x<span id="addedGrapes">?</span></th>
+					<th><img src="img/minifruit/lime.png"> x<span id="addedLimes">?</span></th>
+					<th><img src="img/minifruit/ice.png"> x<span id="addedIce">?</span></th>
+					<th><img src="img/minifruit/sugar.png"> x<span id="addedSugar">?</span></th>
+				</tr>
+				<tr>
+					<td id="mixLemon">100.00%</td>
+					<td id="mixOrange">100.00%</td>
+					<td id="mixGrapefruit">100.00%</td>
+					<td id="mixLime">100.00%</td>
+					<td id="mixIce">100.00%</td>
+					<td id="mixSugar">100.00%</td>
+
+				</tr>
+			</table>
+			<span class="spanish">Concentración de Limón</span>
+			<span class="english">Lemon Concentration</span>
+			<input type="button" onclick="changeLemonRate(0)" value="-">
+			<input type="button" onclick="changeLemonRate(1)" value="+">
+		</div>
+
+		<p id="unstableShop"></p>
+		<h2 class="spanish">Cítricos</h2>
+		<h2 class="english">Citrus Fruit</h2>
+		<table class="shop">
+			<tr class="spanish">
+				<td><img alt="naranja" onmouseover="notif('Naranja', true)" src="img/fruit/orangeb.png"/><br>
+				<input type="button" value="Comprar 1 por 7ç" onclick="buyIngredient('orange', 1)"><br>
+				<input type="button" value="Comprar 9 por 51ç" onclick="buyIngredient('orange', 9)"><br>
+				<input type="button" value="Comprar 99 por 444ç" onclick="buyIngredient('orange', 99)"><br>
+				</td>
+
+				<td><img alt="pomelo" onmouseover="notif('Pomelo', true)" src="img/fruit/grapefruitb.png"/><br>
+				<input type="button" value="Comprar 1 por 10ç" onclick="buyIngredient('grapefruit', 1)"><br>
+				<input type="button" value="Comprar 9 por 72ç" onclick="buyIngredient('grapefruit', 9)"><br>
+				<input type="button" value="Comprar 99 por 634ç" onclick="buyIngredient('grapefruit', 99)"><br>
+				</td>
+
+				<td><img alt="lima" onmouseover="notif('Lima', true)" src="img/fruit/limeb.png"/><br>
+				<input type="button" value="Comprar 1 por 15ç" onclick="buyIngredient('lime', 1)"><br>
+				<input type="button" value="Comprar 9 por 108ç" onclick="buyIngredient('lime', 9)"><br>
+				<input type="button" value="Comprar 99 por 951ç" onclick="buyIngredient('lime', 99)"><br>
+				</td>
+
+			</tr>
+			<tr class="english">
+				<td><img alt="naranja" onmouseover="notif('Orange', true)" src="img/fruit/orangeb.png"/><br>
+				<input type="button" value="Buy 1 for 7ç" onclick="buyIngredient('orange', 1)"><br>
+				<input type="button" value="Buy 9 for 51ç" onclick="buyIngredient('orange', 9)"><br>
+				<input type="button" value="Buy 99 for 444ç" onclick="buyIngredient('orange', 99)"><br>
+				</td>
+
+				<td><img alt="pomelo" onmouseover="notif('Grapefruit', true)" src="img/fruit/grapefruitb.png"/><br>
+				<input type="button" value="Buy 1 for 10ç" onclick="buyIngredient('grapefruit', 1)"><br>
+				<input type="button" value="Buy 9 for 72ç" onclick="buyIngredient('grapefruit', 9)"><br>
+				<input type="button" value="Buy 99 for 634ç" onclick="buyIngredient('grapefruit', 99)"><br>
+				</td>
+
+				<td><img alt="lima" onmouseover="notif('Lime', true)" src="img/fruit/limeb.png"/><br>
+				<input type="button" value="Buy 1 for 15ç" onclick="buyIngredient('lime', 1)"><br>
+				<input type="button" value="Buy 9 for 108ç" onclick="buyIngredient('lime', 9)"><br>
+				<input type="button" value="Buy 99 for 951ç" onclick="buyIngredient('lime', 99)"><br>
+				</td>
+
+			</tr>
+		</table>
+
+		<h2 class="spanish">Añadidos</h2>
+		<h2 class="english">Additives</h2>
+		<table class="shop">
+			<tr class="spanish">
+				<td><img alt="hielo" onmouseover="notif('Hielo', true)" src="img/fruit/iceb.png"/><br>
+				<input type="button" value="Comprar 1 por 23ç" onclick="buyIngredient('ice', 1)"><br>
+				<input type="button" value="Comprar 9 por 166ç" onclick="buyIngredient('ice', 9)"><br>
+				<input type="button" value="Comprar 99 por 1458ç" onclick="buyIngredient('ice', 99)"><br>
+				</td>
+
+				<td><img alt="azúcar" onmouseover="notif('Azúcar', true)" src="img/fruit/sugarb.png"/><br>
+				<input type="button" value="Comprar 1 por 35ç" onclick="buyIngredient('sugar', 1)"><br>
+				<input type="button" value="Comprar 9 por 252ç" onclick="buyIngredient('sugar', 9)"><br>
+				<input type="button" value="Comprar 99 por 2218ç" onclick="buyIngredient('sugar', 99)"><br>
+				</td>
+			</tr>
+			<tr class="english">
+				<td><img onmouseover="notif('Ice', true)" src="img/fruit/iceb.png"/><br>
+				<input type="button" value="Buy 1 for 23ç" onclick="buyIngredient('ice', 1)"><br>
+				<input type="button" value="Buy 9 for 166ç" onclick="buyIngredient('ice', 9)"><br>
+				<input type="button" value="Buy 99 for 1458ç" onclick="buyIngredient('ice', 99)"><br>
+				</td>
+
+				<td><img onmouseover="notif('Sugar', true)" src="img/fruit/sugarb.png"/><br>
+				<input type="button" value="Buy 1 for 35ç" onclick="buyIngredient('sugar', 1)"><br>
+				<input type="button" value="Buy 9 for 252ç" onclick="buyIngredient('sugar', 9)"><br>
+				<input type="button" value="Buy 99 for 2218ç" onclick="buyIngredient('sugar', 99)"><br>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="window" id="anotherWindow" style="height: auto">
+	<p class="border">
+		<span class="spanish">Alerta</span>
+		<span class="english">Warning</span>
+	</p>
+	<div class="center">
+		<img id="anotherImg1" src="img/scouts/scout7e.png">
+		<br><hr><br>
+		<p id="anotherMessage">Hello World!</p>
+		<br><hr><br>
+		<img id="anotherImg2" src="img/scouts/scout7e.png">
+	</div>
+</div>
+
+<div style="text-align: center" id="topBar"><img alt="Lemontastic!" id="lemonLogo" src="img/logobig.png"></img>
+</div>
+<div id="marq" style="display: none"></div>
+
+<div class="langBar">
+	<span class="langSwap" onclick="swapLang('es')">Español</span> | <span class="langSwap" onclick="swapLang('en')">English</span>
+</div>
+
+<!-- Changelog -->
+<div id="frontWindow" style="z-index: 3334; position: fixed; width: 100%; height: 35em; overflow-y: scroll">
+<center><div class="closeFront"><h1 id="gameVersion">Lemontastic</h1><p onclick="hideChangeLog()">
+	<span class="spanish">CERRAR</span>
+	<span class="english">CLOSE</span>
+</p></div></center>
+<div id="front">
+</div>
+<center><div class="closeFront"><p onclick="hideChangeLog()">
+	<span class="spanish">CERRAR</span>
+	<span class="english">CLOSE</span>
+	</p></div></center>
+</div>
+<div style="width: 47.9%; left: 26%; padding-left: 8px; top: 128px; height: 52vh; text-align: left; position: fixed; overflow-y: scroll; font-size: 12px">
+	<span style="display: none" id="notices"></span>
+<h1 class="spanish">Ayuda</h1>
+<h1 class="english">Help</h1>
+
+<span id="test">
+	<span id="testLast"></span>
+	<span id="testNow"></span>
+</span>
+<hr>
+<p class="spanish">
+- Roba limones o recolectalos con los botones a tu derecha.<br>
+- Exprime limones para hacer limonada<br>
+- Si tu popularidad es mayor al 0%, los clientes vendrán a tu puesto y comprarán limonada, puedes llamar la atención para aumentar tu popularidad<br>
+<br>
+- Puedes contratar un mapache para que recoja limones por ti... o comprar cien.<br>
+- Puedes comprar una exprimidora para exprimir más limonada por cada limón<br>
+- Puedes contratar un Boy Scout que venderá limonada por las casas y aumentará tu popularidad.<br>
+- En el supermercado hay frutas y otros aditivos que puedes echarle a tu limonada para que sepa mejor (y valga más perras)<br>
+<br>
+- A tu izquierda está el panel de opciones.<br>
+- El cartel "OPEN" marca el estado actual del puesto de limonada, puedes cerrarlo si no quieres clientes (¿Quién querría eso?)<br>
+- Cuando ocurra algún hecho importante, aparecerá en el registro, que es esa pantalla con letras y cosas.<br>
+- Puedes modificar el precio de la limonada a 4 precios fijos, cuanto más alto sea, menores seran los clientes<br>
+- Puedes guardar o borrar tu partida (Generalmente la partida se guarda cada 60 segundos)<br>
+- Si cerraste sin querer el cartel de nuevas cosas, puedes mostrarlo otra vez<br>
+<br>
+- En el centro de la página está el tablero de mejoras, de momento se puede mejorar el vaso de limonada a otros depósitos
+que tienen capacidad para más limonada. Una mejora de depósito es permanente y te ayudará a vender más limonada a menos clientes.<br>
+
+</p>
+
+<p class="english">
+- Steal lemons or harvest them with buttons on the right side.<br>
+- Squeeze the lemons to make lemonade<br>
+- Raise your popularity to gain more customers. The higher your popularity is, the more customers you will draw in! You may draw attention with the button on the right hand side, to increase your popularity.<br><br>
+- You can get lemons automatically by purchasing some raccoons to do your slave work and scavenge lemons for you. If you feel like starting your own lemonade empire, you will need a lot of these furry little guys.<br>
+- You can buy an squeezer to squeeze more lemonade per lemon.<br>
+- You can hire a Boy Scout that will sell lemonade at the neighbourhood and increase your popularity.<br>
+- There are fruit and other additives at the supermarket that you can add to your lemonade to have a better
+taste (and more value)<br><br>
+- At the left side there is the options panel.<br>
+- The "OPEN" sign means that your lemonade stand is open, you can close it if you don't want customers to come in (But, who would like to do that?)<br>
+- When there is an important event, it will be recorded at the log, that is that screen with characters and such.<br>
+- You can modify lemonade price to 4 fixed prices, the more expensive, the lesser customers<br>
+- You can save or delete your save game (Usually game is saved every 60 seconds)<br>
+- If you closed the "New Stuff" window, you can show it again<br><br>
+- At the middle of the page there is the upgrade window, at the moment you can only upgrade your lemonade glass
+to other kind of liquid storages that have size for more lemonade. Every liquid storage upgrade is permanent
+and will help you sell more lemonade with less customers.<br>
+</p>
+<br><br><hr><br><br>
+</div>
+
+
+
+
+
+<div id="game" style="height: 0">
+	<!-- Pantalla del juego -->
+	<!-- TODO Añadir el puto mapa de una jodida vez
+	<div style="position: relative" id="gameScreen" style="display: none">
+
+		<img class="gamePic" src="img/grid.png" onclick="changeText()" usemap="#gameMap"/>
+		<img class="henryHouse" src="img/house.png" style="position: absolute; bottom: 126px; left: 10px"/>
+		<img class="henryHouse" src="img/house.png" style="position: absolute; bottom: 196px; left: 150px"/>
+		<img class="henryHouse" src="img/house.png" style="position: absolute; bottom: 266px; left: 290px"/>
+		<img class="henryHouse" src="img/house.png" style="position: absolute; bottom: 266px; left: 10px"/>
+		<img class="henryHouse" src="img/house.png" style="position: absolute; bottom: 322px; left: 150px"/>
+		<img class="henryHouse" src="img/forest.png" style="position: absolute; bottom: 106px; left: 444px"/>
+		<img class="henryHouse" src="img/market.png" onclick="showWindow('windowShop')" style="position: absolute; bottom: 8px; left: 220px; border: 2px solid red; opacity: 1"/>
+	</div>
+	-->
+	<center>
+	<div style="position: fixed; right: 1.6em; bottom: 4em; z-index: 1337">
+		
+
+	</div>
+	</center>
+
+	<div class="windos" style="width: 48%; position: fixed; padding-left: 1vh; left: 26%; bottom: 4vh; z-index: 4">
+	<!-- TODO upgradeBar sin usar -->
+	<span class="spanish">Mejoras:</span>
+	<span class="english">Upgrades:</span><br>
+	<table>
+		<tr id="upgradeDeposit" style="display: inline">
+			<td><img id="upgradeDepositImage" style="width: 64px; border-radius: 8px" src="img/depositUpgrade1.png" onclick="upgradeDeposit()"/></td>
+			<td id="upgradeDepositText"><br></td>
+		</tr>
+	</table>
+	
+	<table id="upgrades">
+		<!-- TODO mejoras -->
+	</table>
+	</div>
+
+
+</div>
+<div id="windowNameBack"></div>
+<div class="window" id="windowName" style="width: 20%; height: 128px; margin: 10% 40%; z-index: 10001">
+	<div class="center">
+	<br>
+	<span class="spanish">Elige un nombre</span>
+	<span class="english">Choose a name</span>
+		<br>
+		<input type="textbox" value="" id="newName">
+		<br>
+	</div>
+	<div class="lemonButton" id="newNameButton">
+		<span class="spanish">Confirmar</span>
+		<span class="english">Confirm</span>
+	</div>
+</div>
+
+<div class="window" id="windowHelpers">
+	<p class="border">
+		<span class="spanish">Ayudantes</span>
+		<span class="english">Helpers</span>
+		<sup>BETA</sup>
+	</p>
+	<div onmouseover="notif(12, true)" class="lemonButton" onclick="buyRaccoon()" id="buyH01">
+		<span class="spanish">Contratar Mapache (Tienes: </span>
+		<span class="english">Hire Raccoon (You have: </span>
+		<span id="totalCoons"></span>)
+		<br><span id="raccoonPrice"></span>
+	</div>
+
+	<div onmouseover="notif(14, true)" class="lemonButton" onclick="buyBoyScout()" id="buyH02">
+		<span class="spanish">Contratar Boy Scout (Tienes: </span>
+		<span class="english">Hire Boy Scout (You have: </span>
+		<span id="totalScouts"></span>)
+		<br><span id="boyScoutPrice"></span>
+	</div>
+
+	<div onmouseover="notif(12, true)" class="lemonButton" onclick="helperLevelUpToAll()" id="helperLevelAllButton">
+		<span class="spanish">Subir de nivel a todos </span>
+		<span class="english">Level Up All </span>
+		(<span id="levelUpAllCost"></span>ç)
+	</div>
+
+	<div class="lemonButton" onclick="promoteAllHelpers()" id="promBut">
+		<span class="spanish">Ascender a todos</span>
+		<span class="english">Promote All</span>
+	</div>
+
+	<hr>
+	<div class="center">
+		<span class="spanish">Filtrar por</span>
+		<span class="english">Filter by</span>
+		<br>
+		<img id="helpersCoons" src="img/coons/coon.png" onmouseover="notif(1, true)" onclick="filterBy = 'raccoon'; getHelperList()">
+		<img id="helpersScouts" src="img/scouts/scout.png" onmouseover="notif('Boy Scouts', true)" onclick="filterBy = 'boyScout'; getHelperList()">
+		<img id="helpersAll" src="img/helpers.png" onmouseover="notif(25, true)" onclick="filterBy = false; getHelperList()">
+		<img id="helpersPromote" src="img/helpersPromote.png" onmouseover="notif(29, true)" onclick="filterNoPromote = !filterNoPromote; getHelperList()">
+		<img id="helpersOrder" src="img/helpersOrder.png" onmouseover="notif(30, true)" onclick="filterOrder = !filterOrder; reOrder(lastOrder, filterOrder)">
+		<img id="helpersFarm" src="img/expbonus.png" onmouseover="notif(31, true)" onclick="farmMode()">
+	</div>
+
+	<table class="sortByTable">
+		<caption>
+			<span class="spanish">Ordenar por</span>
+			<span class="english">Order by</span>
+		</caption>
+		<tr>
+			<td onclick="reOrder('level')"><span class="spanish">Nivel</span><span class="english">Level</span></td>
+			<td onclick="reOrder('good')"><span class="spanish">Bondad</span><span class="english">Kindness</span></td>
+		</tr>
+		<tr>
+			<td onclick="reOrder('exp')"><span class="spanish">Experiencia</span><span class="english">Experience</span></td>
+			<td onclick="reOrder('classLevel')"><span class="spanish">Rango</span><span class="english">Rank</span></td>
+			<td onclick="reOrder('lps')"><span class="spanish">Limones/s</span><span class="english">Lemons/s</span></td>
+			<td onclick="reOrder('cps')"><span class="spanish">Citros/s</span><span class="english">Citros/s</span></td>
+		</tr>
+		<tr>
+			<td onclick="reOrder('priceInc')"><span class="spanish">Engaño</span><span class="english">Fraud</span></td>
+			<td onclick="reOrder('gentle')"><span class="spanish">Amabilidad</span><span class="english">Gentleness</span></td>
+			<td onclick="reOrder('pop')"><span class="spanish">Popularidad</span><span class="english">Popularity</span></td>
+			<td onclick="reOrder('charisma')"><span class="spanish">Carisma</span><span class="english">Charisma</span></td>
+		</tr>
+	</table>
+	<span id="expGain"></span>
+
+	<table id="helperTable">
+			<tr><td><img src="img/scout.png"></td><td>Tú</td><td>el Vendedor de limonada</td></tr>
+			<tr><td><img src="img/scout2.png"></td><td>Doppelganger</td><td>el Vendedor de coches</td></tr>
+	</table>
+</div>
+
+<div class="window" id="windowHelperStats">
+	<p class="border">
+		<span class="spanish">Características de</span>
+		<span id="helperName">???</span>
+		<span class="english">'s stats</span>
+		<sup>BETA</sup>
+	</p>
+	<table class="statTable">
+		<caption>Stats</caption>
+		<tr onmouseover="notif(24, true)">
+			<td class="spanish">Nivel</td>
+			<td class="english">Level</td>
+
+			<td id="helperLevel">?</td>
+		</tr>
+		<tr onmouseover="notif(17, true)">
+			<td class="spanish">Experiencia</td>
+			<td class="english">Experience</td>
+			
+			<td id="helperExp">?</td>
+		</tr>
+		<tr id="statLPS" onmouseover="notif(18, true)">
+			<td class="spanish">Limones/s</td>
+			<td class="english">Lemons/s</td>
+			
+			<td id="helperLPS">?</td>
+		</tr>
+		<tr id="statCPS" onmouseover="notif(19, true)">
+			<td>Citros/s</td>
+			
+			<td id="helperCPS">?</td>
+		</tr>
+		<tr id="statFraud" onmouseover="notif(20, true)">
+			<td class="spanish">Engaño</td>
+			<td class="english">Fraud</td>
+			
+			<td id="helperPriceInc">?</td>
+		</tr>
+		<tr id="statGentle" onmouseover="notif(21, true)">
+			<td class="spanish">Amabilidad</td>
+			<td class="english">Gentleness</td>
+			
+			<td id="helperGentle">?</td>
+		</tr>
+		<tr id="statPop" onmouseover="notif(22, true)">
+			<td class="spanish">Popularidad</td>
+			<td class="english">Popularity</td>
+			
+			<td id="helperPop">?</td>
+		</tr>
+		<tr id="statCharisma" onmouseover="notif(23, true)">
+			<td class="spanish">Carisma</td>
+			<td class="english">Charisma</td>
+			
+			<td id="helperCharisma">?</td>
+		</tr>
+		<tr id="statGood">
+			<td class="spanish">Bondad</td>
+			<td class="english">Kindness</td>
+			
+			<td id="helperGood">?</td>
+		</tr>
+	</table>
+	<hr>
+	<h3 class="center"><span class="spanish">Habilidad</span><span class="english">Skill</span></h3><hr>
+	<b id="helperSkillName">?</b><br><em id="helperSkill">?</em>
+	<hr>
+
+	<div class="lemonButton" id="changeName">
+		<span class="spanish">Cambiar nombre</span>
+		<span class="english">Change name</span>
+	</div>
+
+	<div class="lemonButton" id="helperLevelUp">
+		<span id="helperLevelUpMsg"></span><br>
+		(L) <span class="spanish">Subir de nivel</span>
+		<span class="english">Level up</span>
+
+		(<span id="helperLevelUpCost"></span>ç)
+	</div>
+	<div class="lemonButton" id="helperLevelUp10">
+		<span id="helperLevelUpMsg10"></span><br>
+		(Shift L) <span class="spanish">Subir 10 niveles</span>
+		<span class="english">Level up 10 times</span>
+
+		(<span id="helperLevelUpCost10"></span>ç)
+	</div>
+
+	<div class="lemonButton" id="goodUpgrade">
+		(K) <span class="spanish">Ascender a </span>
+		<span class="english">Promote to</span>
+		<span id="nextGoodClassName"></span>
+	</div>
+
+	<div class="lemonButton" id="badUpgrade">
+		(J) <span class="spanish">Ascender a </span>
+		<span class="english">Promote to</span>
+		<span id="nextBadClassName"></span>
+	</div>
+
+	<div class="lemonButton" id="specialUpgrade">
+		<span class="spanish">Ascender a </span>
+		<span class="english">Promote to</span>
+		<span id="nextSpecialClassName"></span>
+	</div>
+
+	<div class="lemonButton" id="helpMentorBut">
+		<span class="es" onmouseover="notif('Jubila a este ayudante cuando alcance el nivel 100', 1, 1)">Jubilar</span>
+		<span class="en" onmouseover="notif('Retire this helper once it reaches level 100', 1, 1)">Retire</span>
+	</div>
+
+	<div class="lemonButton" id="helperKillButton">
+		<span class="spanish">Despedir</span>
+		<span class="english">Fire</span>
+	</div>
+
+	<div class="lemonButton" onclick="document.getElementById('windowHelperStats').style.display = 'none';
+	echo('helperLevelUpMsg','')">
+		<span class="spanish">&lt- Volver</span>
+		<span class="english">&lt- Return</span>
+	</div>
+</div>
+
+<div id="botBar" style="color: #222; background-color: #eee; font-size: 0.8em; position: fixed; left: 0; bottom: 0; padding: 1em; width: 100%; z-index: 81">
+	©2014-2015 <a target="_blank" href="http://www.archlemon.com">Arch Lemon Studios</a>
+</div>
+
+<div style="position: fixed; right: 2px; bottom: 2px; z-index: 82; background-color: transparent">
+	<a href="mailto:sugerencias@archlemon.com">
+	<img class="spanish" src="img/idea.png" title="Sugerencias: sugerencias@archlemon.com">
+	<img class="english" src="img/idea.png" title="Feedback: sugerencias@archlemon.com">
+	</a>
+
+	<a style="display: inline" href="https://twitter.com/intent/follow?original_referer=http%3A%2F%2Flemontastic.archlemon.com%2Fbeta%2F&screen_name=ArchLemonS&tw_p=followbutton" target="_blank" title="Twitter: @ArchLemonS"><img src="http://archlemon.com/als/img/twitterIcon.png"></a>
+
+	<form style="display: inline" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+		<input type="hidden" name="cmd" value="_s-xclick">
+		<input type="hidden" name="hosted_button_id" value="U5C86J94HMJKL">
+		
+		<input type="image" class="spanish" title="Dona 1 céntimo y te amaré siempre. (Y además podré seguir alojando la página)" src="../../img/donate.png" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet.">
+		<input type="image" class="english" title="Donate and I'll love you forever. (And keep hosting this page)" src="../../img/donate.png" border="0" name="submit" alt="PayPal. La forma rápida y segura de pagar en Internet.">
+
+		<img alt="Donar" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1">
+	</form>
+</div>
+
+<!-- -->
+<div style="display: none" id="changelog" style="display: none; width: 500px; padding-bot: 0px; padding-left: 8px">
+<!-- Tablero cosas nuevas -->
+<p id="gameVersion2"></p>
+<center>
+<iframe class="spanish" style="width: 100%; height: 640px" src="changeslog"></iframe>
+<iframe class="english" style="width: 100%; height: 100%" src="changenlog"></iframe>
+<a target="_blank" style="text-align: center; font-size: 24px"
+href="http://blog.archlemon.com/lemontastic/lemontastic-v0-7-9b/">version 0.7.9b (Español/English)</a>
+</center>
+<div>
+<p id="save1"></p>
+<p id="save"></p>
+</div>
+<!-- <script src="../common.js"></script> -->
+
+<script src="../../common.js"></script>
+<script src="main.js"></script>
+</body></html>

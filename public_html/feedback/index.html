@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Arch Lemon Studios Feedback</title>
+</head>
+<body>
+	Leave your Message<br>
+	<hr>
+	<form method="post" action="script.php">
+		<b>Your name</b> <i>(optional)</i><br>
+		<small>Optional. We will keep your identity safe, Sir X.</small><br>
+		<input type="text" name="yourname"><br><br>
+
+		<b>Your email</b> <i>(optional)</i><br>
+		<small>If we solve the problem, you can receive a response via mail.</small><br>
+		<input type="text" name="youremail"><br><br>
+
+		<b>Game</b><br>
+		<small>Specify the game where you want to leave feedback.</small><br>
+		<input type="radio" name="from" value="lemontastic">Lemontastic!
+		<br>
+		<input type="radio" name="from" value="casino">Casino
+		<br>
+		<input type="radio" name="from" value="shipwip">Ship WIP
+		<br>
+		<input type="radio" name="from" value="other" checked>(Other/Main Website)
+		<br><br>
+
+		<b>Subject</b><br>
+		<small>This helps us classify each message to take a different action.</small><br>
+		<input type="radio" name="subject" value="bug" id="subBug">Bug
+		<br>
+		<input type="radio" name="subject" value="idea" id="subIdea">Idea
+		<br>
+		<input type="radio" name="subject" value="fix" id="subFix">Fix
+		<br>
+		<input type="radio" name="subject" value="other" id="subRandom" checked>Random Thought
+		<br><br>
+
+		<b>Message</b><br>
+		<small>Don't swear!</small><br>
+		<textarea style="width: 250px; height: 100px" name="yourmsg"></textarea><br><br>
+
+		<input type="submit" value="Send">
+	</form>
+
+	<div style="font-family: serif; width: 300px">
+			<div id="textRandom">
+				<b>About feedback</b>
+				Before reporting a bug, asking for a fix, or giving an idea, first and foremost, mention the game you are referring to.
+				That helps a lot.
+				<br><br><br>
+			</div>
+			<div id="textBug">
+				<b>How to report a bug</b>
+				To report a bug, first mention the game where you found it, where exactly and the number of steps you followed to find it.
+				<br><br>
+				e.g. 
+				"I was playing <b>Lemontastic</b> and found a bug <b>in the supermarket</b>. Buying a grapefruit gave me <b>NaN money</b>!"
+				<br><br><br>
+			</div>
+			<div id="textFix">
+				<b>About fixes</b>
+				Is the game unbalanced? Do you think some skill is too underpowered? A price is too high? This feature used to be cool but needs a revamp?
+				Tell us what you think and we can fix it to balance all games!
+				<br><br>
+				e.g. 
+				"I think in <b>Lemontastic</b> the <b>Lawyer Raccoon Skill</b> is underpowered. It <b>needs a higher chance</b>!"
+				<br><br><br>
+			</div>
+			<div id="textIdea">
+				<b>About ideas</b>
+				You can submit all ideas you want, but keep in mind that some new features are harder to implement than others.
+				<br><br>
+				e.g. 
+				"I want a button in <b>Lemontastic</b> located below the <b>Money Bar</b> that easily gives me <b>TONS OF MONEY</b>. Please. The game is too hard without that button!"
+			</div>
+	</div>
+
+<script>
+textRandom.style.display = 'none';
+textBug.style.display = 'none';
+textFix.style.display = 'none';
+textIdea.style.display = 'none';
+
+function update() {
+	textRandom.style.display = (subRandom.checked) ? 'block' : 'none';
+	textBug.style.display = (subBug.checked) ? 'block' : 'none';
+	textFix.style.display = (subFix.checked) ? 'block' : 'none';
+	textIdea.style.display = (subIdea.checked) ? 'block' : 'none';
+}
+var t = setInterval(update, 100);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link type="text/css" rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div style="width: 25%">
+<h2>Controls</h2>
+<ul>
+<li>Point anywhere with your mouse for the spaceship to follow it.
+<li>Left click to shoot in front of your ship.
+<li>Keep left click pressed to charge a more powerful blast.
+<li>[P] Pauses the game. Hit 'P' again to resume.
+</ul>
+<br>
+<h2>Gameplay</h2>
+<ul>
+	<li>Shoot enemy spaceships to destroy them.
+	<li>Red bullets damage the player, avoid them.
+	<li>Some ships may explode upon contact or when destroyed, dealing damage to the player but not enemies.
+	<li>Some ships may drop a power-up upon death.
+	<li>Once your ship gets destroyed (Both SHIELD and ENERGY drop to 0), you can go to the shop and buy upgrades.
+</ul>
+
+<h2>Enemies</h2>
+<ul>
+	<li><img src="img/bomb.png"><b>Bomb</b> - Explodes after being destroyed and upon death. It has a search algorithm that helps it chase its prey.
+	<li><img src="img/enemy.png"><b>Doppelganger</b> - Weak unit, shoots single bullets in front of it.
+	<li><img src="img/croissant.png"><b>Turcroise</b> - Killer spaceship that has a higher defense. Shoots two bullets per attack.
+	<li><img src="img/bomber.png"><b>Bomber</b> - Heavy unit with high resistance, shoots large bombs that deal extra damage, they are as slow as this ship while moving.
+</ul>
+
+</div>
+
+<iframe src="ship.html" width="644px" height="484px" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; margin: auto; clear: both"></iframe>
+<h6><a href="../../lemontastic/beta/home.html">Also Try: Lemontastic!</a></h6>
+
+<div style="width: 25%; right: 0; top: 0; position: fixed; color: white">
+	<h2>Changelog</h2>
+	<ul>
+		<li>0.0.2 Added changelog
+		<li>0.0.3 Fixed font being too small
+		<li>0.0.4 Reduced overall point gain
+		<li>0.0.5 Nukes now shoot a minimum of 8 particles, this value can increase with every "Unavoidable Explosion" upgrade you get/buy
+		<li>0.0.5b Fixed Nukes shooting burst particles.
+		<li>0.0.6 Increased weapon charge time
+		<li>0.0.6b Fixed explosion particles increasing in size based on your weapon charge
+		<li>0.0.6c Fixed explosion particles being affected by "Unavoidable Explosion" upgrade
+		<li>0.0.6d Fixed burst particles spawning higher than its parent particle
+		<li>0.0.7 Enemies increase (more) in HP every enemy rank
+		<li>0.0.7b Nerfed damage upgrade
+		<li>0.0.7c Enemies now shoot more often in higher ranks
+		<li>0.0.7d Increased game difficulty
+		<li>0.0.7e Enemy shots no longer disappear every time your own shots passes over them.
+		<li>0.0.7f Enemy shots now disappear only if your shot is bigger, they disappear more often on early ranks
+		<li>0.0.8 Added a short delay after dying before the game over menu/shop comes up
+		<li>0.0.9 Added a Pause button. Press 'P' to pause the game any time.
+		<li>0.0.9b Added spaceship specs on Pause button. You can upgrade your ship right there
+		<li>0.0.10 Deleted stars
+		<li>0.0.10b Increased Nuke damage
+		<li>0.0.10c Fixed HP bars being selected when clicking the screen to shoot (Mozilla Firefox)
+	</ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,4 @@
+_-_name=gyygyg_-_limones=1_-_dollars=12600_-_pic=img/scouts/scout.png_-_level=5_-_id=hs8qd5gpvl_-_
+_-_name=gyygyg_-_limones=1_-_dollars=12600_-_pic=img/scouts/scout.png_-_level=6_-_id=hs8qd5gpvl_-_
+_-_name=gyygyg_-_limones=30_-_dollars=20700_-_pic=img/coons/coon.png_-_level=8_-_id=hs8qd5gpvl_-_
+_-_name=gyygyg_-_limones=30_-_dollars=20700_-_pic=img/coons/coon.png_-_level=8_-_id=hs8qd5gpvl_-_

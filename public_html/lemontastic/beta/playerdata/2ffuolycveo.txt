@@ -1,0 +1,1 @@
+_-_name=Savvy Lemonade_-_limones=65.84_-_dollars=600_-_pic=img/coons/coon.png_-_level=2_-_id=2ffuolycveo_-_played=155.5_-_

@@ -1,0 +1,204 @@
+0.9.11 Cambiada la fórmula de cálculo de precio de niveles para mayor rendimiento
+0.9.11b Arreglado un bug que no ascendía a los ayudantes siempre al pulsar "Ascender a Todos"
+0.9.11c Arreglado un bug que subía de nivel a otro ayudante en lugar del seleccionado y cambiaba la pantalla a sus datos.
+
+0.9.10e - Jubilar a los ayudantes aumenta siempre las caracteristicas del ayudante entrenado, aunque el Veterano tenga peores características.
+
+0.9.10d
+- Arreglados errores críticos al iniciar el juego sin haber una partida guardada que hacían imposible jugar
+- Eliminado un recuadro blanco que aparecía al mostrar los cambios
+- Cambiada la fuente a monospace (Otra vez, paso de hacer una fuente para este juego)
+- El coste para subir de nivel a todos los ayudantes ahora se calcula de otra manera. (Subir de nivel será más barato y se tardará menos tiempo en calcular, reduciendo así el lag)
+
+0.9.10
+- Añadida la habilidad Campaña de Recaudación para las Girl Scout.
+	- Consigue dinero vendiendo galletas
+- Añadida la habilidad Agilidad para los Gataches. Aumenta los limones que recoges manualmente.
+- Añadida la habilidad "Cosas Gratis" para los cleptómanos.
+	- Añade una probabilidad de aumentar los limones obtenidos al recogerlos manualmente un 50% acumulable con otros cleptómanos.
+- Añadida la habilidad "Botín" para los Ladrones.
+	- Añade una probabilidad de robar en otros puestos de limonada, si el tuyo está cerrado por la noche.
+	- Dobla el dinero obtenido al robar otros puestos de limonada.
+- Añadidos atracos.
+	- Cada noche puedes sufrir un atraco si tu puesto está cerrado.
+	- Si ocurre un atraco, puedes perder desde un 10% hasta un 50% de tu dinero.
+- Añadida la habilidad "Thug Life" para los gamberros y delincuentes.
+	- Aumenta la probabilidad de los arrestos en redadas policiales por la noche.
+	- Reduce la probabilidad de ser atracado por la noche.
+- Añadida la habilidad "O te largas, o te largo" para los matones.
+	- Espanta a los ladrones.
+	- Hay una posibilidad de reclutar al ladrón en lugar de ser robado.
+- Añadidos Mapaches Mimo.
+	- Tienen una probabilidad cada segundo de convertirse en otro de tus ayudantes.
+	- Cuando lo hacen, copian el nombre, el rango y la clase, pero conservan sus características básicas.
+	- Un Mimo sin copiar tiene 0 de cada característica, por eso debe convertirse en otro ayudante para poder ser útil.
+
+0.9.8
+- El límite de ayudantes es ahora 99.
+    - Arreglados algunos logros que debido a problemas de rendimiento eran imposibles de conseguir.
+- El dinero ya no se resetea a cero al recargar la página con más de un trillón.
+- Los ayudantes ahora ganan experiencia por cada venta en lugar de por segundo.
+- El minusválido de pega ahora aumenta las propinas en un 50% (En lugar de doblarlas)
+- Añadidos Trompetistas
+	- Se pueden comprar por 10 insignias
+	- Habilidad: Trovador, hay una posibilidad de obtener propinas tocando música
+- Añadidos reembolsos de insignias, obtendrás 1 insignia por cada ayudante especial comprado en la tienda
+- Los músicos y trompetistas ahora ganan dinero basado en los citros por segundo y la amabilidad.
+- Arreglados los botones Bajo-normal-alto-estafa, ahora tienen un impacto menor en la popularidad
+- Tener 99% popularidad es más difícil ahora
+- Añadida la pantalla de Récords, donde puedes ver tus récords comparados con tu última partida.
+	- Los récords que has superado aparecen en negrita
+- Añadida la opción de BORRAR DATOS, que elimina todo tu progreso, incluyendo insignias y logros
+- Si tu carisma es mayor al 100%, aumenta el precio de las propinas.
+- Los limones por segundo y citros por segundo ahora se calculan correctamente.
+- Arreglados iconos de algunas clases de mapache que aparecían desordenadas.
+- Arreglada la habilidad Tacañería que mostraba "undefined" en lugar del nombre correcto del depósito.
+- Añadido un nuevo logro para compensar un logro que estaba buggeado
+- Actualizar la exprimidora a picadora/batidora ya no cuesta más dinero según el nivel
+- Ahora se muestra el precio por litro y el precio por vaso o el tipo de depósito que tengas
+- Ahora obtienes más insignias cuantos más logros has completado
+
+0.9.7
+- Añadidos Logros
+	- Añadidos 46 nuevos logros (58 logros en total)
+	- Puedes ver el número de logros que has completado en un porcentaje y los logros que todavía no has desbloqueado.
+- Cambios en las redadas policiales
+	- En lugar de restar el dinero directamente, se impone una multa
+	- La noche siguiente, la policía viene a cobrar la multa
+	- Si no tienes dinero suficiente para pagarla, se aplica un impuesto por impago. (10% del precio)
+- Rework completo a la popularidad.
+	- El mínimo ahora es 1%
+	- El precio de la limonada afecta a la popularidad (No sólo el precio bajo-alto-estafa)
+	- Ahora se muestra la popularidad con dos decimales en el porcentaje
+	- Los Boy Scouts ahora aumentan más la popularidad
+	- La habilidad del Publicista ahora aumenta la popularidad total en un 2.5% en lugar de 1% (Que era 0% por culpa de un bug)
+- Nueva habilidad: Éxtasis (Chico de la Limonada, Vendedor de Seguros)
+	- Aumenta la popularidad un poco cada vez que vendes limonada
+- Nueva habilidad: Mis queridos súbditos (Don)
+	- Dobla los limones por segundo
+- Añadidas nuevas habilidades, todos los Boy Scouts tienen habilidad ahora.
+- Algunos cambios en la experiencia
+- Añadidos policías
+	- Durante una redada, los policías pueden sobornar a los otros policías para evitar que se lleven arrestado a uno de tus ayudantes
+- Añadidos vampiros
+	- Cada noche pueden morder a uno de tus Boy Scouts (Normalmente aquellos con peores stats)
+	- Los vampiros aumentan su stat de maldad (Reducen la bondad) cuando muerden a otro
+	- Un Boy Scout mordido podrá convertirse en Vampiro de 3 a 6 noches después.
+	- Los Vampiros no ganan experiencia por el día.
+- Arreglado un bug que causaba las redadas y los clientes aparecer demasiado rápido.
+- Arreglados los precios de las mejoras de depósito
+
+0.9.6
+- Nuevas habilidades
+	- Tramposo de Verdad (Tramposo)
+		- Aumenta un 10% la tasa de engaño.
+	- Privilegiado (Cobrador del frac, cobrador de hacienda)
+        - Reduce las multas en un 10%.
+    - Veredicto: Inocente (Abogado Defensor)
+    	- Reduce la probabilidad de redadas policiales en un 5%. (Límite: 45%)
+
+0.9.5
+- Insignias!
+  - Consigues una insignia si tu cantidad de dinero, limones, limonada, ayudantes o niveles totales supera tu último récord.
+  - Consigues una insignia por cada 100 niveles totales en tus ayudantes.
+  - Consigues una insignia si tu dinero + limones + limonada han superado el billón en producción. (Acumulable, no se cuenta la cantidad perdida en ventas o limonada)
+     - (Las insignias se calculan por cada billón obtenido.)
+- Las redadas policiales no pueden ocurrir si tienes menos de 0 citros.
+- Nuevas habilidades:
+	- Publicidad (Publicista)
+		- Aumenta la popularidad en un 1%.
+	- ¡Por la empresa! (Empresario, Becario)
+		- Aumenta los citros/segundo en +1
+	- Yo mando (Subjefe)
+		- Aumenta los citros/segundo en +2/empresarios totales
+		- Los Subjefes, Jefes, Directores ejecutivos y Becarios cuentan como empresarios.
+	- Tipo Duro (Jefe)
+		- Aumenta los citros/segundo en +4/empresarios totales
+	- Jefe supremo (Director Ejecutivo)
+		- Dobla la cantidad de citros/segundo obtenida por empresarios/subjefes/jefes.
+	- El precio está mal (Mentiroso, Estafador)
+		- 5% probabilidades de doblar el precio de la limonada al vender. Límite: 100%.
+
+0.9.3
+- Reducida la tasa de aparición de clientes y la tasa de aparición de redadas.
+- Ahora puedes pulsar la tecla L para subir de nivel rápido a tus ayudantes.
+- Puedes pulsar las teclas K/J para ascender rápido a tus ayudantes.
+- Eliminado el límite de nivel. Ahora los ayudantes pueden subir a más nivel del 10.
+- Añadido un botón para subir de nivel 10 veces.
+
+0.9.2
+- Las carteras no dan dinero negativo cuando tu dinero está bajo cero.
+- El cálculo de stat luz/oscuridad ahora empieza desde 0% y no desde 50%.
+- Las redadas policiales ahora pueden ocurrir siempre que tu stat Oscuridad sea mayor al 0%.
+- Ahora puedes cambiar la concentración de la limonada en el supermercado.
+- Los primeros ayudantes ganan más experiencia cuantos más ayudantes tengas en total.
+- Ordenar tus ayudantes usando filtros mantiene el bonus por primer ayudante, etc.
+
+0.9
+- Añadidos Girl Scouts y Gataches. Puedes comprarlos en "Logros y mejoras" con insignias.
+- Añadida luz y oscuridad. La oscuridad aumenta las probabilidades de estafa.
+- Añadidos Mapache Angel y Mapache Demonio, a la venta en la tienda de mejoras.
+- Añadidos nuevos filtros. Ahora es posible filtrar por ayudantes que pueden ascender e invertir el orden de la lista.
+- Añadidas redadas policiales
+	- Cada segundo entre las 22:00 y las 06:00 hay una posibilidad de redada policial
+	- Las redadas policiales sólo ocurren si tu nivel de Oscuridad es mayor al 50%.
+	- Puedes evitar una redada policial durmiendo o cerrando tu puesto de limonada por la noche.
+	- En una redada policial, uno de tus ayudantes será detenido y no volverás a verlo nunca más.
+	- Además habrá una multa de un mínimo de 100ç y un máximo del doble de tu dinero.
+	- Sólo una redada policial puede ocurrir cada noche.
+
+
+0.8.10
+- Añadidas insignias. Cada vez que reseteas obtienes insignias, siempre y cuando hayas ganado más cosas que en tu partida anterior.
+
+0.8.9
+- Añadido un botón de filtro para filtrar entre mapaches, Boy Scouts o mostrarlos todos.
+
+0.8.8
+- No puedes comprar exprimidoras nunca más. Ahora puedes aumentar el nivel de tu exprimidora.
+- Ahora puedes exprimir un limón para hacer 0.4ml de limonada. Cada nivel de la exprimidora añade 0.2ml por limón exprimido.
+- Ahora es posible cambiar el nombre y aumentar el nivel de tu exprimidora.
+- Añadida la opción auto-exprimir una vez que llega al nivel 10. (Máximo nivel 10)
+- Puedes mejroar tu exprimidora a:
+  - Picadora de Limón: 10x velocidad de exprimido (Sólo para exprimir manualmente)
+  - Licuadora: Velocidad de exprimido al doble. (Funciona para ambos manual y automático.)
+  - Se puede aumentar hasta el nivel 10.
+- Arreglado el cartel abierto/cerrado.
+- Ahora hay una transición a las 01:00, las 08:00 y las 20:00 (Tiempo en el juego) y la hoja de estilos cambia.
+
+0.8.7
+- Robar limones se vuelve gris cuando no puedes robar más.
+- Si te pillan robando limones, no podrás robar más hasta que pase un rato (Máximo 1.5 minutos).
+- Después de contratar un ayudante puedes escoger un nombre. Si dejas el campo en blanco, un nombre aleatorio será escogido.
+
+0.8.5.3
+- Cambiar el nombre de un ayudante sin escoger ninguno resultará en su nombre sin cambiar.
+- Corregido un bug que causaba la popularidad volverse 90% si era negativa.
+- Arreglados bugs relacionados con la atención. Ahora el precio y el tiempo afecta directamente al botón llamar atención.
+- Cambiados los stats de los ayudantes. Gamberro/Delincuente/Matón ahora tienen un rango más bajo.
+- Ladrón/Carterista y cleptomaníaco han sido subidos de rango.
+- Cerebro es ahora rango 10 y Don es rango 9.
+- Las exprimidoras ya no aparecen en la tabla de ayudantes.
+- Ahora el mínimo de popularidad es 5% y el máximo es 95%.
+
+0.8.5
+- Hacer click en "Robar limones" cuando ese Boy Scout cambia su cara... Bueno, tendrás que descubrirlo.
+- Popularidad y carisma ya no pueden bajar de 0.
+- Cuando carisma es 0% el icono cambia a... Bueno, tendrás que descubrirlo.
+
+0.8.4
+- Arreglado precio NaNç en ayudantes.
+- Añadidos mas iconos a botones.
+- Cambiado el icono de exprimir a una jarra de limonada.
+- Dejar el botón exprimir/llamar atención pulsado y salir de la zona ya no aumenta limonada/atención infinitamente.
+- El coste para subir ayudantes de nivel está basado sólamente en experiencia.
+- Las curvas de experiencia han sido actualizadas.
+- Los ayudantes ahora ganan 1exp/segundo.
+- El primer ayudante gana 10 exp/segundo, el segundo 5/segundo, el tercero 4/segundo y el resto 2exp/s hasta el 9.
+- Ahora puedes ordenar a tus ayudantes por nivel, experiencia y demás.
+- Puedes mover al primer puesto cualquier ayudante para que gane más experiencia.
+- Pulsar botones del 1 al 9 mueve a un ayudante a ese puesto en la lista.
+
+0.8.1
+- Empezado el registro de nuevas cosas
+- Añadidos iconos a algunos botones

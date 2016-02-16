@@ -1,0 +1,387 @@
+.spanish:lang(en) {
+	display: none;
+}
+.english:lang(es) {
+	display: none;
+}
+.sup:lang(en) {
+	display: none;
+}
+.igi:lang(es) {
+	display: none;
+}
+body {
+	background-color: hsl(120, 50%, 10%);
+	color: hsl(120, 50%, 90%);
+	margin: 0;
+	padding: 0;
+}
+h1 {
+	font-weight: normal;
+	font-size: 36px;
+	margin: 0;
+	text-align: center;
+}
+.topBar {
+	width: 98%;
+	margin: 0;
+	padding: 1%;
+	background-color: hsl(120, 50%, 20%);
+}
+table {
+	width: 100%;
+}
+.topBar ul {
+	background-color: hsla(0, 0%, 0%, 0.5);
+	padding: 16px;
+	display: block;
+	border-radius: 8px;
+}
+.topBar li {
+	border: 2px solid transparent;
+	padding: 8px;
+	display: inline;
+	list-style: none;
+	cursor: pointer;
+}
+.topBar li:hover {
+	border: 2px solid rgb(0, 128, 0);
+	background-color: rgb(0, 16, 0);
+}
+hr {
+	border-color: rgb(0, 128, 0);
+}
+#botBar {
+	margin: 0;
+	position: fixed; left: 0; bottom: 0;
+	height: 32px; width: 640px;
+}
+/* token sprites */
+.tok1, .tok2, .tok5, .tok10, .tok20, .tok25, .tok50, .tok100, .tok200,
+.tok250, .tok500, .tok1k, .tok2k, .tok5k, .tok10k, .tok20k, .tok50k {
+	display: inline-block;
+	width: 27px;
+	height: 27px;
+}
+.tok1 {
+	background: url(img/tokens.png) 0 0;
+}
+.tok2 {
+	background: url(img/tokens.png) 0 27px;
+}
+.tok5 {
+	background: url(img/tokens.png) 0 54px;
+}
+.tok10 {
+	background: url(img/tokens.png) 0 81px;
+}
+.tok20 {
+	background: url(img/tokens.png) 27px 0px;
+}
+.tok25 {
+	background: url(img/tokens.png) 27px 27px;
+}
+.tok50 {
+	background: url(img/tokens.png) 27px 54px;
+}
+.tok100 {
+	background: url(img/tokens.png) 27px 81px;
+}
+
+.tok200 {
+	background: url(img/tokens.png) 54px 0;
+}
+.tok250 {
+	background: url(img/tokens.png) 54px 27px;
+}
+.tok500 {
+	background: url(img/tokens.png) 54px 54px;
+}
+.tok1k {
+	background: url(img/tokens.png) 54px 81px;
+}
+
+.tok2k {
+	background: url(img/tokens.png) 81px 0px;
+}
+.tok5k {
+	background: url(img/tokens.png) 81px 27px;
+}
+.tok10k {
+	background: url(img/tokens.png) 81px 54px;
+}
+.tok50k {
+	background: url(img/tokens.png) 81px 81px;
+}
+
+#gameHot, #gameBank, #gameLottery, #gameSlot, #gameBlackJack, #gameHoL {
+	display: none;
+}
+#tokenMonitor {
+	position: fixed;
+	top: 8px;
+	right: 8px;
+	background-color: hsla(120, 50%, 50%, 0.5);
+	border-radius: 8px;
+	padding: 8px;
+}
+.protip {
+	font-size: 10px;
+	color: hsla(0, 100%, 100%, 0.5);
+}
+#bank, #nobank, #commonBank, #gameLottery {
+	width: 50%;
+	margin-left: 25%;
+}
+.button, .tokenButton {
+	display: inline-block;
+	padding: 4px;
+	border-radius: 8px;
+	background-color: hsl(120, 10%, 90%);
+	color: hsl(120, 10%, 10%);
+	margin: 2px;
+	cursor: pointer;
+}
+.tokenButton, .tokenAmount {
+	width: 220px;
+	text-align: center;
+	border-radius: 4px;
+	padding: 4px;
+}
+.button:hover, .tokenButton:hover {
+	background-color: hsl(120, 50%, 30%);
+	color: hsl(120, 50%, 70%);
+}
+#yourTickets {
+	-webkit-column-count: 5;
+}
+#slotResults {
+	font-family: monospace;
+}
+#banned {
+	display: none;
+	background-color: black;
+	color: white;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	top: 0;
+	left: 0;
+	text-align: center;
+}
+#banned big {
+	font-size: 36px;
+}
+#hdsbtn, #tlsbtn {
+	width: 100px;
+	height: 80px;
+	margin: 20px;
+}
+sup {
+	font-size: 50%;
+	font-style: italic;
+}
+
+.card {
+	background-image: url(deck.png);
+	background-repeat: no-repeat;
+	display: inline-block;
+	margin-right: 0px;
+	width: 74px;
+	height: 94px;
+	-webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+    -webkit-transition: top 1s, left 1s, transform 1s;
+    transition: top 1s, left 1s, transform 1s;
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    background-position: 999px 999px;
+}
+.card_CA {background-position: 0px 0px;}
+.card_C2 {background-position: -74px 0px;}
+.card_C3 {background-position: -148px 0px;}
+.card_C4 {background-position: -222px 0px;}
+.card_C5 {background-position: -296px 0px;}
+.card_C6 {background-position: -370px 0px;}
+.card_C7 {background-position: -444px 0px;}
+.card_C8 {background-position: -518px 0px;}
+.card_C9 {background-position: -592px 0px;}
+.card_CT {background-position: -666px 0px;}
+.card_CJ {background-position: -740px 0px;}
+.card_CQ {background-position: -814px 0px;}
+.card_CK {background-position: -888px 0px;}
+
+.card_DA {background-position: 0px -94px;}
+.card_D2 {background-position: -74px -94px;}
+.card_D3 {background-position: -148px -94px;}
+.card_D4 {background-position: -222px -94px;}
+.card_D5 {background-position: -296px -94px;}
+.card_D6 {background-position: -370px -94px;}
+.card_D7 {background-position: -444px -94px;}
+.card_D8 {background-position: -518px -94px;}
+.card_D9 {background-position: -592px -94px;}
+.card_DT {background-position: -666px -94px;}
+.card_DJ {background-position: -740px -94px;}
+.card_DQ {background-position: -814px -94px;}
+.card_DK {background-position: -888px -94px;}
+
+.card_HA {background-position: 0px -188px;}
+.card_H2 {background-position: -74px -188px;}
+.card_H3 {background-position: -148px -188px;}
+.card_H4 {background-position: -222px -188px;}
+.card_H5 {background-position: -296px -188px;}
+.card_H6 {background-position: -370px -188px;}
+.card_H7 {background-position: -444px -188px;}
+.card_H8 {background-position: -518px -188px;}
+.card_H9 {background-position: -592px -188px;}
+.card_HT {background-position: -666px -188px;}
+.card_HJ {background-position: -740px -188px;}
+.card_HQ {background-position: -814px -188px;}
+.card_HK {background-position: -888px -188px;}
+
+.card_SA {background-position: 0px -282px;}
+.card_S2 {background-position: -74px -282px;}
+.card_S3 {background-position: -148px -282px;}
+.card_S4 {background-position: -222px -282px;}
+.card_S5 {background-position: -296px -282px;}
+.card_S6 {background-position: -370px -282px;}
+.card_S7 {background-position: -444px -282px;}
+.card_S8 {background-position: -518px -282px;}
+.card_S9 {background-position: -592px -282px;}
+.card_ST {background-position: -666px -282px;}
+.card_SJ {background-position: -740px -282px;}
+.card_SQ {background-position: -814px -282px;}
+.card_SK {background-position: -888px -282px;}
+
+.card_joker {
+	background-position: -962px 0px;
+}
+.card_deck {
+	background-position: -962px -94px;
+}
+.card_backred {
+	background-position: -962px -188px;
+}
+.card_backgray {
+	background-position: -962px -282px;
+}
+
+.table {
+	width: 640px;
+	height: 480px;
+	background-color: #262;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 8px;
+	position: relative;
+	border: 3px solid transparent;
+}
+#hol_deck {
+	top: 70px;
+	left: 16px;
+	z-index: 1;
+}
+#hol_deck_firstcard {
+	top: 16px;
+	left: 16px;
+	z-index: 2;
+}
+#hol_card {
+	top: 16px;
+	left: 240px;
+	z-index: 3;
+	opacity: 0;
+}
+#hol_card2 {
+	top: 16px;
+	left: 16px;
+	z-index: 4;
+}
+#shufflin {
+	z-index: 30;
+	position: relative;
+}
+.hol_slot {
+	position: absolute;
+	border: 2px solid black;
+	top: 250px;
+}
+#hol_slot1 {	left: 16px;		}
+#hol_slot2 {	left: 100px;	}
+#hol_slot3 {	left: 184px;	}
+#hol_slot4 {	left: 268px;	}
+#hol_slot5 {	left: 352px;	}
+#hol_slot6 {	left: 436px;	}
+#hol_slot7 {
+	opacity: 0;
+	left: 540px;
+	border: 3px solid hsl(60, 80%, 60%);
+	box-shadow: 0 0 8px hsl(60, 80%, 60%);
+}
+.center {
+	margin: auto;
+	text-align: center;
+}
+.wrapper {
+	margin: 8px;
+}
+#holClickHi, #holClickLo, #holClickPlay {
+	width: 100px;
+	height: 60px;
+}
+#yeshol, #nohol {
+	display: none;
+}
+.highlight {
+	box-shadow: 0 0 8px hsl(60, 80%, 60%);
+	transition: all 0.25s;
+}
+
+.forteller {
+	float: left;
+	margin-top: -50px;
+}
+#fortext:hover {
+	opacity: 1;
+}
+#fortext {
+	top: 0;
+	right: -150px;
+	position: absolute;
+	width: 300px;
+	height: 200px;
+	padding: 8px;
+	background-color: hsl(120, 80%, 80%);
+	border-radius: 8px;
+
+	opacity: 0;
+	transition: all 1s;
+}
+#fortextBack {
+	top: 0;
+	right: -150px;
+	position: absolute;
+	width: 300px;
+	height: 200px;
+	padding: 8px;
+	border-radius: 8px;
+
+	opacity: 0;
+	transition: all 2s;
+}
+.forteller2 {
+	color: rgba(0, 0, 0, 0.8);
+}
+#fortellerText {
+	margin-left: 4px;
+}
+.red {
+	font-weight: bolder;
+	color: hsl(0, 60%, 60%);
+}
+.blue {
+	font-weight: bolder;
+	color: hsl(180, 60%, 60%);
+}

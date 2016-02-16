@@ -1,0 +1,227 @@
+<form oninput="
+
+ee = 1 + (64 / stackSize.value) / 100
+
+maxLevel = a.value * 4;
+stackMod = 1 + (4 / stackSize.value);
+realMaxLevel = maxLevel * stackMod;
+
+x.value = realMaxLevel * Math.pow(ee,parseInt(b.value) * -1) * c.value;
+
+var compMod = complex.value / 9;
+var moddy = (1 + compMod) / prod.value;
+x.value *= moddy;
+
+z.value = (7 / 64) * x.value;
+gt.value = 2 * x.value;
+chc.value = (4/64) * x.value;
+ac.value = (1/128) * x.value;
+
+cc.value = Math.floor(x.value * 8);
+sc.value = Math.floor(x.value / 8);
+gc.value = Math.floor(x.value / 64);
+
+x.value = Math.floor(x.value);
+z.value = Math.floor(z.value);
+gt.value = Math.floor(gt.value);
+chc.value = Math.floor(chc.value);
+ac.value = Math.floor(ac.value);
+">
+<b>Precio Recomendado</b><br>
+
+	<output name="x" for="a b c"></output> Creditos Industriales<br>
+	<ul>
+		<li><output name="cc" for="a b c"></output> Creditos de Cobre
+		<li><output name="sc" for="a b c"></output> Creditos de Plata
+		<li><output name="gc" for="a b c"></output> Creditos de Oro
+	</ul>
+	<output name="gt" for="a b c"></output> Creditos GT<br>
+	<output name="z" for="a b c"></output> Doge<br>
+	<output name="chc" for="a b c"></output> Monedas de Chocolate<br>
+	<output name="ac" for="a b c"></output> Monedas Antiguas<br>
+
+	<br>
+	<hr>
+	<br>
+	<b>Rareza</b><br>
+	Nivel <input type="number" id="a" min="1" name="a" value="1">
+	<abbr title="Las materias primas son nivel 1. Por cada procesamiento, el nivel aumenta en 1">[?]</abbr>
+	<br>
+	Produccion <input type="number" min="1" max="64" id="prod" name="prod" value="1">
+	<abbr title="Si al fabricar este objeto recibes más de uno, cambia este valor. Por ejemplo: 1 palo y 1 carbón da 4 antorchas, entonces la Produccion es 4">[?]</abbr>
+	<br>
+	Complejidad (1-9) <input type="number" min="1" max="9" id="complex" name="complex" value="1">
+	<abbr title="El numero de objetos que son necesarios para fabricar el objeto, un hacha de madera necesita 5 objetos, una antorcha necesita 2, fundir piedra necesita 1.">[?]</abbr><br>
+	Abundancia (1-64) <input type="number" min="1" max="64" id="stackSize" name="stackSize" value="64">
+	<abbr title="Numero que alcanza el mayor stack de tu stock. Si solo tienes 2 palas, el stack es 1. Si tienes 200 dirt, el stack es 64, si tienes solo 7 diamantes, el stack es 7.">[?]</abbr>
+
+	<br>
+	<b>Cantidad Disponible</b><br>
+	Stock <input type="number" min="1" max="576" id="b" name="b" value="1">
+	<abbr title="El numero de objetos de los que dispones, incluyendo el que estas vendiendo ahora.">[?]</abbr>
+	<br>
+	Cantidad a la Venta<input type="number" min="1" max="64" id="c" name="c" value="1">
+	<abbr title="La cantidad que vendes de un objeto cada vez. Si el precio es demasiado bajo y vendes una materia prima, es mejor que subas la cantidad que vendes cada vez para que el precio sea alto y se pueda manejar.">[?]</abbr>
+	<br>
+
+</form>
+<hr>
+<form oninput="
+result.value = (parseInt(stacks.value) * 64) + parseInt(items.value);
+">
+	<h3>Calculadora</h3>
+	<input type="number" min="0" id="stacks" name="stacks"> Stacks y <input type="number" min="1" max="64" id="items" name="items" value="0">
+	<output id="result" name="result" for="stacks items minus plus"></output> objetos totales
+</form>
+
+<br><hr><br>
+<h3>Niveles</h3>
+<h4>Nivel 1 (Materia Prima)</h4>
+<ul>
+	<li>Menas Nivel 1 (Hierro, oro, cobre, estaño, plata, plomo, níquel-ferrous, uranio, galena, bauxita, tetrahedrita, cassiterita)
+	<li>Minerales (Carbon, lapislazuli, diamante, esmeralda, quarzo, force gem, rubi, zafiro, olivina, iridio)
+	<li>Piedras (Esfaliarita, redstone, pirita, tungstato, sodalita, glowstone)
+	<li>Troncos de Madera (Roble, abedul, selva, abeto, roble de las Ardillas, canopio, mangrovio, arbol oscuro, caucho, eucalipto, sakura, ghostwood, hopseed, bloodwood, darkwood, fusewood, arce, silverbell, amaranthio, tiger, sauce lloron)
+	<li>Nubes
+	<li>Flores y Plantas (Cactus, diente de leon, rosa)
+	<li>Semillas Nv 1 (Semillas de trigo, cebada, cacao, algodon)
+	<li>Tierra (Dirt, roca, grava, arena, netherrack)
+	<li>Animales (Cuero, plumas, huevos, lana)
+	<li>Comida (Carne de cerdo, bacon, carne de vaca, carne de oveja, pollo crudo)
+</ul>
+
+<h4>Nivel 2</h4>
+<ul>
+	<li>Menas Nivel 2 (Lapislazuli, carbón, diamante, redstone, esmeralda, esfaliarita, azufre, force gem, iridio, rubi, zafiro, pirita, cinabrio, sheldonita, olivina, sodalita)
+	<li>Aleaciones (Bronce, latón, cupronickel, invar, nicromo, electrum, magnalio, red alloy, blue alloy, tungstensteel)
+	<li>Lingotes Nivel 1 (Cualquier mena de nivel 1 y lingotes que no sean aleaciones)
+	<li>Tablas de madera</li>
+	<li>Cristal</li>
+	<li>Armaduras Nivel 1 (Cuero, diamante)
+	<li>Coal Dust
+</ul>
+<h4>Nivel 3</h4>
+<ul>
+	<li>Placa de metal (Estaño, Hierro)
+	<li>Cable (Cobre, Estaño)
+	<li>Lingote de Aleación (Red Alloy)
+	<li>Palo
+	<li>Flecha de Ballesta
+	<li>Piston
+	<li>Machine Frame
+	<li>Pepita de Plomo
+	<li>Hielo
+	<li>Coal Ball
+	<li>Carbon Fibre
+</ul>
+
+<h4>Nivel 4</h4>
+<ul>
+	<li>Carcasa de Metal (Estaño)
+	<li>Cable Aislado (Estaño, Cobre)
+	<li>Placa de Aleación (Red Alloy)
+	<li>Arco
+	<li>Pulverizador
+	<li>Capacitador de Flux Patatil
+	<li>Piedra Helada
+	<li>Compressed Coal Ball
+	<li>Carbon Mesh
+	<li>Basic Machine Casing
+</ul>
+
+<h4>Nivel 5</h4>
+<ul>
+	<li>Circuito Electrónico
+	<li>Pila Recargable
+	<li>Ballesta
+	<li>Mixed Metal Ingot
+	<li>Coal Chunk
+	<li>Carbon Plate
+	<li>MV Transformer
+</ul>
+
+<h4>Nivel 6</h4>
+<ul>
+	<li>Circuito Avanzado
+	<li>Caja de Baterías
+	<li>Mochila de Baterias
+	<li>Exosuit Upgrade Module
+	<li>Advanced Alloy
+	<li>Industrial Diamond
+	<li>Nanosuit Bodyarmor
+	<li>Tesla Coil
+	<li>HV Transformer
+</ul>
+
+<h4>Nivel 7</h4>
+<ul>
+	<li>Jetpack Electrico
+	<li>Iridium Alloy Ingot
+	<li>Lapotron Crystal
+	<li>Reinforced Glass
+</ul>
+
+<h4>Nivel 8</h4>
+<ul>
+	<li>Battery Jetpack
+	<li>Iridium Reinforced Plate
+
+</ul>
+
+<h4>Nivel 9</h4>
+<ul>
+	<li>Superconductor Cover
+	<li>QuantumSuit Bodyarmor
+	<li>Cooling Core
+	<li>QuantumSuit Helmet
+</ul>
+
+<h4>Nivel 10</h4>
+<ul>
+	<li>Superconductor
+	<li>QuantumSuit Helmet (Exosuit)
+</ul>
+
+<h4>Nivel 11</h4>
+<ul>
+	<li>Ultimate Lappack
+	<li>Gravitation Engine
+	<li>Solar QuantumSuit Helmet (Exosuit)
+</ul>
+
+<h4>Nivel 12</h4>
+<ul>
+	<li>GraviChestPlate
+</ul>
+
+
+<pre><code>
+	Ejemplo de Niveles:
+
+	Nivel 		Objeto
+	1		Tronco de Madera
+	2		Tablas de Madera
+	3		Palo
+	4		Espada de Madera
+	5		Espada de Madera (Agudeza I)
+	6 		Espada de Madera (Agudeza II)
+	7 		Espada de Madera (Agudeza I, Aspecto Igneo II)
+
+	Vender una Espada de Madera con dos encantamientos que suman 3 en niveles
+	(Nivel 7 del objeto) debería costar:
+	55 creditos industriales (o 6 Doge)
+	Es posible reducir el precio de la espada dividiendolo por 8
+	y eso dará
+
+	55/8 = 6.875
+	Precio total: 7 creditos industriales de Plata
+
+</code></pre>
+
+<script>
+function checkit(where, bad) {
+	var r = 1.15;
+	if (bad) r = 0.85
+	return (document.getElementById(where).checked) ? r : 1;
+}
+</script>

@@ -1,0 +1,11 @@
+[bug] Name: Tucker the Coon (Mail: ) from casino says: Woot, Jackpot every time on slots!
+Buy enough lotto tickets that the time until next draw counter stop completely. Switch over to le slots and become a high roller!
+---[idea] Name:  (Mail: ) from casino says: Sería divertido que cuando pierdes todo tu dinero en el casino o una cantidad grande ponga cosas como "Has perdido todo el dinero de la universidad de tus hijos", "Bravo, has perdido tu casa y el chalet en la playa", o algo así. Se me ha ocurrido mientras cagaba.
+---
+[bug] Name: Tucker the Coon (Mail: ) from other says: tu hermana es una zorra
+---
+[bug] Name: Tucker the Coon (Mail: ) from other says: --- Tower Defense ---
+* NaN bug with null input.
+* On refresh you keep gold, stone, and iron, but nothing else.
+* Can't reassign any workers.
+---

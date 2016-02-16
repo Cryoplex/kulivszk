@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+<style>
+#php {
+	position: fixed;
+	right: 0;
+	top: 0;
+}
+#output {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: hsla(240, 90%, 90%, 0.5);
+	width: 90%;
+	height: 480px;
+	padding: 16px;
+	font-size: 14px;
+	white-space: pre;
+}
+#box {
+	position: fixed;
+	bottom: 32px;
+	left: 32px;
+}
+#box #textbx {
+	height: 48px;
+	width: 512px;
+	border-radius: 8px;
+	border: 2px solid rgba(0, 0, 0, 0.5);
+	font-size: 16px;
+	text-align: center;
+}
+#box #textbtn {
+	height: 48px;
+	width: 128px;
+	border-radius: 8px;
+	border: 2px solid transparent;
+	padding: 8px;
+	margin-left: 16px;
+	background-color: hsl(120, 70%, 70%);
+	text-align: center;
+}
+#php {
+	display: none;
+}
+#menu {
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 300px;
+	height: 100%;
+	background-color: hsl(60, 70%, 70%);
+}
+#game {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+
+</style>
+</head>
+<body>
+
+	<iframe style="width: 10000px; height: 500px" src="script.php"></iframe>
+<span id="php">null</span>
+<span id="output"></span>
+<div id="box">
+<input type="text" id="textbx"><input id="textbtn" type="button" value="Send" onclick="sendMessage()">
+</div>
+
+<div id="menu">
+	<input type="textbox" id="inputname"><input type="button" onclick="data.uname = document.getElementById('inputname').value; saveGame()" value="Change nickname">
+</div>
+
+
+<script src="http://www.archlemon.com/common.js"></script>
+<script>
+function loadGame() {
+	if (!data.uname) data.uname = Math.random();
+	if (JSON.parse(localStorage.getItem('data'))) data = JSON.parse(localStorage.getItem('data'));
+}
+function saveGame() {
+	localStorage.setItem('data', JSON.stringify(data));
+}
+function sendMessage() {
+	document.cookie = 'user='+data.uname;
+	document.cookie = 'msg='+textbx.value;
+	$('#output').load('script.php?act=send');
+}
+function checkMessages() {
+	$('#output').load('script.php?act=read');
+}
+function logIn() {
+	document.cookie = 'user='+data.uname;
+	$('#php').load('script.php?act=login');
+	checkMessages();
+}
+function update() {
+	readVar();
+	checkMessages();
+
+}
+function readFromServer(varName) {
+	var vars = data.fromServer.split(';');
+	for (var xx in vars) {
+		if (vars[xx].split('=')[0] == varName) return vars[xx].split('=')[1];
+	}
+}
+function readVar(name) {
+	document.cookie = 'var='+name;
+	var ret = $('#php').load('script.php?act=varRead', function(response) {
+		data.fromServer = response;
+		return response;
+	})
+}
+function writeVar(name, value) {
+	document.cookie = 'var='+name;
+	document.cookie = 'val='+value;
+	$('#php').load('script.php?act=varWrite');
+}
+
+var data = {};
+
+loadGame();
+saveGame();
+checkMessages();
+logIn();
+
+var t = setInterval(saveGame, 10000);
+var t2 = setInterval(checkMessages, 100);
+var t3 = setInterval(update, 100);
+
+</script>
+</body>
+</html>

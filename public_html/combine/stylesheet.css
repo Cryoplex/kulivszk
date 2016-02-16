@@ -1,0 +1,75 @@
+.jumbotron {
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+table, tr, td {
+	padding-right: 8px;
+	margin-right: 8px;
+}
+.hpbar_filled {
+	background-color: hsla(120, 80%, 50%, 0.8);
+	height: 8px;
+	margin: 0;
+	display: inline-block;
+}
+.mpbar_filled {
+	background-color: hsla(180, 80%, 50%, 0.8);
+	height: 8px;
+	margin: 0;
+	display: inline-block;
+}
+.hpbar_empty, .mpbar_empty, .bar_empty {
+	background-color: hsla(0, 0%, 80%, 0.8);
+	height: 8px;
+	margin: 0;
+	display: inline-block;
+}
+.hpbar, .mpbar, .bar {
+	height: 8px;
+	width: 100px;
+	background-color: rgba(0, 0, 0, 0.8);
+	margin: 0;
+}
+.monster {background-image: url(monst.png); background-repeat: no-repeat; display: inline-block;   width: 96px;    height: 96px;    }
+.monster_test { background-position: 0px 0px;}
+.mostats {
+	font-size: 10px;
+}
+.btn2 {
+	height: 96px;
+	width: 192px;
+	float: right;
+}

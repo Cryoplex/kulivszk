@@ -1,0 +1,304 @@
+	* {
+		font-family: URW Bookman L;
+	}
+	nav {
+		margin: 0;
+		text-align: right;
+		right: 0px;
+		background-color: hsl(50, 10%, 10%);
+		padding: 8px;
+	}
+	nav a {
+		text-decoration: none;
+		margin: 8px;
+		padding: 8px;
+		color: hsl(50, 94%, 70%);
+	}
+	nav a:hover {
+		background-color: hsl(50, 94%, 70%);
+		color: hsl(50, 94%, 10%);
+	}
+	h2 {
+		margin: 0px;
+		text-align: center;
+	}
+	body {
+		padding: 0px;
+		margin: 0;
+		background-color: hsl(50, 10%, 5%);
+		background-image: url(img/bg.png);
+	}
+	#all {
+		margin: 0px 2em;
+		color: hsl(50, 94%, 70%);
+		background-color: #222;
+		padding-left: 5em;
+	}
+	.noticias a, em, .juegos a {
+		color: hsl(119, 94%, 20%);
+		text-decoration: none;
+	}
+	.noticias a em:hover {
+		color: #fff;
+	}
+	.juegos {
+		text-align: center;
+		font-size: 24px;
+	}
+	sup {
+		text-decoration: none;
+		color: red;
+		font-weight: bold;
+		font-size: 50%;
+		font-style: italic;
+		font-family: serif;
+	}
+	.noticias {
+		color: hsl(119, 94%, 20%);
+		background-color: hsl(119, 94%, 80%);
+		border-radius: 8px;
+		height: 40%;
+		padding: 0.5em;
+
+		box-shadow: 0 0 6px #000;
+
+		width: 80%;
+		margin: 2em 10%
+	}
+	.juegos {
+		color: hsl(119, 94%, 20%);
+		background-color: hsl(119, 94%, 80%);
+		border-radius: 8px;
+		margin: 8px 2%;
+
+		box-shadow: 0 0 6px #000;
+	}
+	.footer {
+		height: 20%;
+	}
+	.footer img {
+		margin: 32px;
+	}
+	.base {
+		padding-top: 8px;
+		height: 80%;
+	}
+	.division {
+		width: 100%;
+		height: 2px;
+		background-color: hsl(50, 94%, 50%);
+	}
+	.juegos hr, .noticias hr {
+		border-color: hsl(119, 94%, 50%);
+	}
+	hr {
+		border-color: hsl(50, 10%, 20%);
+		background-color: hsl(50, 10%, 10%);
+		margin-top: 16px;
+		margin-bottom: 16px;
+	}
+	a {
+		color: hsl(50, 94%, 70%);
+	}
+	a:hover {
+		color: hsl(119, 94%, 70%);
+	}
+	table {
+		padding: 0px;
+		margin: 0px;
+		width: 80%;
+		/* background-color: hsl(50, 94%, 70%); */
+	}
+	.followUs {
+		background-color: transparent;
+	}
+	.gentuza {
+		width: 100%
+	}
+	.gentuza a img {
+		margin: 0.05em;
+		padding: 0.05em;
+		border: 0.05em solid transparent;
+		background-color: transparent;
+	}
+	.gentuza a img:hover {
+		box-shadow: 0 0.2em 2px #000;
+	}
+	#all {
+		box-shadow: 0 0 16px #000;
+	}
+	.about td {
+		padding: 0.5em;
+	}
+	.about td:hover {
+		background-color: #888;
+		box-shadow: 0 0 0.2em #000;
+	}
+.spanish:lang(en) {
+	display: none;
+}
+.english:lang(es) {
+	display: none;
+}
+.lang:hover {
+	color: hsl(200, 94%, 40%);
+}
+.nav a {
+	background-color: #222;
+	border-top-right-radius: 1em;
+	border-bottom-right-radius: 1em;
+	width: 80%;
+	display: block;
+	height: 1.5em;
+	padding: 0.5em;
+	text-align: center;
+	border-right: 0.5em solid transparent;
+	border-top: 0.2em solid transparent;
+	border-bottom: 0.2em solid transparent;
+	text-decoration: none;
+}
+.nav a:hover {
+	border-right: 0.5em solid #222;
+	border-top: 0.2em solid #222;
+	border-bottom: 0.2em solid #222;
+	background-color: hsl(50, 94%, 70%);
+	color: hsl(50, 94%, 5%);
+}
+.avi {
+	border-radius: 50%;
+	display: inline-block;
+	width: 64px;
+}
+.avi img {
+	border-radius: 50%;
+	width: 64px;
+}
+.human {
+	display: inline-block;
+}
+.gentuza td {
+	width: 25%;
+}
+#langbar {
+padding: 0.1em;
+position: fixed;
+width: 100%;
+z-index: 30;
+height: 2em;
+background-color: black;
+color: #eee;
+text-align: left;
+font-size: 12px
+}
+#langSelect, #closeButton {
+	position: fixed;
+	top: 0.5em;
+	background-color: black;
+	padding: 1em;
+	text-align: center;
+}
+#langSelect {
+	left: 0em;
+	width: 10%;
+	height: 3em;
+	font-size: 13px;
+	border-bottom-right-radius: 1em
+}
+#closeButton {
+	right: 0;
+	border-bottom-left-radius: 1em
+}
+.navWrapper {
+	background-color: #111;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 200px;
+	height: 100vh;
+}
+.navWrapper img {
+	padding: 1%;
+}
+.front {
+	background-color: #333;
+	width: 90%;
+	height: 80vh;
+	margin-left: 8%;
+	margin-right: 2%;
+	border-top-left-radius: 2em;
+	border-bottom-left-radius: 2em;
+	overflow-y: scroll;
+	padding-left: 1em;
+	padding-top: 1em;
+}
+#front {
+	width: 80%;
+	margin: 2em 10%;
+	height: 100%;
+}
+#home {
+	width: 80%;
+	margin: 2em 10%;
+}
+#home div, .big {
+	margin: 25%;
+	width: 50%;
+	text-align: center;
+	font-size: 72px;
+	font-weight: bolder;
+}
+#juegos {
+	width: 80%;
+	padding: 16px;
+	margin: 2em 10%;
+	font-size: 16px
+}
+#about {
+	width: 80%;
+	margin: 2em 10%
+}
+.transparent {
+	background-color: transparent;
+	color: inherit
+}
+h6, center, h1, h2, h3, h4, h5 {
+	text-align: center;
+}
+#random table {
+	width: 100%;
+}
+.donate {
+	position: fixed;
+	left: 0.5em;
+	bottom: 0.5em;
+	background-color: black;
+	z-index: 31;
+	margin-left: -8px;
+	padding-top: 8px;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	border-top-right-radius: 1em
+}
+.nomargin {
+	margin-top: 0;
+}
+.ads {
+	overflow-y: scroll;
+	overflow-x: scroll;
+	height: 128px
+}
+.fixedFooter {
+	position: fixed;
+	background-color: black;
+	color: #eee;
+	width: 100%;
+	height: 1.5em;
+	left: 0; bottom: 0;
+	padding: 0.5em;
+	margin: -1px 0;
+	font-size: 13px;
+	z-index: 30
+}
+.center {
+	text-align: center;
+}

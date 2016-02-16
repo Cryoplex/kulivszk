@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Lemontastic! | Casino</title>
+	<link REL="SHORTCUT ICON" HREF="../img/lemonIcon.png">
+	<link type="text/css" rel="stylesheet" href="casino.css">
+	<title>Lemontastic! | Casino</title></head>
+<body lang="es">
+	<div id="all" style="background-color: black">
+
+	<div class="topBar">
+		<h1>Casino</h1>
+		<hr>
+		<ul>
+			<li class="spanish" onclick="show('gameHot')">Cara o Cruz <sup>ALPHA</sup>
+			<li class="english" onclick="show('gameHot')">Head or Tails <sup>ALPHA</sup>
+			
+			<li class="spanish" onclick="show('gameLottery')">Lotería <sup>ALPHA</sup>
+			<li class="english" onclick="show('gameLottery')">Lottery <sup>ALPHA</sup>
+
+			<li class="spanish" onclick="show('gameBank')">Banco <sup>ALPHA</sup>
+			<li class="english" onclick="show('gameBank')">Bank <sup>ALPHA</sup>
+
+			<li class="spanish" onclick="show('gameSlot')">Máquina Tragaperras <sup>ALPHA</sup>
+			<li class="english" onclick="show('gameSlot')">Slot Machine <sup>ALPHA</sup>
+
+			<li onclick="show('gameBlackJack')">BlackJack <sup>ALPHA</sup>
+
+			<li onclick="show('gameHoL')">Higher or Lower <sup>ALPHA</sup>
+
+
+		</ul>
+	</div>
+	<div id="tokenMonitor">
+		<i class="tok100"></i><span id="tokens"></span><br>
+		<i class="tok10k"></i><span id="moneys"></span><br>
+	</div>
+	
+	<div id="gameHot">
+		<h1 class="spanish">Cara o Cruz</h1><h1 class="english">Heads or Tails</h1><br>
+
+		<center>
+			<span class="spanish">Cara o Cruz, Doble o Nada. Apuesta fichas por una moneda que gira y gira. ¿Qué tocará?<br>
+			Puedes ganar el 200% de lo apostado.</span>
+			<span class="english">Heads or Tails, Double or Nothing. Bet tokens for a everspinning coin. Will it be Heads or Tails?<br>
+			You can ever win the 200% of your bet.</span><br><br>
+
+			<span class="spanish">Haz tu apuesta</span>
+			<span class="english">Make your bet</span><br>
+
+			<input type="number" class="tokenAmount" id="hotBet">
+			<input type="button" onclick="hotBet.value = Math.floor(casino.tokens*0.25)" value="25%"><input type="button" onclick="hotBet.value = Math.floor(casino.tokens*0.5)" value="50%"><input type="button" onclick="hotBet.value = Math.floor(casino.tokens*0.75)" value="75%"><input type="button" onclick="hotBet.value = Math.floor(casino.tokens)" value="100%"><br>
+			<input type="button" onclick="hotBet.value = Math.floor(hotBet.value * 1.1)" value="x1.1">
+			<input type="button" onclick="hotBet.value = Math.floor(hotBet.value * 1.5)" value="x1.5">
+			<input type="button" onclick="hotBet.value = Math.floor(hotBet.value * 2)" value="x2"><br>
+			<br><br>
+			<h1 id="hotCoin">(H)</h1>
+			<br><br>
+			<input type="button" onclick="headOrTails(0)" class="tokenButton" value="Heads?" id="hdsbtn">
+			<input type="button" onclick="headOrTails(1)" class="tokenButton" value="Tails?" id="tlsbtn"><br>
+		</center>
+	</div>
+
+	<div id="gameBlackJack">
+		<h1>BlackJack</h1>
+		(Coming soon)
+
+	</div>
+
+	<div id="gameSlot">
+		<h1 id="slotResults">[7] [7] [7]</h1>
+
+		<center>
+			<input type="button" value="1" onclick="slotMachine(1)">
+			<input type="button" value="2" onclick="slotMachine(2)">
+			<input type="button" value="5" onclick="slotMachine(5)">
+			<input type="button" value="10" onclick="slotMachine(10)">
+			<input type="button" value="50" onclick="slotMachine(50)">
+			<input type="button" value="100" onclick="slotMachine(100)">
+			<input type="button" value="1000" onclick="slotMachine(1000)">
+
+		</center>
+
+		<table style="width: 50%; font-family: monospace">
+			<tr>
+				<td><span class="spanish">Figura</span><span class="english">Figure</span></td><td>1</td><td>50</td><td>1000</td>
+			</tr>
+			<tr id="helpSeven">
+				<td>7 7 7</td><td>600</td><td>30,000</td><td>600,000</td>
+			</tr>
+			<tr id="helpDiamond">
+				<td>D D D</td><td>300</td><td>15,000</td><td>300,000</td>
+			</tr>
+			<tr id="helpMoneybag">
+				<td>M M M</td><td>150</td><td>7,500</td><td>150,000</td>
+			</tr>
+			<tr id="helpRepeat">
+				<td>R R R</td><td>75</td><td>3,750</td><td>75,000</td>
+			</tr>
+			<tr id="helpLemon">
+				<td>L L L</td><td>35</td><td>1,750</td><td>35,000</td>
+			</tr>
+			<tr id="helpBell">
+				<td>B B B</td><td>15</td><td>750</td><td>15,000</td>
+			</tr>
+			<tr id="helpCherry3">
+				<td>C C C</td><td>10</td><td>500</td><td>10,000</td>
+			</tr>
+			<tr id="helpCherry2">
+				<td>C C _</td><td>5</td><td>250</td><td>5,000</td>
+			</tr>
+			<tr id="helpCherry1">
+				<td>C _ _</td><td>3</td><td>125</td><td>2,500</td>
+			</tr>
+		</table>
+
+		<!--
+			'7': '#helpSeven', 'D': '#helpDiamond', 'M': '#helpMoneybag',
+	'R': '#helpRepeat', 'L': '#helpLemon', 'B': '#helpBell',
+	'C': '#helpCherry'
+		-->
+
+	</div>
+
+	<div id="gameBank">
+		<div id="commonBank">
+			<h1 class="spanish">Banco</h1><h1 class="english">Bank</h1>
+			<span class="english">Money in the Casino's bank</span>
+			<span class="spanish">Dinero en la banca del Casino</span>
+			<span id="banca"></span>
+			<br><div id="stealer"><input type="button" id="stealButton" onclick="steal()"><span id="stealerPenalty"></span></div>
+			<hr>
+
+			<h3 class="spanish">Intercambio de Fichas</h3>
+			<h3 class="english">Token Exchange</h3>
+			<span class="spanish">Precio de cada ficha: 10ç</span>
+			<span class="english">Token price: ç10</span>
+			<br>
+
+			<table>
+				<tr>
+					<td><input type="number" class="tokenAmount" id="tokenBuy"></td>
+					<td><input type="number" class="tokenAmount" id="tokenSell"></td>
+				</tr>
+
+				<tr>
+					<td onclick="buyTokens()">
+						<span class="spanish tokenButton">Comprar Fichas</span>
+						<span class="english tokenButton">Buy Tokens</span>
+					</td>
+					<td onclick="sellTokens()">
+						<span class="spanish tokenButton">Vender Fichas (10x)</span>
+						<span class="english tokenButton">Sell Tokens (10x)</span>
+					</td>
+				</tr>
+				<tr>
+					<td id="tokenPriceBuy"></td>
+					<td id="tokenPriceSell"></td>
+				</tr>
+			</table>
+
+		</div>
+		<div id="bank">
+			<hr>
+
+			<h3 id="accountBalance"></h3>
+			<i class="protip" id="accountInterest"></i>
+
+			<table>
+				<tr>
+					<td><input type="number" class="tokenAmount" id="bankWithdraw"></td>
+					<td><input type="number" class="tokenAmount" id="bankDeposit"></td>
+				</tr>
+
+				<tr>
+					<td onclick="withdrawMoney()">
+						<span class="spanish tokenButton">Retirar Dinero</span>
+						<span class="english tokenButton">Withdraw Money</span>
+					</td>
+					<td onclick="depositMoney()">
+						<span class="spanish tokenButton">Ingresar Dinero</span>
+						<span class="english tokenButton">Deposit Money</span>
+					</td>
+				</tr>
+				<tr>
+					<td id="withdrawMessage"></td>
+					<td id="depositMessage"></td>
+				</tr>
+			</table>
+
+			<span class="spanish">
+				Puedes ingresar dinero en tu cuenta de ahorros y retirarlo cuando quieras. Existe una tasa de interés que se añade automáticamente a tu cuenta, así que puedes irte y cuando vuelvas, ¡Tu dinero habrá crecido!
+
+				Interés: 0.5%/hora
+			</span>
+			<span class="english">
+				You can deposit money in your savings account and withdraw it whenever you want to. There is an interest rate that is added automatically to your account, so you can leave and once you come back, your money could have been doubled!
+
+				Interest rate: 0.5%/hour
+			</span>
+
+			<hr>
+			<h3 class="spanish">Préstamo</h3><h3 class="english">Loan</h3>
+			<p id="loanInfo"></p>
+
+			<div id="noloan">
+				<form oninput="interestRate.value = requestLoan(1); daysBeforeRepay.value = parseInt(maxTime.value)">
+					<span class="spanish">Horas antes de la devolución</span>
+					<span class="english">Hours before repay</span><br>
+					<input type="range" min="1" value="1" max="200" id="maxTime">
+					<output id="daysBeforeRepay">0</output><br>
+
+					<span class="spanish">Cantidad (+ intereses)</span>
+					<span class="english">Ammount (+ interests)</span><br>
+
+					<input type="number" min="1" value="1000" class="tokenAmount" id="loanAmount">
+					<output id="interestRate">0</output>
+				</form>
+				<div onclick="requestLoan()" class="tokenButton spanish">Solicitar</div>
+				<div onclick="requestLoan()" class="tokenButton english">Request</div>
+				<span id="loan"></span>
+			</div>
+
+			<div id="yesloan">
+				<span id="loanLeft"></span><br><br>
+
+				<input type="number" class="tokenAmount" id="loanRepay">
+				<div onclick="repayLoan()" class="tokenButton spanish">
+				Devolver Préstamo</div>
+				<div onclick="repayLoan()" class="tokenButton english">
+				Repay Loan</div>
+			</div>
+
+			<hr>
+			<h3 class="spanish">La Banca</h3><h3 class="english">The Bank</h3>
+
+			<span class="spanish">
+				Este es el dinero que tiene el Casino actualmente. Cada vez que alguien gana o pierde dinero, se hace notar en La Banca.
+				Puedes intentar robar o incluso realizar donaciones.
+			</span>
+			<span class="english">
+				This is the money that the Casino owns. Every time someone wins or loses money, this number changes.
+				You can try to steal here or make a donation.
+			</span>
+			<br>
+
+			<input type="number" class="tokenAmount" id="bancaDonation">
+			<div onclick="donateToBanca()" class="tokenButton spanish">
+				Donar a La Banca</div>
+			<div onclick="donateToBanca()" class="tokenButton english">
+				Donate to Bank</div>
+
+			<br><br><br><br><br><br><br><br><br>
+		</div>
+		<div id="nobank">
+			<hr>
+
+			<span class="spanish">
+				Parece que no tienes una cuenta de banco abierta.<br>
+				¡Abre ya tu cuenta de ahorros para empezar a disfrutar de las mejores tasas de intereses!
+			</span>
+			
+			<span class="english">
+				Seems like you don't have an open bank account.<br>
+				Open your savings account right now to start taking advantage of the best interest rates!
+			</span>
+			<br>
+			
+			<div class="button english" onclick="openAccount()">Open Savings Account (ç10,000)</div>
+			<div class="button spanish" onclick="openAccount()">Abrir Cuenta de Ahorros (10 000ç)</div>
+		</div>
+	</div>
+
+	<div id="gameLottery">
+		<h1 class="spanish">Lotería</h1><h1 class="english">Lottery</h1>
+		<hr>
+		<div class="spanish">
+			¡Compre un billete de lotería!<br>
+			¡Por tan sólo 2 fichas, podrá ganar hasta 300,000!
+		</div>
+		<div class="english">
+			Buy a lottery ticket!<br>
+			It costs only 2 tokens, and you could win up to 300,000!
+		</div>
+		<br>
+		<form>
+			<p class="spanish">Selecciona la cantidad de boletos que quieres comprar.</p>
+			<p class="english">Choose the amount of tickets you want to purchase.</p>
+			<form>
+				<input type="radio" name="lotteryType" value="generic" checked> Lotería
+				<input type="radio" name="lotteryType" value="big"> MegaPremio
+				<input type="radio" name="lotteryType" value="huge"> GigaPremio
+			</form>
+
+			<input type="number" class="tokenAmount" id="lottoAmt" value="1">
+			<input type="button" class="tokenButton" onclick="getLotteryTicket('custom')" id="lottoButton" value=""><br>
+			<input type="button" onclick="lottoAmt.value = Math.floor((canIBuyTickets())*0.25)" value="25%"><input type="button" onclick="lottoAmt.value = Math.floor((canIBuyTickets())*0.5)" value="50%"><input type="button" onclick="lottoAmt.value = Math.floor((canIBuyTickets())*0.75)" value="75%"><input type="button" onclick="lottoAmt.value = Math.floor((canIBuyTickets())*1)" value="100%">
+
+			<br>
+
+			<p id="youHaveTickets"></p>
+			<hr>
+			<pre id="yourTickets"></pre>
+			<hr>
+			<pre id="yourTicketsBig"></pre>
+		</form>
+		<hr>
+		<pre id="pastPrizes"></pre>
+
+		<br><br><br>
+	</div>
+
+	<div id="gameHoL">
+		<h1 class="sup">Mayor o Menor</h1>
+		<h1 class="igi">Higher or Lower</h1>
+		<p class="sup">Hay 52 cartas en el mazo. ¿Será la siguiente mayor o menor? Puedes ganar mucho dinero, pero ten cuidado, la avaricia rompe el saco.<br>
+			Si superas las 6 primeras rondas, entrarás en el <b>Triple o Nada</b>, donde podrás ganar una pasta. ¿Eres un gallina, o te atreverás con el Triple o Nada?</p>
+		<p class="igi">There are 52 cards in the deck. Can you guess if the next one will be higher or lower? You could end winning a lot of money, but be careful...<br>If you pass the first 6 rounds, you will enter <b>Triple or Nothing</b> mode. Are you a chicken? Challenge yourself with Triple or Nothing!</p>
+		<div class="table" id="holtable">
+			<i class="card card_backgray" id="hol_deck_firstcard"></i>
+			<i class="card card_deck" id="hol_deck"></i>
+
+			<div id="fortextBack" class="highlight"></div>
+			<div id="fortext" onclick="fortellerText.innerHTML = holChance()">
+				<p class="forteller2"><img src="forteller.png" class="forteller"><span id="fortellerText"></span></p>
+
+			</div>
+
+			<div class="center wrapper">
+				<h3 id="holtitle"></h3>
+			<p><span id="hol_minbet"></span><br>
+			<div id="hol_bet">
+				<input type="number" min="1" value="1" id="holBet"><br>
+				<input type="button" value="10%" onclick="holBet.value = Math.ceil(casino.tokens/10) || 1">
+				<input type="button" value="50%" onclick="holBet.value = Math.ceil(casino.tokens/2) || 1">
+				<input type="button" value="100%" onclick="holBet.value = Math.ceil(casino.tokens) || 1">
+			</div>
+			<div id="hol_giveup" onclick="resetHol()" class="tokenButton center"></div>
+			<br>
+			<div id="yeshol">
+				<input type="button" value="" id="holClickHi" onclick="higherOrLower('higher')">
+				<input type="button" value="" id="holClickLo" onclick="higherOrLower('lower')">
+			</div>
+			<div id="nohol">
+				<input type="button" value="" id="holClickPlay" onclick="resetHol()">
+			</div>
+			</p>
+
+			</div>	
+
+			<i class="card hol_slot" id="hol_slot1"></i>
+			<i class="card hol_slot" id="hol_slot2"></i>
+			<i class="card hol_slot" id="hol_slot3"></i>
+			<i class="card hol_slot" id="hol_slot4"></i>
+			<i class="card hol_slot" id="hol_slot5"></i>
+			<i class="card hol_slot" id="hol_slot6"></i>
+			<i class="card hol_slot" id="hol_slot7"></i>
+		</div>
+	</div>
+
+	<div id="botBar">
+		<img src="../lemontastic/beta/img/flags/en" onclick="swapLang('en')">
+		<img src="../lemontastic/beta/img/flags/es" onclick="swapLang('es')">
+
+		<span class="spanish">Notifica un error: </span>
+		<span class="english">Notify a bug: </span>
+		<a href="../feedback" target="_blank">Feedback</a>
+	</div>
+
+	<div id="banned">
+		<big id="timeleft">BANHAMMER!</big><br><br>
+		<input type="button" onclick="gambleTime()" value="Click!"><br>
+		<span id="timeleftgame"></span><br><br>
+		<span id="wq_debug"></span><br>
+		<span id="wq_upgrade">
+			<span id="wq_upgradeText"></span>
+			<input type="button" id="wq_upbt_0" onclick="upgradeWQ(0)">
+			<input type="button" id="wq_upbt_1" onclick="upgradeWQ(1)">
+			<input type="button" id="wq_upbt_2" onclick="upgradeWQ(2)">
+			<input type="button" id="wq_upbt_3" onclick="instantHealWQ()">
+		</span><br>
+		<input type="button" id="wq_debutton">
+	</div>
+	<script src="../jquery-2.1.4.min.js"></script>
+	<script src="../ui/1.11.4/jquery-ui.min.js"></script>
+	<script src="../common.js"></script>
+	<script src="casino.js"></script>
+	</div>
+</body>
+</html>

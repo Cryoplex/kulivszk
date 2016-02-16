@@ -1,0 +1,193 @@
+
+
+addManualEntry (
+	translate ( 'Hotkeys | Hotkeys'),
+'',
+	TRANSLATE
+	TRANSLATE
+		'Wherever you turn, you can press the following shortcut keys. <br> \
+(W) - Build a wall. The walls cost '  WALL_PRICE  ' ç. And they can only be built on grass. <br> \
+(E) - exit the building. Cancel the construction of towers, walls and traps. <br> \
+(R) - Place a trap. Cost traps '  TRAP_PRICE  ' ç. You can build traps in various types of terrain. <br> \
+(T) - Build a tower. The towers cost '  TOWER_PRICE  ' ç and can be built only on grass. <br> \
+(U) - Enhanced Mode. Select the Upgrade mode and click one of your units to bring them up a level. <br> \
+By this method, it is possible to increase the level of the towers to make them more powerful. <br> \
+. Please note that the cost to level increases with each use <br> \ | '
+)
+);
+addManualEntry (
+	translate ( 'Weather | Weather'),
+'',
+	TRANSLATE
+	TRANSLATE
+		'At the beginning of each shift, the weather is changing, giving rise to different phenomena. <br> \
+There are two factors that change, temperature and rain. <br> \
+Both have positive or negative effects. <br> \
+
+<br>
+<H3> Temperature </ h3> <br> \
+<B> Heat </b> <br> \
+In hot weather, the pools of water and dry ice and frost melts. <br> \
+<B> Heat </b> <br> \
+During a heat wave, the units may come into heat stroke if left too long on the move. <br> \
+Heat stroke causes damage, but does not kill. <br> \
+To avoid a heatstroke unit can stand still until wears off, into puddles or ice. Although it is rare to see ice with hot, right?
+<br>
+
+<br>
+<B> Cool </b> <br> \
+In cold weather, water puddles freeze leading to ice, and the grass becomes Frost. <br> \
+If it's cold and it rains, you may map ski giant becomes a <i> </ i> <br> \
+<B> Cool </b> <br> \
+A cold snap is a pretty serious weather conditions, which can cause freezing units. <br> \
+A cold unit loses mobility and eventually freezes, resulting in a temporary paralysis. <br> \
+If the weather improves, the unit will not be frozen, but that can be avoided through a hot spring. <br> \
+
+<br>
+<B> Clear </b> <br> \
+Rain is an event that causes puddles appear on the map. . This can be a nuisance at times, but can be beneficial if the rain combined with cold weather <br> \ | '
+)
+);
+addManualEntry (
+	translate ( 'Career Mode | Race Mode'),
+'',
+	TRANSLATE
+	TRANSLATE
+		'The career mode uses only two units, yours and that of the enemy. <br> \
+The goal is simple, you have to move towards the right side of the map and the last unit standing is the winner. <br> \
+To complicate matters, there is a phenomenon called corruption, causing the disappearance of specific parts of the map. <br> \
+Corruption harms units walking over, reaching death. <br> \
+There are two different ways to lose in Career Mode. <br> \
+One is dying from prolonged exposure to corruption. <br> \
+The other is being absorbed by the edge of the screen at the start of a shift. <br> \
+To avoid losing, stay on the move, and do your best to eat grapes Rainbow. <br> \
+If you eat grapes Rainbow, may increase the movement of your unit, giving you an advantage over the enemy <br> \ |. '
+)
+);
+
+addManualEntry (
+	translate ( 'List Units | Unit List'),
+'',
+	TRANSLATE
+	TRANSLATE
+		''   getUnitThumbnail('sprite_boyScout')   '<br> \
+The Boy Scout is the basic unit of Boy Scout Team. <br> \
+It has an average defense and under attack, so it excels in defensive strategies. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_soldierScout ')  ' <br> \
+The Soldier is a unit of Boy Scout Team is fairly inexpensive and versatile. <br> \
+Its movement is quite high compared to other units, making it easy to plan strategies. Moreover, its range is limited and their combat performance is mediocre, so it is imperative not to use them as cannon fodder. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_sniperScout ')  ' <br> \
+The Sniper is an expensive unit, with a decent attack and an impressive range. <br> \
+It is perfect to defend your base from enemy attacks patrolling the area and eliminating any enemy within reach. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_tower ')  ' <br> \
+The tower is a still defensive unit Boy Scout Team. <br> \
+It's expensive to build, but automatically attacks enemies that are available, so it can be used as a sentinel to protect the base. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_wall ')  ' <br> \
+The tower is a still defensive unit Boy Scout Team. <br> \
+Its cost is cheap. Despite not being able to attack, their defense is high and serves as a great aid combined with towers and traps. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_wall ')  ' <br> \
+Raccoon is the basic unit of the Raccoon team. <br> \
+It has a medium attack and low defense. It is excellent in the melee, and causes serious damage if used in large numbers. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_soldierCoon ')  ' <br> \
+Raccoon Soldier is a unit of the Raccoon team fairly cheap. <br> \
+His attack is higher than the raccoon, but has less defense. To attack from a distance, it can be used as heavy artillery against walls and towers. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_rppCoon ')  ' <br> \
+Raccoon Grenade Launcher is a unit of the Raccoon team siege. <br> \
+Its cost is expensive, but has a high attack and a greater range to Raccoon soldier, despite its low mobility. It's perfect for the siege of towers and walls, to make way for lighter units. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_cannon ')  ' <br> \
+The gun turret is an immobile defensive unit Raccoon Team. <br> \
+It's expensive to build, but automatically attacks enemies that are available, so it can be used as a sentinel to protect the base. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_barbedWire ')  ' <br> \
+The barbed wire is a still defensive unit Raccoon Team. <br> \
+Its cost is cheap. Despite not being able to attack, their defense is high and serves as a great aid combined with towers and traps. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_traitorBoyScout ')  ' <br> \
+The Boy Scout Traitor is invoked by a hostile unit succubi. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_traitorCoon ')  ' <br> \
+Raccoon Traitor is invoked by a hostile unit succubi. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_zombieScout ')  ' <br> \
+The Zombie is a hostile unit survival mode. The attack can cause disease, which lowers the life of the affected quickly to death. Zombies are created when another zombie kills a Boy Scout. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_zombieCoon ')  ' <br> \
+The Zombie Raccoon is a hostile unit survival mode. The attack can cause disease, which lowers the life of the affected quickly to death. Raccoon Zombies are created when another zombie kills a raccoon. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_vampire ')  ' <br> \
+The Vampire is a fearsome unit of Heaven against Hell mode. It has a high ability to move, and recovers life by attacking their enemies. If a vampire kills a Boy Scout, it is converted into a Bit, which eventually turns into another vampire's. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_bitten ')  ' <br> \
+The Bitten is a Boy Scout who has been attacked by a vampire and died. After move 13 times, bitten becomes another Vampire. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_priest ')  ' <br> \
+The priest is available in the fight against vampires unit. When a priest attacks a vampire, it receives a high amount of damage that results in death. Priests can not be turned into zombies or vampires, and are incapable of being false. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_fireSage ')  ' <br> \
+The Sage of Fire is one of the four sages. Use fireballs to attack, its range is smaller than a tower and its defense is low, so it is vulnerable to melee attacks. Unlike raccoons, it is immune to zombie conversions or Traitor. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_windSage ')  ' <br> \
+Wind Sage is one of the four sages. Rays used to attack, its range is smaller than a tower and its defense is low, so it is vulnerable to melee attacks. Unlike raccoons, it is immune to zombie conversions or Traitor. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_earthSage ')  ' <br> \
+The Sage of the Earth is one of the four sages. Grindstones used to attack, its range is smaller than a tower and its defense is low, so it is vulnerable to melee attacks. Unlike raccoons, it is immune to zombie conversions or Traitor. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_waterSage ')  ' <br> \
+The Water Wise is one of the four sages. Use rain to attack, its range is smaller than a tower and its defense is low, so it is vulnerable to melee attacks. Unlike raccoons, it is immune to zombie conversions or Traitor. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_angel ')  ' <br> \
+The Angel is a defensive unit available in Heaven against Hell mode. His attack is greater than a Boy Scout and although it is actually a raccoon, is immune to zombie conversions or betrayals. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_demon ')  ' <br> \
+The Devil is an offensive unit available in Heaven against Hell mode. Shares characteristics with raccoons, but has a slightly higher defense. It can not be turned into a zombie or a traitor. <br> \
+
+<br>
+ '  GetUnitThumbnail (' sprite_succubus ')  ' <br> \
+Succubi are evil creatures that hypnotize the Boy Scouts and raccoons and may even turn them into traitors. Faced with units that do not succumb to its charms, are weak, so they are vulnerable to ranged combat. <br> \
+<br>
+)
+);
+
+
+/* 
+
+addManualEntry (
+	translate ( 'Test | Test')
+'',
+	TRANSLATE
+	TRANSLATE
+		'|'
+)
+);
+
+*/

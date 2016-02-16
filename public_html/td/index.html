@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>Game</title>
+
+  <link type="text/css" rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="stylesheet.css">
+
+  <style>
+  mark {
+    color: red;
+    background-color: transparent;
+    font-weight: bolder;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1></h1>
+  </div>
+
+  <div class="row">
+    <div class="container">
+      <div class="col-md-4">
+        <h2>Stats</h2>
+        <h3>Population</h3>
+        <p>Your village has <span id="data_population"></span> citizens.<br>
+          <span id="data_occupations"></span>
+        </p>
+        <p><i>Growth: ~<span id="data_growth"></span> per second.</i></p>
+        <hr>
+        
+        <h3>Resources</h3>
+        <span id="data_resources"></span>
+
+        <input type="button" onclick="gather('food')" value="Harvest Farms">
+        <br>
+        <input type="button" onclick="gather('wood')" value="Chop Trees">
+        <br>
+        <input type="button" onclick="mine()" value="Go Mining">
+      </div>
+
+      <div class="col-md-4">
+        <h2>Management</h2>
+        <h3>Construction</h3>
+        <input type="button" onclick="build('house')" id="data_build_house">
+        <br>
+        <input type="button" onclick="build('stonehouse')" id="data_build_stonehouse">
+        <br>
+
+        <hr>
+
+        <div id="unemployed">
+          <p>Select the number of unemployed citizens you want to employ.<br>
+          <input type="number" id="employ"><br><br>
+          <input type="button" onclick="giveJob('farmers')" value="Farmer">
+          <br>
+          <input type="button" onclick="giveJob('miners')" value="Miner">
+          <br>
+          <input type="button" onclick="giveJob('lumbers')" value="Lumberjack">
+          <br>
+          <input type="button" onclick="giveJob('soldiers')" value="Soldier">
+          <br>
+        </div>
+
+        </p>
+      </div>
+
+      <div class="col-md-3">
+        <h2>Market</h2>
+        <h3>Buy</h3>
+        <input type="button" onclick="buyItem('food')" id="data_mb_food"><br>
+        <input type="button" onclick="buyItem('wood')" id="data_mb_wood"><br>
+        <input type="button" onclick="buyItem('stone')" id="data_mb_stone"><br>
+        <input type="button" onclick="buyItem('iron')" id="data_mb_iron"><br>
+        <br>
+        <h3>Sell</h3>
+        <input type="button" onclick="sellItem('food')" id="data_ms_food"><br>
+        <input type="button" onclick="sellItem('wood')" id="data_ms_wood"><br>
+        <input type="button" onclick="sellItem('stone')" id="data_ms_stone"><br
+        >
+        <input type="button" onclick="sellItem('iron')" id="data_ms_iron"><br>
+        <br>
+      </div>
+
+      <div class="col-md-1">
+        <h4>Autobuy</h4>
+        <input type="radio" id="ab_none" name="autobuy" checked> (None) <br>
+        <input type="radio" id="ab_food" name="autobuy"> Food <br>
+        <input type="radio" id="ab_wood" name="autobuy"> Wood <br>
+        <input type="radio" id="ab_stone" name="autobuy"> Stone <br>
+        <input type="radio" id="ab_iron" name="autobuy"> Iron <br>
+        <hr>
+        <h4>Autosell</h4>
+        <input type="radio" id="as_none" name="autosell" checked> (None) <br>
+        <input type="radio" id="as_food" name="autosell"> Food <br>
+        <input type="radio" id="as_wood" name="autosell"> Wood <br>
+        <input type="radio" id="as_stone" name="autosell"> Stone <br>
+        <input type="radio" id="as_iron" name="autosell"> Iron <br>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="http://www.archlemon.com/common.js"></script>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
