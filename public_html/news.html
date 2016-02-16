@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free HTML5 Incremental Games at ArchLemon Studios">
+  <meta name="keywords" content="play random incremental indie games">
+  <link rel="icon" href="home/favicon.png">
+
+  <title>Arch Lemon Studios Homepage</title>
+
+  <link type="text/css" rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="home/stylesheet.css">
+</head>
+<body>
+<div class="container">
+	<!-- Labels
+		<span class="label label-default">Test</span>
+		<span class="label label-primary">Game</span>
+		<span class="label label-warning">Beta</span>
+		<span class="label label-danger">Alpha</span>
+		<span class="label label-info">Update</span>
+		<span class="label label-success">Bugfix</span>
+	-->
+
+	<!-- Publication -->
+	<h3>February 2016</h3>
+	<h5>February 16, 2016</h5>
+	<p><span class="label label-primary">Game</span> Added game "Lemontactics!"</p>
+
+	<h3>September 2015</h3>
+	<h5>September 11, 2015</h5>
+	<p><span class="label label-info">Update</span> Updated ArchLemon Studios homepage. The old one can still be seen <a href="http://www.archlemon.com/index_old.html">here</a></p>
+	<hr>
+
+	<h6 id="older" onclick="showOlder()"><a>Show older posts</a></h6>
+</div>
+<div class="container" id="archive">
+	<!-- Publication -->
+	<h3>Test</h3>
+	<h5>September 11, 2015 <span class="label label-default">Test</span>
+		<span class="label label-primary">Game</span>
+		<span class="label label-warning">Beta</span>
+		<span class="label label-danger">Alpha</span>
+		<span class="label label-info">Update</span>
+		<span class="label label-success">Bugfix</span></h5>
+	<p>Hello World!</p>
+	<hr>
+	<hr>
+</div>
+
+
+ <script src="http://www.archlemon.com/common.js"></script>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+ <script>
+	document.getElementById('archive').style.display = 'none';
+	function showOlder() {
+		document.getElementById('archive').style.display = 'block';
+		document.getElementById('older').style.display = 'none';
+	}
+ </script>
+</body>
+</html>
