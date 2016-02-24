@@ -3,6 +3,8 @@
 <head></head>
 <body>
 <h1>Hello World</h1>
+<input type="button" onclick="showHide()">
+<span id="tohide">Hello world</span>
 
 <script src="../jquery.min.js"></script>
 <script src="../jquery-ui.min.js"></script>
@@ -11,6 +13,9 @@
 $(document).keypress(function(evt) {
 	alert(evt.keyCode);
 });
+function showHide() {
+	$('#tohide').slideUp();
+}
 </script>
 </body>
 </html>
