@@ -1,10 +1,10 @@
 var stalk = {};
 stalk.turnips = 0;
 stalk.money = 3000;
-stalk.day = 0;
+stalk.day = 12;
 
 stalk.turnip = {};
-stalk.turnip.price = 100;
+stalk.turnip.price = rand(90, 110);
 stalk.turnip.pattern = rand(0,3);
 stalk.turnip.spikeDay = rand(0,7);
 stalk.turnip.highest = rand(250,600);
@@ -44,6 +44,8 @@ Days:
 */
 
 function updateHUD() {
+	drawShops();
+
 	moneyBag.className = 'sprite sprite_bag99k';
 	if (stalk.money < 99000) {
 		moneyBag.className = 'sprite sprite_bag10k';
@@ -59,7 +61,10 @@ function updateHUD() {
 	moneyValue.innerHTML = stalk.money;
 	turnipValue.innerHTML = stalk.turnips;
 	dayValue.innerHTML = 'Hoy es '+dayToString(stalk.day);
-	turnipPrice.innerHTML = 'Precio de los nabos: '+stalk.turnip.price+'<br>'+stalk.turnip.pattern;
+	turnipPrice.innerHTML = 'Precio de los nabos: '+stalk.turnip.price;
+
+	var exClassBuy = '';
+	var exClassSell = '';
 
 	buyPrice.innerHTML = (parseInt(toBuy.value)) * stalk.turnip.price;
 	sellPrice.innerHTML = (parseInt(toSell.value)) * stalk.turnip.price;
@@ -68,7 +73,12 @@ function sleep() {
 	stalk.day++;
 	if (stalk.day >= 14) newWeek();
 	stalk.turnip.price = getNewTurnipPrice(stalk.turnip);
-	drawShops();
+
+	if (stalk.day == 12) {
+    	var tur = stalk.turnips;
+    	notification('Tus '+tur+' nabos se han podrido.');
+    	stalk.turnips = 0;
+    }
 
 	updateHUD();
 }
@@ -139,12 +149,10 @@ function drawShops() {
 	turnipSell.style.visibility = 'visible';
 	turnipBuy.style.visibility = 'hidden';
 	if (stalk.day >= 12) {
-		console.log('Sunday AM');
 		turnipSell.style.visibility = 'hidden';
 		turnipBuy.style.visibility = 'visible';
 	}
 	if (stalk.day == 13) {
-		console.log('Sunday PM');
 		turnipBuy.style.visibility = 'hidden';
 	}
 }
