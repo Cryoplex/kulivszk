@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="stylesheet.css">
+	<meta charset="UTF-8">
+</head>
+<body>
+	<span class="hud">
+		<span class="moneyHUD">
+			<span id="moneyBag" class="sprite sprite_bag10k"></span>
+			<span id="moneyValue"></span>
+		</span>
+		<br>
+		<span class="turnipHUD">
+			<span class="sprite sprite_turnip"></span>
+			<span id="turnipValue"></span>
+		</span>
+	</span>
+
+	<span id="dayValue"></span><br>
+	<span id="turnipPrice"></span><br><br>
+
+	<div id="turnipBuy">
+		<h2>Comprar</h2>
+		<input type="number" value="0" id="toBuy"> nabos por <span id="buyPrice"></span> bayas.<br>
+		<input type="button" onclick="buyEm()" value="¡Comprar!">
+	</div><br>
+	<div id="turnipSell">
+		<h2>Vender</h2>
+		<input type="number" value="0" id="toSell"> nabos por <span id="sellPrice"></span> bayas.<br>
+		<input type="button" onclick="sellEm()" value="¡Vender!">
+	</div><br>
+	<br>
+
+	<input type="button" onclick="sleep()" value="Dormir 12 horas">
+
+	<script src="../common.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
