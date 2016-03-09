@@ -16,7 +16,18 @@
         <div class="navbar-header">
           <ul>
             <!-- Tabs -->
-	          <li><a href="#" onclick="mainWindow('shipSelector')">Editar Nave</a></li>
+            <li><a href="#" onclick="mainWindow('shipSelector')">
+              <span class="es">Editar Nave</span>
+              <span class="en">Edit Ship</span>
+            </a></li>
+            <li><a href="#" onclick="mainWindow('shipShop')">
+              <span class="es">Tienda</span>
+              <span class="en">Shop</span>
+            </a></li>
+            <li><a href="#" onclick="mainWindow('inventory')">
+              <span class="es">Inventario</span>
+              <span class="en">Inventory</span>
+            </a></li>
             <li><a href="#" onclick="mainWindow('test')">Test</a></li>
           </ul>
         </div>
@@ -27,14 +38,31 @@
       <div class="stars2">
       <div class="stars3">
         <div class="container">
+          <div class="moneyContainer">
+            <span class="es">Dinero</span><span class="en">Money</span>
+            <span id="yourMoney">0</span> ç
+          </div>
 
+          <div id="shipShop">
+            <span class="es">Bienvenido al a tienda, viajero. Aquí puede encontrar una amplia variedad de mejoras para su nave.</span>
+            <span class="en">Welcome to the shop, traveller. Here you will find different types of upgrades for your ship.</span>
 
+            <span id="shipShopList"></span>
+          </div>
+
+          <div id="inventory">
+            <span id="shipData"></span>
+            <span id="inventoryData"></span>
+          </div>
 
           <div id="shipSelector">
-            <input type="button" class="btn btn-default" onclick="generateRandomShip()" value="Aleatorio"><output id="game_value"></output>
+            <button class="btn btn-default" onclick="generateRandomShip()">
+              <span class="es">Aleatorio</span><span class="en">Random</span>
+            </button><output id="game_value"></output>
 
             <br><br>
-            Decoración de la nave:<br>
+             <span class="es">Decoración</span>
+             <span class="en">Decoration</span><br>
             <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 1; drawShip()" value="1">
             <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 2; drawShip()" value="2">
             <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 3; drawShip()" value="3">
@@ -51,19 +79,13 @@
             <br><br>
 
             Color:<br>
-            <input type="number" min="0" max="360" class="btn btn-default" onchange="game.myShip.hueChange = parseInt(this.value); drawShip()">
+            <input type="range" min="0" max="360" onchange="game.myShip.hueChange = parseInt(this.value); drawShip()">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 0; drawShip()" value="Rojo">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 30; drawShip()" value="Naranja">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 60; drawShip()" value="Amarillo">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 90; drawShip()" value="Lima">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 120; drawShip()" value="Verde">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 150; drawShip()" value="Jade">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 180; drawShip()" value="Celeste">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 210; drawShip()" value="Azul">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 240; drawShip()" value="Azul Marino">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 270; drawShip()" value="Púrpura">
             <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 300; drawShip()" value="Rosa">
-            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 330; drawShip()" value="Fucsia">
           </div>
 
         </div>
