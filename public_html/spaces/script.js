@@ -157,7 +157,7 @@ function increaseValue(num) {
 function resetVariables() {
 	if (!game.value) game.value = 0;
 
-	if (!game.myShip) game.myShip = new Ship();
+	if (!game.myShip || !game.myShip.primaryWeapon) game.myShip = new Ship();
 
 	if (game.money == undefined) game.money = 1000;
 
