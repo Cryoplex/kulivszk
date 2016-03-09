@@ -1144,6 +1144,26 @@ function saveGame() {
 	$('.notification').remove();
 	notification('Game Saved');
 }
+function getItemDataFromID(id) {
+	var item = floh.items[id];
+	return {
+		'id': item[0],
+		'name': item[1],
+		'basePrice': item[2],
+		'description': item[3],
+		'trait': item[4]
+	}
+}
+function dumpItemData(id) {
+	var item = getItemDataFromID(id);
+	return item.id+' '+item.name+' '+item.basePrice+' '+item.description+' '+item.trait;
+}
+function dumpAllItems() {
+	var l = 'ITEM LIST (FOR DEBUGGING PURPOSES)<br>';
+	for (var x in floh.items) l += dumpItemData(x)+'<br>';
+	debugLog.innerHTML = l;
+}
+
 
 loadGame();
 saveGame();
@@ -1567,6 +1587,7 @@ $(document).ready(function() {
 	});
 
 	$('#b_changelog').click(function() {
+		dumpAllItems();
 		showWindow('#w_changelog');
 	});
 
