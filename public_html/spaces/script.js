@@ -1,17 +1,20 @@
 function getRandomShip() {
 	return {
-		'shipColor': rand(1,15),
+		'shipColor': rand(1,7),
 		'fireColor': rand(1,3),
+		'hueChange': rand(0,360),
 	}
 }
 function drawShip(ship) {
+	if (!ship) ship = game.myShip;
+	console.log('Ship: '+ship);
 	var fc = ship.fireColor;
 	var sc = ship.shipColor;
-	return '<img src="img/fire_'+fc+'.png" style="z-index: 1"><img src="img/ship_'+sc+'.png" style="position: relative; top: 0px; left: -168px; z-index: 2">';
+	var hr = ship.hueChange;
+	game_value.innerHTML = '<img src="img/fire_'+fc+'.png" style="z-index: 1"><img src="img/ship_'+sc+'.png" style="-webkit-filter: hue-rotate('+hr+'deg); position: relative; top: 0px; left: -168px; z-index: 2">';
 }
 function generateRandomShip() {
 	var myShip = getRandomShip();
-	game_value.innerHTML = drawShip(myShip);
 }
 
 function increaseValue(num) {
@@ -20,6 +23,12 @@ function increaseValue(num) {
 }
 function resetVariables() {
 	if (!game.value) game.value = 0;
+
+	game.myShip = {
+	'shipColor': rand(1,7),
+	'fireColor': rand(1,3),
+	'hueChange': rand(0,360),
+	}
 }
 function saveGame() {
 	localStorage.setItem('game', JSON.stringify(game));
@@ -36,6 +45,9 @@ function update(step) {
 }
 
 var game = {};
+
 loadGame();
 resetVariables();
 var t = setInterval(saveGame, 60000);
+
+drawShip();
