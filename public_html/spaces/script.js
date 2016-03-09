@@ -14,7 +14,8 @@ function drawShip(ship) {
 	game_value.innerHTML = '<img src="img/fire_'+fc+'.png" style="z-index: 1"><img src="img/ship_'+sc+'.png" style="-webkit-filter: hue-rotate('+hr+'deg); position: relative; top: 0px; left: -168px; z-index: 2">';
 }
 function generateRandomShip() {
-	var myShip = getRandomShip();
+	game.myShip = getRandomShip();
+	drawShip();
 }
 
 function increaseValue(num) {
@@ -24,7 +25,7 @@ function increaseValue(num) {
 function resetVariables() {
 	if (!game.value) game.value = 0;
 
-	game.myShip = {
+	if (!game.myShip) game.myShip = {
 	'shipColor': rand(1,7),
 	'fireColor': rand(1,3),
 	'hueChange': rand(0,360),
@@ -42,6 +43,13 @@ function loadGame() {
 }
 function update(step) {
 	if (step == 'game_value' || !step) doc('game_value').innerHTML = shortNum(game.value);
+
+	drawShip();
+}
+function mainWindow(what) {
+	var wins = ['shipSelector'];
+	for (var e in wins) $('#'+wins[e]).slideUp(100);
+	$('#'+what).slideDown(100);
 }
 
 var game = {};

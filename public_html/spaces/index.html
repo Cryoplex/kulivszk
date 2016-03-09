@@ -16,7 +16,8 @@
         <div class="navbar-header">
           <ul>
             <!-- Tabs -->
-	          <li><a href="#">Game</a></li>
+	          <li><a href="#" onclick="mainWindow('shipSelector')">Editar Nave</a></li>
+            <li><a href="#" onclick="mainWindow('test')">Test</a></li>
           </ul>
         </div>
       </div>
@@ -26,27 +27,45 @@
       <div class="stars2">
       <div class="stars3">
         <div class="container">
-          <input type="button" class="btn btn-default" onclick="generateRandomShip()" value="Cambiar nave"><output id="game_value"></output>
 
-          <br><br>
-          Decoración de la nave:<br>
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 1; drawShip()" value="Gris">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 2; drawShip()" value="Un Color">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 3; drawShip()" value="Negra">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 4; drawShip()" value="Color Oscuro (Sin franjas)">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 5; drawShip()" value="Color Claro">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 6; drawShip()" value="Un Color Oscuro">
-          <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 7; drawShip()" value="Dos Colores">
-          <br><br>
 
-          Motor:<br>
-          <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 1; drawShip()" value="Nuclear">
-          <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 2; drawShip()" value="Queroseno">
-          <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 3; drawShip()" value="Iónico">
-          <br><br>
 
-          Color:<br>
-          <input type="number" min="0" max="36" class="btn btn-default" onchange="game.myShip.hueChange = parseInt(this.value) * 10; drawShip()">
+          <div id="shipSelector">
+            <input type="button" class="btn btn-default" onclick="generateRandomShip()" value="Aleatorio"><output id="game_value"></output>
+
+            <br><br>
+            Decoración de la nave:<br>
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 1; drawShip()" value="1">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 2; drawShip()" value="2">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 3; drawShip()" value="3">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 4; drawShip()" value="4">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 5; drawShip()" value="5">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 6; drawShip()" value="6">
+            <input type="button" class="btn btn-default" onclick="game.myShip.shipColor = 7; drawShip()" value="7">
+            <br><br>
+
+            Motor:<br>
+            <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 1; drawShip()" value="1">
+            <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 2; drawShip()" value="2">
+            <input type="button" class="btn btn-default" onclick="game.myShip.fireColor = 3; drawShip()" value="3">
+            <br><br>
+
+            Color:<br>
+            <input type="number" min="0" max="360" class="btn btn-default" onchange="game.myShip.hueChange = parseInt(this.value); drawShip()">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 0; drawShip()" value="Rojo">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 30; drawShip()" value="Naranja">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 60; drawShip()" value="Amarillo">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 90; drawShip()" value="Lima">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 120; drawShip()" value="Verde">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 150; drawShip()" value="Jade">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 180; drawShip()" value="Celeste">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 210; drawShip()" value="Azul">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 240; drawShip()" value="Azul Marino">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 270; drawShip()" value="Púrpura">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 300; drawShip()" value="Rosa">
+            <input type="button" class="btn btn-default" onclick="game.myShip.hueChange = 330; drawShip()" value="Fucsia">
+          </div>
+
         </div>
       </div>
       </div>
