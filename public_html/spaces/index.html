@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Space Survival v0.0.0</title>
+    <title>Space Survival v0.2</title>
 
-    <link type="text/css" rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="../bootstrap.css">
     <link type="text/css" rel="stylesheet" href="stylesheet.css">
   </head>
 
@@ -28,7 +28,10 @@
               <span class="es">Inventario</span>
               <span class="en">Inventory</span>
             </a></li>
-            <li><a href="#" onclick="mainWindow('test')">Test</a></li>
+            <li><a href="#" onclick="mainWindow('combatTest')">
+              <span class="es">Prueba de Combate</span>
+              <span class="en">Combat Test</span>
+            </a></li>
           </ul>
         </div>
       </div>
@@ -48,6 +51,37 @@
             <span class="en">Welcome to the shop, traveller. Here you will find different types of upgrades for your ship.</span>
 
             <span id="shipShopList"></span>
+          </div>
+
+          <div id="combatTest">
+            <span id="projectile"></span>
+            <span id="explosion"></span>
+
+            <span id="enemyShip"></span>
+
+            <span id="yourShip"></span>
+
+            <br class="btn btn-default attackb" style="opacity: 0; clear: right">
+
+            <div id="seekBattle" style="display: none">
+              <button onclick="startBattle()" class="btn btn-default attackb">
+                <span class="es">Buscar Oponente</span><span class="en">Look for an Opponent</span>
+              </button>
+            </div>
+            <div id="combatButtons">
+              <button onclick="combat(0)" class="btn btn-default attackb" id="combatButton1">
+                <span class="es">Disparar con Arma Primaria</span><span class="en">Shoot with Primary Weapon</span><br><span id="w1_tip"></span>
+              </button>
+              <button onclick="combat(1)" class="btn btn-default attackb" id="combatButton2">
+                <span class="es">Disparar con Arma Secundaria</span><span class="en">Shoot with Secondary Weapon</span><br><span id="w2_tip"></span>
+              </button>
+              <button onclick="combat(2)" class="btn btn-default attackb" id="combatButton3">
+                <span class="es">Esquivar</span><span class="en">Dodge</span>
+              </button>
+              <button onclick="combat(3)" class="btn btn-default attackb" id="combatButton4">
+                <span class="es">Recargar</span><span class="en">Reload</span>
+              </button>
+            </div>
           </div>
 
           <div id="inventory">

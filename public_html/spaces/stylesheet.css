@@ -94,8 +94,10 @@ sup {
 	z-index: 1031;
 }
 
-#shipShop, #shipSelector {
+#shipShop, #shipSelector, #inventory, #combatTest {
 	display: none;
+	height: 400px;
+	overflow-y: scroll;
 }
 .shopItem {
 	background-color: #fff;
@@ -118,4 +120,85 @@ sup {
 	width: 360px;
 	float: right;
 	display: inline;
+}
+#yourShip {
+	float: right;
+	background-color: hsla(120, 50%, 50%, 0.8);
+	padding: 8px;
+}
+#enemyShip {
+	float: left;
+	background-color: hsla(0, 50%, 50%, 0.8);
+	padding: 8px;
+}
+.flipped {
+	transform: scale(-1, 1);
+}
+.attackb {
+	width: 23%;
+	height: 64px;
+	margin: 8px;
+	float: left;
+}
+.active {
+	outline: 2px solid yellow;
+}
+.commonBlack {
+	background-color: rgba(0, 0, 0, 0.5);
+	color: transparent;
+}
+.commonFilled {
+	background-color: rgba(0, 255, 255, 0.8);
+	color: transparent;
+}
+.commonDepleted {
+	background-color: rgba(32, 128, 32, 0.2);
+	color: transparent; 
+}
+.gray {
+	opacity: 0.5;
+}
+.badItem {
+	background-color: rgb(255, 192, 192);
+}
+.goodItem {
+	background-color: rgb(192, 255, 192);
+}
+#projectile {
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	border-radius: 100%;
+	background-color: yellow;
+	box-shadow: 0 0 8px yellow;
+	width: 16px;
+	height: 16px;
+	z-index: 2000;
+}
+#explosion {
+	display: none;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 32px;
+	height: 32px;
+	border-radius: 100%;
+	background-color: orange;
+	box-shadow: 0 0 64px orange;
+	z-index: 2001;
+}
+.hpfilled {
+	border-bottom-left-radius: 8px;
+	border-top-left-radius: 8px;
+	background: linear-gradient(#08f, #0f8);
+	height: 32px;
+	display: inline-block;
+}
+.hpempty {
+	border-bottom-right-radius: 8px;
+	border-top-right-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.2);
+	height: 32px;
+	display: inline-block;
 }
