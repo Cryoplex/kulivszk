@@ -50,6 +50,14 @@ sup {
 	z-index: 3;
 	-webkit-user-select: none;
 }
+.mousePoop {
+	width: 4px;
+	height: 2px;
+	display: inline-block;
+	position: absolute;
+	background-color: #442;
+	border-radius: 100%;
+}
 .mouse:hover {
 	animation: catch 1s infinite;
 }

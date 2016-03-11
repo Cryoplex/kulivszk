@@ -4,6 +4,7 @@
 0.2.0.0 Now you can catch mice with your bare hands
 0.2.1.0 Difficulty increases each 10 mice caught. After 1000 mice, there will be a lot of mice spawned each tick.
 0.2.1.1 Fixed loading bug
+0.2.2 Mice now poop on the floor.
 
 */
 
@@ -31,11 +32,17 @@ function Mouse() {
 
 	this.x = spawn.x;
 	this.layer = spawn.layer;
-	this.y = getYFromLayer(spawn.layer);
+	this.y = getYFromLayer(spawn.layer) + rand(0,10);
 	this.motionX = red(-1, 1);
 	this.invul = 10;
 	this.stand = 0;
 	this.type = 'mouse';
+}
+function Poop(x, y) {
+	this.x = x;
+	this.size = rand(10,20) / 10;
+	this.y = y + rand(20,26);
+	this.rot = rand(0, 360);
 }
 function getSpawnPoint() {
 	var spawns = [
@@ -43,6 +50,10 @@ function getSpawnPoint() {
 	{'x': 111, 'layer': 1},
 	];
 	return read(spawns);
+}
+function addPoop(x, y) {
+	poops.push(new Poop(x, y));
+	moveMice(1);
 }
 function moveMice(draw) {
 	var maxDiff = 100 - Math.ceil(miceGame.catched / 10);
@@ -64,6 +75,9 @@ function moveMice(draw) {
 	    if (mouse.invul > 0) {
 	    	i = 'invul';
 	    	mouse.invul--;
+	    }
+	    if (!rand(0,250)) {
+	    	addPoop(mouse.x, mouse.y);
 	    }
 
 	    if (!mouse.stand && !draw) {
@@ -91,6 +105,9 @@ function moveMice(draw) {
 	    }
 
 		l += '<i id="mouse_'+m+'" onclick="catchMouse('+m+')" class="mouse '+i+' '+cl+' '+is+'" style="top: '+mouse.y+'px; left: '+mouse.x+'px"></i>';
+	}
+	for (var p in poops) {
+		l += '<i class="mousePoop" style="transform: scale('+poops[p].size+') rotate('+poops[p].rot+'deg); top: '+poops[p].y+'px; left: '+poops[p].x+'px"></i>';
 	}
 	if (draw) playableBG.innerHTML = l;
 	if (!miceGame.catched) miceGame.catched = 0;
@@ -134,6 +151,7 @@ miceGame.mice = [];
 miceGame.catched = 0;
 loadGame();
 resetVariables();
+var poops = [];
 
 addMouse();
 var t = setInterval(saveGame, 60000);
