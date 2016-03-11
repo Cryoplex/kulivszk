@@ -1,0 +1,121 @@
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a, .navbar li {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.red {
+	color: red;
+}
+
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+
+.mouse {
+	background: url(mouse.png);
+	width: 57px;
+	height: 23px;
+	display: inline-block;
+	z-index: 3;
+	-webkit-user-select: none;
+}
+.mouse:hover {
+	animation: catch 1s infinite;
+}
+@keyframes catch {
+	0%, 100% {
+		outline: 2px solid yellow;
+	}
+	50% {
+		outline: 1px solid red;
+	}
+}
+.block {
+	background: url(block.png);
+	width: 36px;
+	height: 52px;
+	display: inline-block;
+	z-index: 4;
+	position: absolute;
+	image-rendering: pixelated;
+}
+.mouse_stand {
+	background-position: 0px 0px;
+	animation: standAnimation 0.1s steps(2) infinite;
+	image-rendering: pixelated;
+	position: absolute;
+}
+.mouse_run {
+	background-position: 0px -46px;
+	animation: runAnimation 0.1s steps(2) infinite;
+	image-rendering: pixelated;
+	position: absolute;
+}
+.big {
+	transform: scale(2.0);
+}
+.invul {
+	animation: invul 0.02s infinite;
+}
+.invertSide {
+	transform: scale(-1, 1);
+}
+@keyframes invul {
+	0%, 100% {
+		opacity: 0.2;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes standAnimation {
+	to {
+		background-position: 0px -46px;
+	}
+}
+@keyframes runAnimation {
+	to {
+		background-position: 0px -92px;
+	}
+}
+.playable {
+	position: relative;
+	top: 0;
+	left: 0;
+	background: url(bg.png);
+	width: 640px;
+	height: 480px;
+	-webkit-user-select: none;
+}

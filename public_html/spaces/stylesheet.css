@@ -94,9 +94,11 @@ sup {
 	z-index: 1031;
 }
 
-#shipShop, #shipSelector, #inventory, #combatTest {
+#shipShop, #shipSelector, #inventory, #combatTest, #race {
 	display: none;
 	height: 400px;
+}
+#shipShop {
 	overflow-y: scroll;
 }
 .shopItem {
@@ -200,5 +202,18 @@ sup {
 	border-top-right-radius: 8px;
 	background-color: rgba(0, 0, 0, 0.2);
 	height: 32px;
+	display: inline-block;
+}
+.isosquare {
+	background: url(img/isosquare.png);
+	position: fixed;
+	width: 26px;
+	height: 13px;
+	display: inline-block;
+}
+.raceShip {
+	background: url(img/ship_1b.png);
+	width: 133px;
+	height: 39px;
 	display: inline-block;
 }

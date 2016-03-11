@@ -1,6 +1,10 @@
 /*
 0.1.0.0 Started changelog (Kinda late?)
 0.2.0.0 Added sounds
+0.2.1.0 Shop now discards old items
+0.2.2.0 Added a little delay before the losing message appears
+0.2.3.0 Battles now start with all weapons ready.
+0.2.4.0 Hit chances for weapons are now shown.
 
 */
 
@@ -14,48 +18,6 @@ var snd_explode = new Audio('sound/explosion.wav');
 
 var itemList = [];
 var shopList = [];
-//itemList.push(new Item(name, price, atk, reload, accuracy, def, evasion, speed, weight));
-itemList.push(new Item('Basic Cannon', 0, 10, 2, 0.9, 0, 0, 0, 0));
-itemList.push(new Item('Basic Engine', 0, 0, 0, 0, 0, 0.1, 10, 0));
-itemList.push(new Item('Basic Body', 0, 0, 0, 0, 10, 0, 0, 1));
-
-//Basic weapons
-itemList.push(new Item('Blaster', 0, 20, 2, 0.9, 0, 0, 0, 0));
-itemList.push(new Item('Gatling', 0, 10, 1, 0.9, 0, 0, 0, 0));
-itemList.push(new Item('Sniper', 0, 10, 2, 1.15, 0, 0, 0, 0));
-
-itemList.push(new Item('Cannon', 0, 20, 1, 0.9, 0, 0, 0, 0));
-itemList.push(new Item('Missile', 0, 20, 1, 1.15, 0, 0, 0, 0));
-itemList.push(new Item('Laser', 0, 10, 1, 1.15, 0, 0, 0, 0));
-
-//Basic Engines
-itemList.push(new Item('Nuclear Engine', 0, 0, 0, 0, 0, 0.1, 20, 0));
-itemList.push(new Item('Ion Thruster', 0, 0, 0, 0, 0, 0.2, 10, 0));
-
-//Basic Bodies
-itemList.push(new Item('Titanium Plating', 0, 0, 0, 0, 20, 0, 0, 1));
-itemList.push(new Item('Aluminium Plating', 0, 0, 0, 0, 1, 0, 0, 1));
-
-for (var x = 0; x < 3; x++) {
-	itemList.push(new Item(randomName('weapon'), 0, rand(1,100), rand(1,10), (Math.random()+0.15), 0, 0, 0, 0));
-}
-
-for (var x = 0; x < 3; x++) {
-	itemList.push(new Item(randomName('engine'), 0, 0, 0, 0, 0, (Math.random()/10), rand(1,100), 0));
-}
-
-for (var x = 0; x < 3; x++) {
-	itemList.push(new Item(randomName('body'), 0, 0, 0, 0, rand(1,100), 0, 0, (rand(1,100)/10)));
-}
-
-for (var x = 0; x < 100; x++) {
-	var it = read(itemList);
-	itemList.push(upgradeItem(it));
-}
-
-for (var x = 0; x < 10; x++) {
-	shopList.push(clone(read(itemList)));
-}
 
 function itemValue(item) {
 	var v = 1000;
@@ -64,6 +26,34 @@ function itemValue(item) {
 	v /= (item.reload + 1)
 	v /= (item.weight + 1);
 	return v;
+}
+function generateItemList() {
+	//itemList.push(new Item(name, price, atk, reload, accuracy, def, evasion, speed, weight));
+	itemList.push(new Item('Basic Cannon', 0, 10, 2, 0.6, 0, 0, 0, 0));
+	itemList.push(new Item('Basic Engine', 0, 0, 0, 0, 0, 0.1, 10, 0));
+	itemList.push(new Item('Basic Body', 0, 0, 0, 0, 10, 0, 0, 1));
+	//Basic weapons
+	itemList.push(new Item('Blaster', 0, 20, 2, 0.6, 0, 0, 0, 0));
+	itemList.push(new Item('Gatling', 0, 10, 1, 0.6, 0, 0, 0, 0));
+	itemList.push(new Item('Sniper', 0, 10, 2, 1, 0, 0, 0, 0));
+	itemList.push(new Item('Cannon', 0, 20, 1, 0.6, 0, 0, 0, 0));
+	itemList.push(new Item('Missile', 0, 20, 1, 1, 0, 0, 0, 0));
+	itemList.push(new Item('Laser', 0, 10, 1, 1, 0, 0, 0, 0));
+	//Basic Engines
+	itemList.push(new Item('Nuclear Engine', 0, 0, 0, 0, 0, 0.1, 20, 0));
+	itemList.push(new Item('Ion Thruster', 0, 0, 0, 0, 0, 0.2, 10, 0));
+	//Basic Bodies
+	itemList.push(new Item('Titanium Plating', 0, 0, 0, 0, 20, 0, 0, 1));
+	itemList.push(new Item('Aluminium Plating', 0, 0, 0, 0, 1, 0, 0, 1));
+
+	for (var x = 0; x < 100; x++) {
+		var it = read(itemList);
+		itemList.push(upgradeItem(it));
+	}
+
+	for (var x = 0; x < 10; x++) {
+		shopList.push(clone(read(itemList)));
+	}
 }
 
 function drawShop() {
@@ -115,7 +105,8 @@ function randomName(itemType) {
 	var add = randChar().toUpperCase();
 	do {
 		add += randChar().toUpperCase();
-	} while (!rand(0,1))
+	} while (!rand(0,1));
+	if (!itemType) return add;
 	if (itemType == 'weapon') {
 		add += ' '+read(['Cannon', 'Heavy Cannon', 'Machine Gun', 'Sniper', 'Missile', 'Blaster', 'Laser']);
 	}
@@ -131,14 +122,16 @@ function randomName(itemType) {
 }
 function upgradeItem(item) {
 	var obj = clone(item);
-	obj.atk = Math.ceil(obj.atk * 1.2);
-	if (obj.reload > 1) obj.reload -= rand(0,1);
-	obj.accuracy = obj.accuracy * 1.2;
-	obj.def = Math.ceil(obj.def * 1.2);
-	obj.evasion = obj.evasion * 1.2;
-	obj.speed = Math.ceil(obj.speed * 1.2);
-	obj.weight = round(obj.weight / 1.2);
-	obj.price *= 2;
+	obj.atk += rand(1, obj.atk);
+	if (obj.reload > 1 && rand(0,1)) obj.reload += rand(0,1);
+	obj.accuracy = obj.accuracy + (0.05 + (Math.random() / 10));
+	obj.def += rand(1, obj.def);
+	obj.evasion = obj.evasion + (0.01 + (Math.random() / 20));
+	obj.speed += rand(1, obj.speed);
+	obj.weight = round(obj.weight / 1.1);
+	obj.price *= Math.random()+1.5;
+	obj.price = Math.ceil(obj.price);
+	obj.name = randChar().toUpperCase()+''+obj.name;
 	obj.mark++;
 	return obj;
 }
@@ -160,14 +153,14 @@ function Item(name, price, atk, reload, accuracy, def, evasion, speed, weight, m
 	speed (negative) = Higher weight lowers speed
 
 	*/
-	this.name = name;
+	this.name = randChar().toUpperCase()+'-'+name;
 	this.atk = atk;
 	this.def = def;
 	this.reload = reload;
 	this.speed = speed;
 	this.evasion = evasion;
 	this.accuracy = accuracy;
-	this.used = Infinity;
+	this.used = this.reload;
 	this.weight = weight;
 	if (!mark) mark = 1;
 	this.mark = mark;
@@ -193,6 +186,9 @@ function Ship() {
 	this.shipColor = rand(1,7);
 	this.fireColor = rand(1,3);
 	this.hueChange = rand(0,360);
+
+	this.x = 0;
+	this.y = 0;
 
 	this.primaryWeapon = clone(itemList[0]);
 	this.secondaryWeapon = clone(itemList[0]);
@@ -231,9 +227,17 @@ function getShipData(ship) {
 }
 function drawShipData(ship) {
 	var sd = getShipData(ship);
+	var hc1 = '';
+	var hc2 = '';
+	if (game.enemyShip) {
+		var from = ship;
+		var to = (ship == game.enemyShip) ? game.myShip : game.enemyShip;
+		hc1 = round(hitChances(from, to, 0) * 100)+'%';
+		hc2 = round(hitChances(from, to, 1) * 100)+'%';
+	}
 
-	return translate('Arma Primaria|Primary Weapon')+': '+ship.primaryWeapon.name+' '+romanNumber(ship.primaryWeapon.mark)+realDrawBar(ship.primaryWeapon.used, ship.primaryWeapon.reload)+'<br>'+
-	translate('Arma Secundaria|Secondary Weapon')+': '+ship.secondaryWeapon.name+' '+romanNumber(ship.primaryWeapon.mark)+realDrawBar(ship.secondaryWeapon.used, ship.secondaryWeapon.reload)+'<br>'+
+	return translate('Arma Primaria|Primary Weapon')+': '+ship.primaryWeapon.name+' '+romanNumber(ship.primaryWeapon.mark)+' '+realDrawBar(ship.primaryWeapon.used, ship.primaryWeapon.reload)+' '+hc1+'<br>'+
+	translate('Arma Secundaria|Secondary Weapon')+': '+ship.secondaryWeapon.name+' '+romanNumber(ship.primaryWeapon.mark)+' '+realDrawBar(ship.secondaryWeapon.used, ship.secondaryWeapon.reload)+' '+hc2+'<br>'+
 	translate('Motor|Engine')+': '+ship.engine.name+'<br>'+
 	translate('Cuerpo|Body')+': '+ship.body.name+'<br><br>'+
 	translate('Potencia|Power')+': '+Math.ceil(sd.atk)+'<br>'+
@@ -241,10 +245,18 @@ function drawShipData(ship) {
 	translate('Velocidad|Speed')+': '+Math.ceil(sd.speed)+'<br>'+
 	translate('Evasión|Evasion')+': '+round(100 * sd.evasion)+'%<br>';
 }
-function damageFormula(attack, accuracy, defense, evasion, dodge) {
+function hitChances(from, to, weapon) {
+	var evasion = getShipData(to).evasion;
+	var accuracy = (weapon == 0) ? from.primaryWeapon.accuracy : from.secondaryWeapon.accuracy;
+	var dodge = (to.status == 'dodge') ? 1 : 0;
+
 	var hit = 1 - evasion;
 	hit *= accuracy;
 	if (dodge) hit /= 2;
+	return hit;
+}
+function damageFormula(attack, accuracy, defense, evasion, dodge, from, to, weapon) {
+	var hit = hitChances(from, to, weapon);
 	console.log('Hit chances: '+hit);
 	if (hit >= Math.random()) {
 		var d = Math.ceil(attack / defense);
@@ -258,7 +270,7 @@ function damageFormula(attack, accuracy, defense, evasion, dodge) {
 }
 function combat(action) {
 	var from = game.turn;
-	var ships = [game.myShip, game.enemyShip]
+	var ships = [game.myShip, game.enemyShip];
 	var ship = ships[from];
 	var enemy = (from == 0) ? ships[1] : ships[0];
 	enemyShip = getShipData(enemy);
@@ -283,7 +295,7 @@ function combat(action) {
 		var def = enemyShip.def;
 		var evasion = enemyShip.evasion;
 
-		var dmg = damageFormula(atk, accuracy, def, evasion, enemy.status);
+		var dmg = damageFormula(atk, accuracy, def, evasion, enemy.status, ship, enemy, action);
 		var mizz = 1;
 		if (dmg > 0) {
 			enemy.hp -= dmg;
@@ -302,6 +314,9 @@ function combat(action) {
 		playSound(snd_reload);
 		ship.primaryWeapon.used++;
 		ship.secondaryWeapon.used++;
+
+		if (ship.primaryWeapon.used > ship.primaryWeapon.reload) ship.primaryWeapon.used = ship.primaryWeapon.reload;
+		if (ship.secondaryWeapon.used > ship.secondaryWeapon.reload) ship.secondaryWeapon.used = ship.secondaryWeapon.reload;
 	}
 	game.ticks[from] -= game.lower;
 	newTurn();
@@ -346,9 +361,19 @@ function increaseValue(num) {
 	game.value += num;
 	update('game_value');
 }
+function readyWeapons(ship) {
+	ship.primaryWeapon.used = ship.primaryWeapon.reload;
+	ship.secondaryWeapon.used = ship.secondaryWeapon.reload;
+}
 function battleStart() {
 	var from = game.myShip;
 	var to = game.enemyShip;
+
+	$('#enemyShip').fadeIn(100);
+
+	readyWeapons(from);
+	readyWeapons(to);
+
 	var speed0 = getShipData(from).speed;
 	var speed1 = getShipData(to).speed;
 	game.turn = (speed0 > speed1) ? 0 : 1;
@@ -356,10 +381,15 @@ function battleStart() {
 }
 function newTurn() {
 	if (game.myShip.hp <= 0) {
-		$('#combatTest').slideUp(100);
-		game = {};
-		resetVariables();
-		resetVariables();
+		game.turn = -1;
+		setTimeout(function() {
+			game.money = Math.floor(game.money / 4);
+			$('#combatTest').slideUp(100);
+			game.enemyShip = undefined;
+			$('#enemyShip').fadeOut(100);
+			alert(translate('Has perdido el combate y algo de dinero.|You lost combat and some money.'));
+		}, 1000);
+		
 		return;
 	}
 	if (game.enemyShip.hp <= 0) {
@@ -453,7 +483,13 @@ function startBattle() {
 	getEnemyShip();
 	battleStart();
 }
-function resetVariables() {
+function resetVariables(hard) {
+	if (hard) {
+		game = {};
+		itemList = [];
+		shopList = [];
+		generateItemList();
+	}
 	if (!game) game = {};
 	if (!game.value) game.value = 0;
 	if (!game.turn) game.turn = 0;
@@ -553,10 +589,15 @@ function drawInventory() {
 	inventoryData.innerHTML = l;
 }
 function saveGame() {
+	if (!shopList) shopList = [];
+	while (!rand(0,1) && shopList.length > 1) shopList.splice(0, 1);
 	do {
 		itemList.push(upgradeItem(read(itemList)));
 		shopList.push(clone(read(itemList)));
-	} while (!rand(0,1))
+	} while (!rand(0,1));
+
+	game.itemList = itemList;
+	game.shopList = shopList;
 
 	localStorage.setItem('game', JSON.stringify(game));
 	notification('Game Saved');
@@ -565,6 +606,10 @@ function loadGame() {
 	var losto = localStorage.getItem('game');
 	if (!losto) return;
 	game = JSON.parse(losto);
+
+	console.log(itemList.length);
+	if (game.itemList && itemList.length < game.itemList.length) itemList = game.itemList;
+	shopList = game.shopList;
 	notification('Game Loaded');
 }
 function update(step) {
@@ -611,8 +656,8 @@ function isWeaponReady(ship, slot) {
 }
 function drawCombatTest() {
 	if (!game.enemyShip) {
-		yourShip.innerHTML = '';
-		enemyShip.innerHTML = '';
+		doc('yourShip').innerHTML = '';
+		doc('enemyShip').innerHTML = '';
 		return;
 	}
 	var l = ''
@@ -620,9 +665,22 @@ function drawCombatTest() {
 	doc('enemyShip').innerHTML = drawShipElement(game.enemyShip, 1, 1)+drawShipData(game.enemyShip);
 }
 function mainWindow(what) {
-	var wins = ['shipSelector', 'shipShop', 'inventory', 'combatTest'];
+	var wins = ['shipSelector', 'shipShop', 'inventory', 'combatTest', 'race'];
 	for (var e in wins) $('#'+wins[e]).slideUp(100);
 	$('#'+what).slideDown(100);
+}
+function grid(w, h) {
+	game.myShip.x = 60;
+	game.myShip.y = 240;
+
+
+	var l = '';
+
+	var hr = game.myShip.hueChange;
+
+	l += 'asdf <span class="raceShip" style="-webkit-filter: hue-rotate('+hr+'deg)"></span>';
+
+	race.innerHTML = l;
 }
 function getShipPrice(ship) {
 	var price = 0;
@@ -655,7 +713,13 @@ function aiTurn() {
 
 var game = {};
 var anim = false;
+var griddy = {
+	'top': 0,
+	'left': 0,
+}
 
+
+generateItemList();
 loadGame();
 resetVariables();
 var t = setInterval(saveGame, 60000);
