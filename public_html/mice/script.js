@@ -3,16 +3,17 @@
 0.1.0.0 Added mice
 0.2.0.0 Now you can catch mice with your bare hands
 0.2.1.0 Difficulty increases each 10 mice caught. After 1000 mice, there will be a lot of mice spawned each tick.
+0.2.1.1 Fixed loading bug
 
 */
 
 
 function addMouse() {
-	game.mice.push(new Mouse());
+	miceGame.mice.push(new Mouse());
 	moveMice(1);
 }
 function addBlock() {
-	game.mice.push(new Block());
+	miceGame.mice.push(new Block());
 }
 function Block() {
 	var spawn = {'x': rand(1,583), 'layer': rand(0,1)};
@@ -44,12 +45,12 @@ function getSpawnPoint() {
 	return read(spawns);
 }
 function moveMice(draw) {
-	var maxDiff = 100 - Math.ceil(game.catched / 10);
+	var maxDiff = 100 - Math.ceil(miceGame.catched / 10);
 	if (maxDiff < 1) maxDiff = 1;
 	if (!rand(0,maxDiff)) addMouse();
 	var l = '';
-	for (var m in game.mice) {
-		var mouse = game.mice[m];
+	for (var m in miceGame.mice) {
+		var mouse = miceGame.mice[m];
 		var cl = 'mouse_run';
 		if (mouse.stand) {
 			mouse.stand--;
@@ -92,14 +93,14 @@ function moveMice(draw) {
 		l += '<i id="mouse_'+m+'" onclick="catchMouse('+m+')" class="mouse '+i+' '+cl+' '+is+'" style="top: '+mouse.y+'px; left: '+mouse.x+'px"></i>';
 	}
 	if (draw) playableBG.innerHTML = l;
-	if (!game.catched) game.catched = 0;
-	miceCatched.innerHTML = game.catched;
+	if (!miceGame.catched) miceGame.catched = 0;
+	miceCatched.innerHTML = miceGame.catched;
 }
 function catchMouse(id) {
 	console.log('Catching '+id);
-	if (game.mice[id].invul > 0) return;
-	game.mice.splice(id, 1);
-	game.catched++;
+	if (miceGame.mice[id].invul > 0) return;
+	miceGame.mice.splice(id, 1);
+	miceGame.catched++;
 	moveMice(1);
 }
 function getYFromLayer(layer) {
@@ -107,29 +108,30 @@ function getYFromLayer(layer) {
 }
 
 function increaseValue(num) {
-	game.value += num;
+	miceGame.value += num;
 	update('game_value');
 }
 function resetVariables() {
-	if (!game.value) game.value = 0;
+	if (!miceGame.value) miceGame.value = 0;
 }
 function saveGame() {
-	localStorage.setItem('game', JSON.stringify(game));
+	localStorage.setItem('miceGame', JSON.stringify(miceGame));
 	notification('Game Saved');
 }
 function loadGame() {
-	var losto = localStorage.getItem('game');
+	var losto = localStorage.getItem('miceGame');
 	if (!losto) return;
-	game = JSON.parse(losto);
+	miceGame = JSON.parse(losto);
+	if (!miceGame) miceGame = {};
 	notification('Game Loaded');
 }
 function update(step) {
-	if (step == 'game_value' || !step) doc('game_value').innerHTML = shortNum(game.value);
+	if (step == 'game_value' || !step) doc('game_value').innerHTML = shortNum(miceGame.value);
 }
 
-var game = {};
-game.mice = [];
-game.catched = 0;
+var miceGame = {};
+miceGame.mice = [];
+miceGame.catched = 0;
 loadGame();
 resetVariables();
 
