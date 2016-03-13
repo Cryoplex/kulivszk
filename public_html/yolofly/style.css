@@ -1,7 +1,7 @@
 #container {
 	-webkit-transition: background-color 0.5s;
 
-	background-color: #001;
+	background-color: #888;
 	border: 2px solid black;
 	width: 640px;
 	height: 480px;
@@ -19,12 +19,25 @@ body {
 	user-select: none;
 }
 .spaceship {
-	background-image: url(img/ship.png);
+	background-image: url(img/fly_idle.png);
 	height: 32px;
 	width: 32px;
 	top: 440px;
 	left: 0px;
 	position: fixed;
+	transform: scale(2.0);
+	image-rendering: pixelated;
+}
+.flying {
+	animation: fly_flying 0.005s infinite;
+}
+@keyframes fly_flying {
+	0% {
+		background: url(img/fly_flying1.png);
+	}
+	100% {
+		background: url(img/fly_flying2.png);
+	}
 }
 .enemyShip {
 	/* background-image: url(img/enemy.png); */
@@ -34,6 +47,15 @@ body {
 	left: 320px;
 	position: fixed;
 	font-size: 6px;
+	animation: rotateforever steps(100) 0.60s infinite;
+}
+@keyframes rotateforever {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(359deg);
+	}
 }
 .enemyShip span {
 	opacity: 0.5;

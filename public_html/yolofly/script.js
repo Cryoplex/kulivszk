@@ -73,9 +73,16 @@ function moveStuff() {
 		sship.style.opacity = 1;
 		var realPosX = posX + 16;
 		var diff = Math.abs(realPosX - cursorX);
-		diff = Math.floor(diff/30)+1;
+		diff = Math.floor(diff/5)+1;
 		diff += upgrade.speed;
+		sship.className = 'spaceship';
+		var deg = posX / 320;
+		deg *= -90;
+		deg += 90;
+		sship.style.transform = 'scale(2.0) rotate('+deg+'deg)';
+
 		if (realPosX != cursorX) {
+			sship.className = 'spaceship flying';
 			posX = (realPosX < cursorX) ? posX + diff : posX - diff;
 		}
 		if (posX < 0) posX = 0;
@@ -83,12 +90,13 @@ function moveStuff() {
 		sship.style.left = posX+'px';
 		lastX = cursorX;
 
-		if (!posY) posY = 440;
+		if (!posY) posY = 0;
 		var realPosY = posY + 16;
 		var diff = Math.abs(realPosY - cursorY);
-		diff = Math.floor(diff/30)+1;
+		diff = Math.floor(diff/5)+1;
 		diff += upgrade.speed;
 		if (realPosY != cursorY) {
+			sship.className = 'spaceship flying';
 			posY = (realPosY < cursorY) ? parseInt(posY) + parseInt(diff) : parseInt(posY) - parseInt(diff);
 		}
 		if (posY < 0) posY = 0;
@@ -128,7 +136,6 @@ function moveStuff() {
 			kill(x);
 		}
 		if (ali == 'enemyBullet' && collision(fb, me)) {
-			doc('container').style.backgroundColor = '#101';
 			if (shield > 0) {
 				shield -= Math.floor(fb.weight*2);
 				if (shield <= 0) shield = 0;
@@ -139,7 +146,6 @@ function moveStuff() {
 				playSound('sound/shot1.wav');
 			}
 			var ccc = setTimeout(function() {
-				doc('container').style.backgroundColor = '#001';
 			}, 500);
 
 			me.weight = 16;
@@ -206,10 +212,7 @@ function moveStuff() {
 			gps(sp, me);
 		}
 
-		sp.xx += (3*sp.motionL)/sp.heavy/5;
-		sp.xx -= (3*sp.motionR)/sp.heavy/5;
-
-		if (collision(sp, me) && sp.bomb == 1) kill(s, 'sp');
+		if (collision(sp, me)) kill(s, 'sp');
 
 		if (sp.xx <= 0) sp.xx = 0;
 		if (sp.xx >= 640) sp.xx = 640;
@@ -233,7 +236,6 @@ function moveStuff() {
 				sp.motionL *= 1+(Math.random()*0.01);
 			}
 		}
-		el.innerHTML = '<mark>'+sp.generation.toString(36)+'</mark>'+realDrawBar(Math.round(sp.hp),Math.round(sp.hpx));
 		sp.yy += movez;
 
 
@@ -241,7 +243,6 @@ function moveStuff() {
 		el.style.left = sp.xx+'px';
 
 		var rmax = 100+(100/difficulty);
-		if (rand(1,rmax) == 1) shoot('enemy', sp);
 
 		//No wall collision
 		if (sp.xx >= 512) sp.motionR += 0.1;
@@ -269,28 +270,12 @@ function moveStuff() {
 	if (shield <= 0) ene = 'ENERGY';
 	left = (shield > 0) ? shield+'/'+(100 + parseInt(upgrade.shield)) : HP+'/'+(100 + parseInt(upgrade.hp));
 
-	echo('energy', left+realDrawBar(HP,100+upgrade.hp)+realDrawBar(shield,100+upgrade.shield)+' '+ene+' | '+beam+' | '+points+' POINTS<br><br>ENEMY RANK '+difficulty.toString(36).toUpperCase());
+	//echo('energy', left+realDrawBar(HP,100+upgrade.hp)+realDrawBar(shield,100+upgrade.shield)+' '+ene+' | '+beam+' | '+points+' POINTS<br><br>ENEMY RANK '+difficulty.toString(36).toUpperCase());
 }
 function gps(from, to) {
 	var value = 0.01;
 	if (from.xx > to.xx) from.motionR += (value*Math.random())/from.heavy;
 	if (from.xx < to.xx) from.motionL += (value*Math.random())/from.heavy;
-	if (from.xx > to.xx-16 && from.xx < to.xx+16) {
-		if (from.bomb && !from.kamikaze) {
-			from.kamikaze = 1;
-		}
-	}
-	else {
-		if (from.kamikaze > 0) {
-			from.kamikaze--;
-			from.motionY *= 0.9;
-		}
-	}
-	if (from.kamikaze) {
-		from.motionY += from.kamikaze/50;
-		from.motionY *= 1.042;
-		from.kamikaze++;
-	}
 }
 function charge() {
 	var ch = 0.12;
@@ -326,50 +311,6 @@ function bomb(fromy, strength, variation, fwork) {
 		var vare = (variation == 'dark' || fromy.dark) ? 'dark' : 'bomb';
 		if (variation == 'harmless' || fwork) vare = 'harmless';
 		fireballs[fireballs.length] = new fireball(vare, fromy, fromy.strength, fwork);
-	}
-}
-function shoot(type, from) {
-	if (pause) return;
-	if (type == 'enemy') {
-		if (from.type == 'bomb' || from.bomb == 1 || from.peace) return;
-		var maxShots = 1;
-		var stren = from.strength;
-		if (from.type == 'croissant') maxShots += 1;
-		for (var sss = 0; sss < maxShots; sss++) {
-			fireballs[fireballs.length] = new fireball('enemy', from, stren);
-		}
-		if ((from.type == 'boss' && rand(1,10) == 1) || from.type == 'laser') laser(from);
-		if ((from.type == 'boss' && rand(1,10) == 1) || from.type == 'explo') {
-			for (var cus = 0; cus < 100; cus++) fireballs[fireballs.length] = new fireball('customEnemy', from, stren);
-		}
-	}
-	else {
-		playSound('sound/shot2.wav');
-		var oCL = chargeLevel;
-		if (chargeLevel >= 30) {
-			if (chargeLevel >= 50) {
-				explode(posX-32, posY-32, 32);
-				var mm = {
-					'xx': posX,
-					'yy': posY,
-					'weight': 32,
-				}
-				var maxxx = 8;
-				maxxx += upgrade.bomb*2;
-				for (var xxxx = 0; xxxx < maxxx; xxxx++) {
-					fireballs[fireballs.length] = new fireball('nightmare');
-				}
-			}
-			else {
-				fireballs[fireballs.length] = new fireball();
-			}
-		}
-		else {
-			shotNumber = 1 + upgrade.shots;
-			for (ie = 0; ie < shotNumber; ie++) fireballs[fireballs.length] = new fireball();
-		}
-		chargeLevel = 0;
-		charging = false;
 	}
 }
 function explosionPhase(source, phase) {
@@ -423,12 +364,7 @@ function kill(id, arr, silent) {
 			var hx = ships[id].xx;
 			var hy = ships[id].yy;
 			var ht = ships[id].fixed;
-			var powerUpChances = Math.ceil(10 / ships[id].pchance);
-			if (rand(1,powerUpChances) == 1) powerUp(ships[id]);
-			if (ships[id].bomb == 1) bomb(ships[id], 3, 'dark');
-			bomb(ships[id], 3, 'harmless');
 			var nu = expl.length;
-			explode(ships[id].xx, ships[id].yy);
 			if (ht) {
 				var xxx = setTimeout(function() { explode(hx, hy, 16) },500);
 				var yyy = setTimeout(function() { explode(hx, hy, 24) },1000);
@@ -517,7 +453,7 @@ function ship(type, whereX, whereY) {
 	this.hpx = baseHP * (kills/10 + (difficulty*Math.random()));
 	this.motionL = Math.random()*0.8;
 	this.motionR = Math.random()*0.8;
-	this.motionY = Math.random()*0.8;
+	this.motionY = 5;
 	this.strength = 4 + (difficulty*Math.random());
 	this.generation = 1;
 
@@ -584,7 +520,7 @@ function ship(type, whereX, whereY) {
 
 	this.element = document.createElement('div');
 	this.element.className = 'enemyShip';
-	this.element.style.backgroundImage = 'url("img/'+type+'.png")';
+	this.element.style.backgroundImage = 'url("img/enemy.png")';
 	this.element.style.top = this.yy+'px';
 	this.element.style.left = this.xx+'px';
 	if (type == 'bomber' || type == 'boss') {
