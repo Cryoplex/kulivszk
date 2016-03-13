@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ship WIP</title>
+<link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="container" onmouseup="shoot(); charging = false" onmousedown="charging = true">
+<div id="pause" style="display: none; color: white; position: fixed; left: 16px; width: 80%; top: 32px">
+	<div class="button" style="width: 128px" onclick="pause = !pause">Resume game</div>
+
+	<div id="specs" style="color: white; position: fixed; left: 160px; width: 384px; padding: 4px; height: 384px; top: 32px; background-color: rgba(255, 255, 255, 0.2)">
+		<ul id="statList">
+
+		</ul>
+
+	</div>
+</div>
+
+	<div id="energy"></div>
+	<div id="extra" style="text-align: center; font-size: 11px"></div>
+<div class="spaceship" id="sship"></div>
+<div id="gameover">
+<div class="button" onclick="gameover.style.display = 'none'; resetStats()">PLAY AGAIN</div>
+
+
+<div id="shoppie"></div>
+
+<div class="button" onclick="lock = 0">Lock to SHOT Mode</div>
+<div class="button" onclick="lock = 1">Lock to MISSILE Mode</div>
+<div class="button" onclick="lock = 2">Lock to BURST Mode</div>
+<div class="button" onclick="lock = 9">Lock to NIGHTMARE Mode</div>
+
+</div>
+</div>
+<div id="aud"></div>
+<div id="gameoverClick">
+<div class="button" onclick="this.display = 'none'">
+	GAME OVER!
+</div>
+</div>
+
+
+<span id="log"></span>
+<script src="../common.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
