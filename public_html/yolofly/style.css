@@ -199,3 +199,50 @@ mark {
 	background-color: transparent;
 	color: white;
 }
+
+
+
+/* "World" map sprites */
+.world_sprite {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	float: left;
+	zoom: 2;
+}
+.world_wall {
+	background-color: #222;
+}
+.world_houseWall {
+	background-color: #422;
+}
+.world_houseRoof {
+	background-color: #822;
+}
+.world_houseWindow {
+	background-color: #0aa;
+}
+.world_houseDoor {
+	background-color: #642;
+}
+.world_dogFloor {
+	background-color: #840;
+}
+.world_dogHouse {
+	background-color: #eee;
+}
+.world_dogRoof {
+	background-color: #a00;
+}
+.world_dogDoor {
+	background-color: #111;
+}
+.world_gardenFloor {
+	background-color: #0d0;
+}
+.world_gardenTreeTrunk {
+	background-color: #870;
+}
+.world_gardenTreeLeaves {
+	background-color: #080;
+}

@@ -1,0 +1,110 @@
+* {
+	font-family: monospace;
+}
+
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+.cell {
+	position: absolute;
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	background: url(cells.png);
+	image-rendering: pixelated;
+}
+#game_value {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	overflow-y: scroll;
+	height: 100%;
+}
+#gaem {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: 640px;
+	height: 480px;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+/* Generation 1 cells */
+.cell_g1_s0_m0 { background-position: 0px 0px; }
+
+/* Generation 2 cells */
+.cell_g2_s0_m0 { background-position: -18px -18px; }
+
+/* Generation 3 cells */
+.cell_g3_s0_m0 { background-position: -18px -36px; }
+.cell_g3_s0_m1 { background-position: -36px -36px; }
+
+/* Generation 4 cells */
+.cell_g4_s0_m0 { background-position: -18px -54px; }
+.cell_g4_s0_m1 { background-position: -36px -54px; }
+.cell_g4_s0_m2 { background-position: -54px -54px; }
+
+.cell_g4_s1_m0 { background-position: -18px -72px; }
+.cell_g4_s1_m1 { background-position: -36px -72px; }
+.cell_g4_s1_m2 { background-position: -54px -72px; }
+
+/* Generation 5 cells */
+.cell_g5_s0_m0 { background-position: -18px -90px; }
+.cell_g5_s0_m1 { background-position: -36px -90px; }
+.cell_g5_s0_m2 { background-position: -54px -90px; }
+
+.cell_g5_s1_m0 { background-position: -18px -108px; }
+.cell_g5_s1_m1 { background-position: -36px -108px; }
+.cell_g5_s1_m2 { background-position: -54px -108px; }
+.cell_g5_s1_m3 { background-position: -72px -108px; }
+.cell_g5_s1_m4 { background-position: -90px -108px; }
+
+.cell_g5_s2_m0 { background-position: -18px -126px; }
+
+.cell_g5_s3_m0 { background-position: -18px -144px; }
+
+.cell_g5_s4_m0 { background-position: -18px -162px; }
+
+.cell_g5_s5_m0 { background-position: -18px -180px; }
+
+.red {
+	color: red;
+}
+.normal {
+	color: black;
+}

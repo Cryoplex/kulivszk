@@ -1,5 +1,13 @@
+/*
+YOLOFly
+
+*/
+
+
+
 var posX = 320;
 var posY = 448;
+var deg = 0;
 var lastX = 0;
 var cursorX = 320;
 var fireballs = [];
@@ -48,6 +56,11 @@ function resetStats() {
 }
 resetStats();
 
+function calculateAngle(fromX, fromY, toX, toY) {
+	var angle = Math.atan2((toY - fromY), (toX - fromX));
+	return (angle * 180 / Math.PI) + 90;
+}
+
 function moveStuff() {
 	starfield();
 
@@ -76,9 +89,6 @@ function moveStuff() {
 		diff = Math.floor(diff/5)+1;
 		diff += upgrade.speed;
 		sship.className = 'spaceship';
-		var deg = posX / 320;
-		deg *= -90;
-		deg += 90;
 		sship.style.transform = 'scale(2.0) rotate('+deg+'deg)';
 
 		if (realPosX != cursorX) {
@@ -103,6 +113,12 @@ function moveStuff() {
 		if (posY > 480) posY = 480;
 		sship.style.top = posY+'px';
 		lastY = cursorY;
+
+		var a = calculateAngle(realPosX, realPosY, cursorX, cursorY);
+		if (a != 90) {
+			var dir = deg - a;
+			deg = a;
+		}
 	}
 
 	var me = {
