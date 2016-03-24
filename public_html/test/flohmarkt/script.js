@@ -1146,6 +1146,13 @@ function saveGame() {
 }
 function getItemDataFromID(id) {
 	var item = floh.items[id];
+	if (!item) return {
+		'id': -1,
+		'name': '',
+		'basePrice': 0,
+		'description': '',
+		'trait': '',
+	}
 	return {
 		'id': item[0],
 		'name': item[1],
@@ -1158,9 +1165,31 @@ function dumpItemData(id) {
 	var item = getItemDataFromID(id);
 	return item.id+' '+item.name+' '+item.basePrice+' '+item.description+' '+item.trait;
 }
+function dumpRecipeData(id) {
+	var r = floh.craftRecipes[id];
+	var l = '(';
+	//Ingredients
+	for (var e in r[0]) {
+		var i = r[0][e];
+		l += getItemDataFromID(i).name;
+		if (e < (r[0].length - 1)) l += ' + ';
+	}
+	l += ') = ';
+
+	//Output
+	l += getItemDataFromID(r[1]).name;
+
+	return l;
+}
 function dumpAllItems() {
 	var l = 'ITEM LIST (FOR DEBUGGING PURPOSES)<br>';
 	for (var x in floh.items) l += dumpItemData(x)+'<br>';
+
+	l += '<br>';
+    l += 'RECIPE LIST (FOR DEBUGGING PURPOSES)<br>';
+    for (var x in floh.craftRecipes) l += dumpRecipeData(x)+'<br>';
+
+
 	debugLog.innerHTML = l;
 }
 
@@ -1397,6 +1426,8 @@ floh.items = [
 	[196, 'Glass Powder',		0.17,		''],
 	[197, 'Porcelain Powder', 	0.2,		''],
 	[198, 'Cork',				0.15,		''],
+	[199, 'Zinc Oxide',			0.12,		'ZnO, made in reaction with air.'],
+	[200, 'Zinc Carbonate',		0.1,		'ZnCO<sub>3</sub>, made when reacting ZnO with CO<sub>2</sub>.'],
 ];
 
 //Calculate money value of all items together
@@ -1525,6 +1556,8 @@ floh.craftRecipes = [
 	[[193, 193], 195, 'smash'],			//Porcelain Shard (Porcelain Jar + Porcelain Jar)
 	[[194, 194], 196, 'smash'],			//Glass Powder (Glass Shard + Glass Shard)
 	[[195, 195], 197, 'smash'],			//Porcelain Powder (Porcelain Shard + Porcelain Shard)
+	[[6, 6], 199, 'craft'],	            //Zinc Oxide (Zinc + Zinc)
+	[[199, 199], 200, 'craft'],	        //Zinc Carbonate (Zinc Oxide + Zinc Oxide)
 ];
 
 floh.deCraftRecipes = [
