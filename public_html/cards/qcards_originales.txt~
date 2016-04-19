@@ -1,0 +1,370 @@
+cartas originales:
+Exterminador -IDEM, (bicho con cara robotica y cuernos)
+100ps (+10ps)
+---
+Cañonazo espacial 68 = 6/5/3
+Atenazar 50 = 4/
+Cornada 35 = 2/
+Piel de acero 10 = 1/ (El ataque piel de acero multiplica la defensa en 20 y a todas las máquinas inferiores. Solo hace daño al atacar)
+
+Cuando le quedan 10ps todos los ataques aumentan en 5pts
+
+-----
+Guardián del castillo (calavera)
+100ps
+---
+Golpe con maza: 55 / 3,4
+Ataque sombrío = 40/1 (Ineludible)
+Poder oscuro = 50/6
+Desaparecer = 0/1,5
+
+----
+Himnatorum 3º (bicho cara robot y cuernos)
+120ps
+---
+Vapores aplastantes = 60/1,2
+Vapores termales = 50/4 (Restaura 50ps a un mutante)
+Danza de los felinos = 35,0/5
+Rayo de la vida = 50/6,3
+
+(BESTIA LEYENDA)
+
+
+----
+Aguilon (ojo)
+100ps
+---
+Hachazo = 45/6,5
+Corte = 35/4,3
+Volar = 0/2,1
+
+(Bestia soldado imperial)
+
+
+-----
+Infector (ojo)
+100ps, +10ps
+---
+Lanzallamas = 68/6,5
+Ametralladora = 50/4
+Gas venenoso = 35/3,2
+Fuerza = 0/1
+
+(Cuando le quedan 10ps todos los ataques aumentan en 5pts)
+
+
+-----
+Unojuk (ojo)
+100ps
+---
+Rayo ocular 55 = 6/4
+Ataque taladro = 30 = 5/2
+Trueno 25 = 3
+Desvanecimiento = 0/1
+
+
+----
+Artillerotrón (ojo)
+100ps
+---
+Dinamitero total = 60/3,5
+Minas = 40,0/4
+Blaster X = 58/6,1
+Pierna de acero = 35/2
+-----
+
+Ciber canguro (robot raro)
+100ps
+-
+Patada cometa = 50/6
+Cola metal = 25/4
+Disparo = 10/2
+Salto = 0, 1/3/5 (El ataque Salto es anulado si el enemigo puede volar)
+
+(Los movimientos Patada cometa y Disparo sólo pueden ser usados tras el movimiento Salto)
+
+---
+Morti Formidon (calavera)
+100ps
+-
+Fusion 60 = 1,2,3,4 (La fusion se realiza con otro monstruo)
+Revivir 0 = 5,6 (Revive a un monstruo caido)
+
+-----
+Pirometal (robot)
+100ps
+-
+Agarre y golpe = 55/6,5
+Serrada = 40/4
+Furia = 35/3,2
+Penumbra = 0/ proteccion 1
+
+------
+Dragón de barbarán (ojo)
+100ps
+-
+Ataque aéreo 45 / 6,5
+Rastreo 30 / 4,3 (Este ataque hace 15 daños un turno y 15 el siguiente, entre ambos turnos el dragón de barbarán no puede atacar)
+Altos vuelos 0/2,1
+
+------
+Guardián Exor (robot)
+100ps
+-
+Espada aguda 55/6,5,4
+Garra metal 40/3
+Armadura 0/2,1
+
+------
+Hermano Jakur (ojo)
+100ps
+-
+Mordisco 30/1,2
+Fusión 0/3,4,5,6 (Se fusiona con el hermano Yakay)
+
+-----
+Hermano Yakay (ojo)
+100ps
+-
+Mordisco 30/6,5
+Fusión 0/4,3,2,1 (Se fusiona con el hermano Jakur)
+
+-----
+Sakay (ojo)
+200ps
+-
+Hiper mordisco 60/1,2,3
+Coraza 0/4,5
+Defensa punzante 30,0/6
+
+-----
+Mister Combalton (ojo)
+100ps
+-
+Disparo mortal = 50/6
+Calentador temporal = 35/5
+Ataque puñal = 30/4
+Acido viral = 25/3
+Himnotismo = 20/2
+Coraza = 0, proteccion/1
+
+(Mister Combalton de las bestias posee habilidades técnicas, el espacio aumenta 5ps de vida y 5ps de defensa)
+-----
+
+Tetro Ball (robot)
+70ps
+-
+Cuchillada 30/6,4
+Pelotazo = 25/3
+Autodestrucción = 20/2,1
+(Falta un ataque?)
+
+(Componente de ataque)
+-----
+
+Cañonetor (robot)
+100ps
+-
+Golpe de cañon 60/6,5 (El ataque falla a menos que esté en juego "Tetro Ball"
+Ciberescudo 20,0/4,3,2
+Supercornada 50/1
+
+----
+
+Mega conductor (ojo)
+100ps
+-
+Puñalada 10/1,2
+Huir 0/3,4,5,6
+
+(Este monstruo es el conductor del "Mega Tanque")
+-
+
+Mega Tanque (bombilla)
+200ps
+-
+Misil 90/6,5,4
+Atropello 50/3,2
+Susto 0/1 (Este ataque se efectua siempre al empezar)
+
+(Este monstruo solo se puede sacar cuando esta en juego el "Mega Conductor")
+
+-----
+Señor de Alabanzas (ojo)
+100ps
+-
+Alabar 0/6 (Esocge un monstruo del mazo y ponlo en el campo si quieres)
+Rayo cruzado 55/5,4
+Recuperación 0/3,2/50 (Restaura 50ps a un monstruo)
+Fuerza luminosa 20/1 (Paraliza un turno al monstruo dañado por este ataque)
+
+----
+Dragón Fúnebre (ojo) (REY)
+180ps
+-
+Llama fúnebre 100/1,2 (Cada vez que el Dragón Fúnebre usa este ataque, gana 10ps)
+Garra diamante 58/3,4,5
+Llamar alabanzas 0/6 (Este ataque puede invocar, segun las reglas generales a un "Señor de Alabanzas" (una ficha)
+
+(BESTIA LEYENDA)
+------
+
+
+
+
+
+Cartas en total:
+22 cartas
+
+- Tipos
+-- (Ojo) Bestia
+-- (Robot) Máquina
+-- (Calavera) Fantasma
+-- (Bombilla) Máquina
+En las cartas se refieren a los monstruos como Monstruo/Mutante
+
+Nombre (tipo)
+70-120ps (Por lo general tienen 100ps) (Rey: 180ps) (Fusiones/Dependientes: 200ps)
+FURIA: (Activador/Aumento de daño) Si hay furia, por defecto es (10/5) Si hay 10 o menos ps, aumenta el daño de cada ataque en 5.
+-----
+Ataques: 2 minimo, máximo 6
+(Nombre del ataque) (Daño) (Tiradas de dados) (Efecto)
+- Si el daño es 0, el ataque no hace daño y bloquea el siguiente ataque enemigo.
+- Si el daño es combinado (10,0 por ejemplo) el monstruo esquiva el siguiente ataque y además devuelve esa cantidad de daño.
+
+-----
+FURIA
+- Cuando le quedan 10ps todos los ataques aumentan en 5pts
+- (Cuando le quedan 10ps todos los ataques aumentan en 5pts)
+
+CARACTERISTICAS (Sin efectos aparentes)
+- (BESTIA LEYENDA)
+- (Bestia soldado imperial)
+- (BESTIA LEYENDA)
+- (Componente de ataque)
+- (Este monstruo es el conductor del "Mega Tanque")
+
+HABILIDADES PASIVAS
+- (Mister Combalton de las bestias posee habilidades técnicas, el espacio aumenta 5ps de vida y 5ps de defensa)
+
+RESTRICCIONES
+- (Los movimientos Patada cometa y Disparo sólo pueden ser usados tras el movimiento Salto)
+- (Este monstruo solo se puede sacar cuando esta en juego el "Mega Conductor")
+
+-----
+LISTA DE MOVIMIENTOS
+Daño:
+10 10 10
+20 20 20 20
+25 25 25 25
+30 30 30 30 30 30 30
+35 35 35 35 35 35 35
+40 40 40 40
+45 45
+50 50 50 50 50 50 50 50 50
+55 55 55 55 55
+58 58
+60 60 60 60 60
+68 68
+90
+100
+2382 total, 56 movimientos
+
+media: 40
+
+
+Cañonazo espacial 68 = 6/5/3
+Atenazar 50 = 4/
+Cornada 35 = 2/
+Piel de acero 10 = 1/ (El ataque piel de acero multiplica la defensa en 20 y a todas las máquinas inferiores. Solo hace daño al atacar)
+
+Golpe con maza: 55 / 3,4
+Ataque sombrío = 40/1 (Ineludible)
+Poder oscuro = 50/6
+Desaparecer = 0/1,5
+
+Vapores aplastantes = 60/1,2
+Vapores termales = 50/4 (Restaura 50ps a un mutante)
+Danza de los felinos = 35,0/5
+Rayo de la vida = 50/6,3
+
+Hachazo = 45/6,5
+Corte = 35/4,3
+Volar = 0/2,1
+
+Lanzallamas = 68/6,5
+Ametralladora = 50/4
+Gas venenoso = 35/3,2
+Fuerza = 0/1
+
+Rayo ocular 55 = 6/4
+Ataque taladro = 30 = 5/2
+Trueno 25 = 3
+Desvanecimiento = 0/1
+
+Dinamitero total = 60/3,5
+Minas = 40,0/4
+Blaster X = 58/6,1
+Pierna de acero = 35/2
+
+Patada cometa = 50/6
+Cola metal = 25/4
+Disparo = 10/2
+Salto = 0, 1/3/5 (El ataque Salto es anulado si el enemigo puede volar)
+
+Fusion 60 = 1,2,3,4 (La fusion se realiza con otro monstruo)
+Revivir 0 = 5,6 (Revive a un monstruo caido)
+
+Agarre y golpe = 55/6,5
+Serrada = 40/4
+Furia = 35/3,2
+Penumbra = 0/ proteccion 1
+
+Ataque aéreo 45 / 6,5
+Rastreo 30 / 4,3 (Este ataque hace 15 daños un turno y 15 el siguiente, entre ambos turnos el dragón de barbarán no puede atacar)
+Altos vuelos 0/2,1
+
+Espada aguda 55/6,5,4
+Garra metal 40/3
+Armadura 0/2,1
+
+Mordisco 30/1,2
+Fusión 0/3,4,5,6 (Se fusiona con el hermano Yakay)
+
+Mordisco 30/6,5
+Fusión 0/4,3,2,1 (Se fusiona con el hermano Jakur)
+
+Hiper mordisco 60/1,2,3
+Coraza 0/4,5
+Defensa punzante 30,0/6
+
+Disparo mortal = 50/6
+Calentador temporal = 35/5
+Ataque puñal = 30/4
+Acido viral = 25/3
+Himnotismo = 20/2
+Coraza = 0, proteccion/1
+
+Cuchillada 30/6,4
+Pelotazo = 25/3
+Autodestrucción = 20/2,1
+
+Golpe de cañon 60/6,5 (El ataque falla a menos que esté en juego "Tetro Ball"
+Ciberescudo 20,0/4,3,2
+Supercornada 50/1
+
+Puñalada 10/1,2
+Huir 0/3,4,5,6
+
+Misil 90/6,5,4
+Atropello 50/3,2
+Susto 0/1 (Este ataque se efectua siempre al empezar)
+
+Alabar 0/6 (Esocge un monstruo del mazo y ponlo en el campo si quieres)
+Rayo cruzado 55/5,4
+Recuperación 0/3,2/50 (Restaura 50ps a un monstruo)
+Fuerza luminosa 20/1 (Paraliza un turno al monstruo dañado por este ataque)
+
+Llama fúnebre 100/1,2 (Cada vez que el Dragón Fúnebre usa este ataque, gana 10ps)
+Garra diamante 58/3,4,5
+Llamar alabanzas 0/6 (Este ataque puede invocar, segun las reglas generales a un "Señor de Alabanzas" (una ficha)

@@ -89,7 +89,10 @@ function moveStuff() {
 		diff = Math.floor(diff/5)+1;
 		diff += upgrade.speed;
 		sship.className = 'spaceship';
-		sship.style.transform = 'scale(2.0) rotate('+deg+'deg)';
+		var scal = 0.5;
+		if (position == 'outside') scal = 1.0;
+		if (position == 'home') scal = 2.0;
+		sship.style.transform = 'scale('+scal+') rotate('+deg+'deg)';
 
 		if (realPosX != cursorX) {
 			sship.className = 'spaceship flying';
@@ -402,6 +405,7 @@ function randie() {
 	return Math.random()*red(-1,1);
 }
 function spawn(type) {
+	return;
 	ships[ships.length] = new ship(type);
 }
 function autoSpawn() {
@@ -992,8 +996,7 @@ document.onkeypress = function(key) {
 	var kee = String.fromCharCode(toKeyCode(key));
 
 	if (kee == 'p' || kee == 'P') {
-		updateStats();
-		pause = !pause;
+		warpToWorldMap();
 	}
 
 }

@@ -1,7 +1,15 @@
 var WORLD_WIDTH = 19;
 var WORLD_HEIGHT = 14;
 
+var position = 'world';
+var whereMap = worldMap;
+var whereCoordinates = {'x': 0, 'y': 0}
+
+var houseDoor = rand(0,1);
+var windows = [];
+
 var worldMap = [];
+var worldMapDetail = [];
 var houseMap = [];
 
 function generateWorldMap() {
@@ -30,7 +38,10 @@ function generateWorldMap() {
 
 	for (var y = 0; y <= WORLD_HEIGHT; y++) {
 		worldMap[y] = [];
+		worldMapDetail[y] = [];
+		windows[y] = [];
 		for (var x = 0; x <= WORLD_WIDTH; x++) {
+			windows[y][x] = rand(0,1);
 			
 			if (y <= dogTerrain) changeTile(worldMap, x, y, 'world_dogFloor');
 			if (y > dogTerrain) changeTile(worldMap, x, y, 'world_gardenFloor');
@@ -69,23 +80,83 @@ function generateWorldMap() {
 		}
 	}
 }
+function generateSmallMap(worldX, worldY) {
+	var tile = worldMap[worldY][worldX];
+	var map = [];
+	for (var y = 0; y <= WORLD_HEIGHT; y++) {
+		map[y] = [];
+		for (var x = 0; x <= WORLD_WIDTH; x++) {
+			var toAdd = getTileSetFor(tile);
+			if (x == 0 || x == WORLD_WIDTH || y == WORLD_HEIGHT || y == 0) {
+				toAdd = 'world_warp';
+			}
+			map[y][x] = toAdd;
+		}
+	}
+	worldMapDetail[worldY][worldX] = map;
+}
+function getTileSetFor(tile) {
+	var arr = [tile];
+	if (tile == 'world_dogFloor' || tile == 'world_gardenFloor') arr.push('world_shit');
+	for (var x = 0; x < 5; x++) arr.push(tile);
+	return read(arr);
+}
+function goHereFromWorld(x, y) {
+	whereCoordinates.x = x;
+	whereCoordinates.y = y;
+
+	var tileType = whereMap[y][x];
+	if (tileType == 'world_wall') return;
+	var where = worldMapDetail[y][x];
+	if (!where) generateSmallMap(x, y);
+
+	drawMap(worldMapDetail[y][x]);
+	position = 'outside';
+}
 function generateHouse() {
 
 }
-function drawWorldMap() {
+function drawMap(map) {
 	var l = '';
 
-	for (var y = 0; y < worldMap.length; y++) {
-		for (var x = 0; x < worldMap[y].length; x++) {
-			var ex = worldMap[y][x];
-			l += '<div class="world_sprite '+ex+'"></div>';
+	for (var y = 0; y < map.length; y++) {
+		for (var x = 0; x < map[y].length; x++) {
+			var ex = map[y][x];
+			if (ex == 'world_houseDoor' && houseDoor) ex = 'world_houseDoorOpen';
+			if (ex == 'world_houseWindow' && windows[y][x]) ex = 'world_houseWindowOpen';
+			var click = 'goHereFromWorld('+x+', '+y+')';
+			if (map != worldMap) click = 'interactHere('+x+', '+y+')';
+			l += '<div class="world_sprite '+ex+'" onclick="'+click+'"></div>';
 		}
 		l += '<div style="clear: both"></div>';
 	}
 	containerMap.innerHTML = l;
+	whereMap = map;
+}
+function interactHere(x, y) {
+	var thisTile = whereMap[y][x];
+	if (thisTile == 'world_warp') {
+		var whereWarp = {
+			'x': whereCoordinates.x,
+			'y': whereCoordinates.y,
+		}
+		if (x == 0) whereWarp.x--;
+		if (x == WORLD_WIDTH) whereWarp.x++;
+		if (y == 0) whereWarp.y--;
+		if (y == WORLD_HEIGHT) whereWarp.y++;
+
+		console.log(whereWarp);
+
+		goHereFromWorld(whereWarp.x, whereWarp.y);
+	}
+}
+function warpToWorldMap() {
+	position = 'world';
+	drawMap(worldMap);
 }
 function changeTile(arr, x, y, newTile) {
 	arr[y][x] = newTile;
 }
 generateWorldMap();
-drawWorldMap();
+
+drawMap(worldMap);
