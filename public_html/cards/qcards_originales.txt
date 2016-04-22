@@ -231,6 +231,12 @@ Ataques: 2 minimo, máximo 6
 (Nombre del ataque) (Daño) (Tiradas de dados) (Efecto)
 - Si el daño es 0, el ataque no hace daño y bloquea el siguiente ataque enemigo.
 - Si el daño es combinado (10,0 por ejemplo) el monstruo esquiva el siguiente ataque y además devuelve esa cantidad de daño.
+- Los movimientos tienen una media de 40 daño. Un mímino de 10 y un máximo de 100.
+- El total de todos los movimientos (daño) debe sumar:
+  - 200 para monstruos básicos (100ps)
+  - 250 para monstruos únicos (120ps)
+  - 300 para reyes (180ps)
+  - 350 para quimeras y especiales (200ps)
 
 -----
 FURIA
@@ -254,23 +260,13 @@ RESTRICCIONES
 -----
 LISTA DE MOVIMIENTOS
 Daño:
-10 10 10
-20 20 20 20
-25 25 25 25
-30 30 30 30 30 30 30
-35 35 35 35 35 35 35
-40 40 40 40
-45 45
-50 50 50 50 50 50 50 50 50
-55 55 55 55 55
-58 58
-60 60 60 60 60
-68 68
-90
-100
-2382 total, 56 movimientos
-
 media: 40
+
+
+Monstruos básicos (70-100ps) (200 daño)
+Monstruos únicos (120ps) (250 daño)
+Reyes (180ps) (300 daño)
+Quimeras/Especiales (200ps) (350 daño)
 
 Cañonazo espacial 68 = 6/5/3
 Atenazar 50 = 4/
