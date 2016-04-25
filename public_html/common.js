@@ -1,5 +1,6 @@
 //Funciones comunes de usar y tirar. Por Kulivszk v0.6
 //0.6 - Added function last()
+//0.7 - Added function changes()
 
 var commonDebug = false;
 var commonLang = 'es';
@@ -564,6 +565,36 @@ function rchance(float) {
 }
 function lchance(hits, attempts) {
 	return (hits + 1) / (attempts + 2);
+}
+function changes(changelogArray) {
+	var newChangeLog = [];
+	var clog = changelog;
+	var version = [0, 0, 0, 0, 0];
+	for (var c in clog) {
+		var item = clog[c];
+		var spl = item.split(' ');
+		var i = spl[0];
+		var index = i.length;
+		version.splice((index + 1));
+
+		if (!version[index]) version[index] = 0;
+		version[index] += 1;
+		newChangeLog.push(version.join('.')+' '+spl.slice(1).join(' '));
+	}
+	newChangeLog = newChangeLog.reverse().join('<br>');
+	return {
+		'latestVersion': version.join('.'),
+		'changelog': newChangeLog,
+	}
+}
+function showChangeLog() {
+	var l = '';
+	var oc = "this.style.display = 'none'";
+	l += '<div style="padding: 8px; position: fixed; display: block; top: 0; left: 0; z-index: 9999999; width: 100%; height: 100%; background-color: black; color: white; font-size: 1.5em; overflow-y: scroll" onclick="'+oc+'">';
+	l += gameInfo.changelog;
+	l += '<div>';
+
+	document.body.innerHTML += l;
 }
 
 

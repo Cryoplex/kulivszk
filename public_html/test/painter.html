@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.block {
+	background-color: black;
+	width: 8px;
+	height: 8px;
+	display: inline-block;
+	float: left;
+}
+.linebreak {
+	clear: both;
+}
+</style>
+</head>
+<body>
+<div id="canvas"></div>
+
+<script src="../common.js"></script>
+<script>
+var paint = [
+[],
+];
+function newCanvas(width) {
+	paint[0] = [];
+	for (var x = 0; x < width; x++) paint[0][x] = 0;
+	var r = rand(1, paint[0].length) - 1;
+    paint[0][r] = 1;
+}
+function draw() {
+	var l = '';
+	for (var e in paint) {
+		for (var p in paint[e]) {
+			l += '<div class="block" style="opacity: '+paint[e][p]+'"></div>';
+		}
+		l += '<div class="linebreak"></div>';
+	}
+	canvas.innerHTML = l;
+}
+function expand() {
+	var last = paint[(paint.length - 1)];
+	var n = [];
+	for (var x in last) {
+		n[x] = 0;
+		if (!rand(0,100)) n[x] = 1;
+		if (last[x] == 1) {
+			var min = 0;
+			var max = last.length;
+
+			var pos_left = parseInt(parseInt(x) - 1);
+			var pos_center = parseInt(x);
+			var pos_right = parseInt(parseInt(x) + 1);
+
+			console.log('max: '+max+' pos_right: '+pos_right);
+
+			if (Math.random() >= 0.33 && pos_left > min && pos_left < max) n[pos_left] = 1;
+			if (Math.random() >= 0.33 && pos_center > min && pos_center < max) n[pos_center] = 1;
+			if (Math.random() >= 0.33 && pos_right <= max) n[pos_right] = 1;
+		}
+	}
+	paint.push(n);
+	if (paint.length > 32) paint.splice(0, 1);
+	draw();
+}
+
+newCanvas(32);
+draw();
+
+setInterval(expand, 100);
+</script>
+</body>
+</html>
