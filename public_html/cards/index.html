@@ -24,13 +24,13 @@
 
     <div class="jumbotron game">
       <div class="container">
-        <input type="button" class="btn btn-default" onclick="increaseValue(1)" value="Click Me!"><output id="game_value"></output>
+        <input type="button" class="btn btn-default" onclick="game_value.innerHTML = drawCard()" value="Generate a card"><output id="game_value"></output>
       </div>
     </div>
 
     <div class="container">
       <footer>
-        <p>&copy; 2016 Arch Lemon Studios</p>
+        <p>&copy; 2016 Arch Lemon Studios | <span onclick="showChangeLog()">Ver cambios en la versión</span></p>
       </footer>
     </div>
     <script src="../common.js"></script>

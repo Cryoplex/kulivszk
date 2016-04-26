@@ -37,3 +37,68 @@ sup {
 .ourgames h2 {
 	font-size: 24px;
 }
+.card {
+	width: 256px;
+	height: 384px;
+	background-color: hsl(0, 50%, 50%);
+	font-size: 12px;
+	border-radius: 8px;
+	border: 2px solid rgba(0, 0, 0, 0.5);
+}
+.smallCard {
+	width: 64px;
+	height: 96px;
+
+	font-size: 3px;
+}
+.cardSectionA {
+	background-color: rgba(255, 255, 255, 0.5);
+	width: 240px;
+	height: 48px;
+	left: 6px;
+	top: 8px;
+	position: relative;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	padding: 8px;
+	font-size: 14px;
+	text-align: center;
+}
+.cardSectionB {
+	top: 8px;
+	left: 6px;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: relative;
+	height: 180px;
+	width: 240px;
+	text-align: center;
+	border-top: 2px ridge rgba(128, 128, 128, 0.5);
+	border-bottom: 2px ridge rgba(128, 128, 128, 0.5);
+}
+.cardSectionC {
+	top: 8px;
+	background-color: rgba(255, 255, 255, 0.5);
+	position: relative;
+	left: 6px;
+	height: 136px;
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+	width: 240px;
+}
+.hpSection {
+	position: absolute;
+	top: 0px;
+	left: 40px;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	width: 160px;
+	height: 20px;
+}
+.quote {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	text-align: center;
+	width: 100%;
+}

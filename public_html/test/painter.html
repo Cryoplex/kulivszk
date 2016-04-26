@@ -32,7 +32,9 @@ function draw() {
 	var l = '';
 	for (var e in paint) {
 		for (var p in paint[e]) {
-			l += '<div class="block" style="opacity: '+paint[e][p]+'"></div>';
+			var o = paint[e][p];
+			if (o > 0) o = 1;
+			l += '<div class="block" style="opacity: '+o+'"></div>';
 		}
 		l += '<div class="linebreak"></div>';
 	}
@@ -44,7 +46,7 @@ function expand() {
 	for (var x in last) {
 		n[x] = 0;
 		if (!rand(0,100)) n[x] = 1;
-		if (last[x] == 1) {
+		if (last[x] > 0) {
 			var min = 0;
 			var max = last.length;
 
@@ -52,11 +54,12 @@ function expand() {
 			var pos_center = parseInt(x);
 			var pos_right = parseInt(parseInt(x) + 1);
 
-			console.log('max: '+max+' pos_right: '+pos_right);
+			if (pos_left < min) pos_left = pos_center;
+			if (pos_right > max) pos_right = pos_center;
 
-			if (Math.random() >= 0.33 && pos_left > min && pos_left < max) n[pos_left] = 1;
-			if (Math.random() >= 0.33 && pos_center > min && pos_center < max) n[pos_center] = 1;
-			if (Math.random() >= 0.33 && pos_right <= max) n[pos_right] = 1;
+			n[pos_left] += rand(0,1);
+			n[pos_center] += rand(0,1);
+			n[pos_right] += rand(0,1);
 		}
 	}
 	paint.push(n);
