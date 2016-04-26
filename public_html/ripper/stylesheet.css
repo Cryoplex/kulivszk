@@ -1,10 +1,24 @@
+* {
+	font-family: monospace;
+}
+body {
+	background-color: #000;
+}
+input {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: rgba(0, 255, 0, 0.8);
+	border: none;
+}
 .jumbotron {
-	background-image: url(jum.png);
 	height: 500px;
+	background-color: #000;
+}
+.game {
+	padding: 8px;
 }
 .jumbotron .container {
 	position: absolute;
-	top: 60px;
+	top: 8px;
 	color: hsl(60, 40%, 80%);
 }
 .jumbotron a {
@@ -36,4 +50,25 @@ sup {
 }
 .ourgames h2 {
 	font-size: 24px;
+}
+.window {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: rgba(0, 255, 0, 0.8);
+	border-radius: 8px;
+	width: 100%;
+	float: left;
+	padding: 8px;
+}
+.insertionPoint, .caret {
+	display: inline-block;
+	background-color: rgba(0, 255, 0, 0.8);
+	animation: blink 0.4s steps(1) infinite;
+}
+@keyframes blink {
+	0%, 100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
 }
