@@ -11,25 +11,20 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <ul>
-            <!-- Tabs -->
-	          <li><a href="#">Game</a></li>
-          </ul>
-        </div>
+    <div class="game" id="game">
+      <div id="gameOptions">
+        <span style="width: 50%" onclick="showWindow('myDeck')">Ver mi baraja</span>
       </div>
-    </nav>
-
-    <div class="jumbotron game">
-      <div class="container">
-        <input type="button" class="btn btn-default" onclick="game_value.innerHTML = drawCard()" value="Generate a card"><output id="game_value"></output>
+      <div id="deckSelection">
+        No tienes ninguna baraja. Para empezar, te daré una baraja de principiante.
+        <input type="button" onclick="generateRandomDeck()" value="Obtener baraja de principiante">
       </div>
+      <div id="myDeck"></div>
+      <div id="myCollection"></div>
     </div>
 
     <div class="container">
-      <footer>
+      <footer style="position: fixed; bottom: 0px; left: 0px">
         <p>&copy; 2016 Arch Lemon Studios | <span onclick="showChangeLog()">Ver cambios en la versión</span></p>
       </footer>
     </div>
