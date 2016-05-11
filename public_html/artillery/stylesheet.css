@@ -1,0 +1,65 @@
+.jumbotron {
+	background-image: url(jum.png);
+	height: 480px;
+	width: 640px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 0px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+#battleground {
+	width: 640px;
+	height: 480px;
+	background-color: #ccc;
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+.player {
+	position: absolute;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+}
+.wall {
+	position: absolute;
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+}
