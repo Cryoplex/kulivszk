@@ -1,0 +1,115 @@
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+#clock {
+	background-color: rgba(0, 0, 0, 0.8);
+	border-radius: 8px;
+	position: fixed;
+	top: 8px;
+	right: 8px;
+	padding: 8px;
+	z-index: 9999;
+	color: rgba(255, 255, 255, 0.8);
+	text-align: center;
+}
+tile {
+	background-color: #ccc;
+	display: inline-block;
+	position: absolute;
+	z-index: 1;
+}
+unit {
+	background-color: #00c;
+	display: inline-block;
+	position: absolute;
+	animation: blink 1s infinite;
+	border-radius: 100%;
+	z-index: 2;
+}
+@keyframes blink {
+	0%, 100% {
+		opacity: 0.5;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+tile:hover {
+	background-color: #444;
+}
+
+.tile_grass {
+	background-color: #2e4;
+}
+.tile_dirt {
+	background-color: #a61;
+}
+.tile_tree {
+	background-color: #040;
+}
+.tile_treeFruit {
+	background-color: #f24;
+}
+.tile_crops {
+	background-color: #ff4;
+}
+
+.tile_human {
+	background-color: #fa2;
+}
+.tile_cow {
+	background-color: #8f0;
+}
+.tile_pig {
+	background-color: #44f;
+}
+.tile_chicken {
+	background-color: #e2b;
+}
+.tile_sheep {
+	background-color: #0ff;
+}
+tile_notification {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: rgba(255, 255, 255, 0.8);
+	padding: 2px;
+	border-radius: 8px;
+	position: absolute;
+	z-index: 30;
+}

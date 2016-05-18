@@ -1,2 +1,0 @@
-[01-Aug-2015 09:32:33 UTC] PHP Fatal error:  Call to undefined function query() in /home/kulivszk/public_html/test/sql/send.php on line 20
-[01-Aug-2015 09:36:43 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/kulivszk/public_html/test/sql/send.php on line 31

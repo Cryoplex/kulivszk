@@ -173,7 +173,7 @@ function moveStuff() {
 						if (!fireworks) bomb(fb, 5);
 						if (fireworks) bomb(fb, 5, 'dark', fireworks);
 					}
-					if (ali == 'chargedAllyBullet' || ali == 'nightmareAllyBullet') {
+					if (ali == 'chargedAllyBullet' || ali == 'nightmareAllyBullet' || ali == 'superChargedAllyBullet') {
 						fb.motionX *= 1.1;
 						fb.motionY *= 1.1;
 					}
@@ -233,7 +233,7 @@ function moveStuff() {
 				sp.motionL *= 1+(Math.random()*0.01);
 			}
 		}
-		el.innerHTML = '<mark>'+sp.generation.toString(36)+'</mark>'+realDrawBar(Math.round(sp.hp),Math.round(sp.hpx));
+		el.innerHTML = '<mark>'+sp.generation.toString(36)+' '+sp.hp+'</mark>'+realDrawBar(Math.round(sp.hp),Math.round(sp.hpx));
 		sp.yy += movez;
 
 
@@ -263,7 +263,7 @@ function moveStuff() {
 		beam = realDrawBar(Math.floor(chargeLevel)-30, 20)+' BURST'
 	}
 	if (chargeLevel >= 50) {
-		beam = realDrawBar(50,50)+' NUKE'
+		beam = Math.ceil(chargeLevel/100)+'% NUKE'
 	}
 	if (shield > 0) ene = 'SHIELD';
 	if (shield <= 0) ene = 'ENERGY';
@@ -316,9 +316,10 @@ function bomb(fromy, strength, variation, fwork) {
 	if (fromy.type == 'bomb3') strength += rand(2,16);
 	if (fromy.type == 'test') strength += 500;
 	if (!variation) {
-		var add = rand(0,(upgrade.bomb/10));
-		strength+= rand(0,add);
+		var add = upgrade.bomb/5;
+		strength += rand(0,add);
 		var strength = rand(3,strength);
+		strength++;
 	}
 	if (fwork) strength += rand(4,8) + upgrade.bomb;
 	for (i = 0; i < strength; i++) {
@@ -355,7 +356,7 @@ function shoot(type, from) {
 					'weight': 32,
 				}
 				var maxxx = 8;
-				maxxx += upgrade.bomb*2;
+				maxxx += upgrade.bomb*3;
 				for (var xxxx = 0; xxxx < maxxx; xxxx++) {
 					fireballs[fireballs.length] = new fireball('nightmare');
 				}
@@ -661,7 +662,7 @@ function fireball(type, from, strength, fworkMode) {
 	}
 	if (chargeLevel >= 50 && !from) {
 		this.element.className = 'nightmareAllyBullet';
-		this.weight = 8;
+		this.weight = 8 + (chargeLevel / 100);
 		this.element.width = '8px';
 	}
 	if (type == 'enemy' || type == 'dark' || type == 'harmless') {
@@ -720,7 +721,7 @@ function fireball(type, from, strength, fworkMode) {
 	if (type == 'bomb') {
 		this.motionY = Math.sin(fireballs.length);
 		this.motionX = Math.cos(fireballs.length);
-		if (this.motionY > 0) this.motionY *= -1;
+		//if (this.motionY > 0) this.motionY *= -1;
 		var speedMod = (upgrade.shotSpeed/10)+1;
 		this.motionY *= speedMod;
 		this.motionX *= speedMod;

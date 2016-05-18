@@ -1,3 +1,0 @@
-[08-Jun-2015 09:52:20 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/kulivszk/public_html/test/war/script.php on line 17
-[08-Jun-2015 09:52:53 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/kulivszk/public_html/test/war/script.php on line 17
-[08-Jun-2015 09:56:34 UTC] PHP Fatal error:  Call to a member function query() on a non-object in /home/kulivszk/public_html/test/war/script.php on line 16
