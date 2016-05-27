@@ -16,6 +16,40 @@
         <div class="window" id="startGame"></div>
       </div>
       <div class="window" id="computerShop"></div>
+
+      <div class="window" id="mainMenu">
+        <h2>Menu</h2>
+        You have $<span id="myMoney"></span>.<br><br>
+        <b class="link" onclick="exitShop(1)">Go to the shop</b><br>
+        <b class="link" onclick="exitCracking(1)">Start</b><br>
+        <b class="link">View stats</b><br>
+      </div>
+
+      <div class="window" id="cracking">
+        <div id="crackingPhase">
+          <span class="crackButton" onclick="runScript('start')" id="runScriptButton">Run Script</span>
+
+          <span class="crackButton disabled" onclick="runScript('stop')" id="stopScriptButton">Stop Script</span>
+
+          <span class="crackButton" onclick="runScript('manual')">Enter Random Password Manually</span>
+
+          <span class="crackButton" onclick="exitCracking()">Quit</span>
+        </div>
+        <div id="stealingPhase">
+          <span class="crackButton crackButton2" onclick="steal('low')" id="stealButton1">Withdraw $1</span>
+          
+          <span class="crackButton crackButton2" onclick="steal('all')" id="stealButton2">Withdraw $100</span>
+
+          <span class="crackButton crackButton2" onclick="steal('sell')" id="stealButton3">Sell password for $10</span>
+
+          <span class="crackButton crackButton2" onclick="exitCracking()">Quit</span>
+        </div>
+
+        <i style="clear: both"></i><br><br>
+        <div id="crackingLog"></div>
+
+      </div>
+      <div class="window" id="statsWindow"></div>
     </div>
 
     <div>

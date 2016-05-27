@@ -59,6 +59,7 @@ sup {
 .window {
 	background-color: rgba(0, 0, 0, 0.8);
 	color: rgba(0, 255, 0, 0.8);
+	text-shadow: 0 0 2px rgba(0, 255, 0, 0.8);
 	border-radius: 8px;
 	width: 100%;
 	float: left;
@@ -91,8 +92,9 @@ sup {
 }
 .computer:hover {
 	background-color: rgba(0, 255, 0, 0.2);
+	cursor: pointer;
 }
-#computerShop {
+#computerShop, #mainMenu, #cracking, #statsWindow {
 	width: 70%;
 	overflow-y: scroll;
 	height: 100%;
@@ -100,6 +102,58 @@ sup {
 }
 #terminal {
 	width: 30%;
-	overflow-y: scroll;
+	overflow-y: hidden;
 	height: 100%;
+}
+.link {
+	text-decoration: underline;
+}
+.link:hover {
+	background-color: rgba(0, 255, 0, 0.2);
+	cursor: pointer;
+}
+#crackingLog {
+	clear: both;
+	overflow-y: hidden;
+	font-size: 8px;
+	color: white;
+	text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+	width: 100%;
+	height: 80%;
+}
+.crackButton {
+	padding: 8px;
+	width: 22%;
+	height: 64px;
+	font-size: 11px;
+	border-top-left-radius: 8px;
+	border: 1px solid rgba(0, 255, 0, 0.5);
+	margin: 0 1%;
+	float: left;
+	cursor: pointer;
+
+	text-select: none;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+
+	display: inline-block;
+}
+.crackButton2 {
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	color: rgba(255, 255, 255, 0.8);
+	text-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+.disabled {
+	cursor: wait;
+	opacity: 0.5;
+}
+.crackButton:hover {
+	background-color: rgba(0, 255, 0, 0.2);
+}
+.crackButton:active {
+	background-color: rgba(0, 255, 0, 0.8);
+}
+#stealingPhase {
+	display: none;
 }

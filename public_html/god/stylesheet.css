@@ -49,22 +49,24 @@ sup {
 	text-align: center;
 }
 tile {
-	background-color: #ccc;
+	background-color: #8fa;
 	display: inline-block;
 	position: absolute;
 	z-index: 1;
+	image-rendering: pixelated;
+	background-size: 100% 100%;
 }
 unit {
-	background-color: #00c;
 	display: inline-block;
 	position: absolute;
 	animation: blink 1s infinite;
 	border-radius: 100%;
 	z-index: 2;
+	background-image: url(img/human.png);
 }
 @keyframes blink {
 	0%, 100% {
-		opacity: 0.5;
+		opacity: 0.9;
 	}
 	50% {
 		opacity: 1;
@@ -75,23 +77,25 @@ tile:hover {
 }
 
 .tile_grass {
-	background-color: #2e4;
+	background-image: url(img/tile_grass.png);
+}
+.tile_city {
+	background-image: url(img/tile_city.png);
 }
 .tile_dirt {
-	background-color: #a61;
+	background-image: url(img/tile_dirt.png);
 }
 .tile_tree {
-	background-color: #040;
+	background-image: url(img/tile_tree.png);
 }
 .tile_treeFruit {
-	background-color: #f24;
+	background-image: url(img/tile_treeFruit.png);
 }
 .tile_crops {
 	background-color: #ff4;
 }
 
 .tile_human {
-	background-color: #fa2;
 }
 .tile_cow {
 	background-color: #8f0;
@@ -104,6 +108,9 @@ tile:hover {
 }
 .tile_sheep {
 	background-color: #0ff;
+}
+.tile_zombie {
+	background-image: url(img/zombie.png);
 }
 tile_notification {
 	background-color: rgba(0, 0, 0, 0.8);

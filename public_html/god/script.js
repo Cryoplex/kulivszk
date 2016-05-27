@@ -15,17 +15,19 @@ var changelog = [
 '------ Units can share some of their food with same type units',
 '---- Added new units, chickens, sheep and pigs',
 '----- Units now spawn randomly each save.',
+'---- Added cities',
+'----- Units enter cities sometimes when passing by.',
 ];
 
-var TILE_WIDTH = 10;
-var TILE_HEIGHT = 10;
+var TILE_WIDTH = 32;
+var TILE_HEIGHT = 32;
 var MAP_WIDTH = 100;
 var MAP_HEIGHT = 50;
 var TIME_START = -100000000000000;
 var FOOD_PER_KILL = 10;
 var ENERGY_PER_FOOD_RATION = 2400;
 
-var updateInterval = 100;
+var updateInterval = 20;
 
 var cursorPosition = {
 	'x': 0,
@@ -37,7 +39,7 @@ var tileTypes = [
 ];
 
 var unitTypes = [
-'human', 'pig', 'cow', 'chicken', 'sheep',
+'human', 'pig', 'cow', 'chicken', 'sheep', 'zombie',
 ]
 
 function resetVariables() {
@@ -132,10 +134,13 @@ function Unit(x, y, type) {
 	this.y = y;
 	this.type = 'unit';
 
+	this.zombie = false;
+	if (type == 'zombie') this.zombie = true;
+
 	this.pregnant = 0;
 	this.gender = rand(0, 1);
 	this.sterile = false;
-	if (!rand(0,2)) this.sterile = true;
+	if (!rand(0,1)) this.sterile = true;
 
 	this.seeds = rand(0, 3);
 
@@ -237,7 +242,7 @@ function giveBirth(unit) {
 	onTileNotification(unit.x, unit.y, 'A baby '+unit.data.tileType+' was born');
 	generateUnit(unit.x, unit.y, unit.data.tileType);
 	unit.energy = Math.floor(unit.energy / 2);
-	if (!rand(0,2)) unit.sterile = true;
+	if (!rand(0,1)) unit.sterile = true;
 	while (!rand(0,1)) generateUnit(unit.x, unit.y, unit.data.tileType);
 }
 function reproduce(from, to) {
@@ -251,14 +256,17 @@ function reproduce(from, to) {
 	}
 }
 function hunt(from, to) {
-	if (from.data.tileType != to.data.tileType) {
+	if (from.data.tileType != to.data.tileType && (!from.zombie || !to.zombie)) {
 		if (!from.food) from.food = 0;
 		if (!to.food) to.food = 0;
 		if (!to.age) to.age = 0;
 		var tot = (to.age * FOOD_PER_KILL) + to.food;
 		from.food += tot;
 
-		onTileNotification(from.x, from.y, to.data.tileType+' got hunted for '+tot+' food.');
+		//onTileNotification(from.x, from.y, to.data.tileType+' got hunted for '+tot+' food.');
+		if (from.zombie && rand(0,1)) {
+			generateUnit(from.x, from.y, 'zombie');
+		}
 		kill(to);
 	}
 }
@@ -268,6 +276,10 @@ function giveFood(from, to) {
 	var give = Math.floor(from.food / 2);
 	from.food -= give;
 	to.food += give;
+}
+function joinCity(unit, x, y) {
+	god.map[y][x].data.population++;
+	kill(unit);
 }
 function kill(unit) {
 	doc('game').removeChild(unit.element);
@@ -341,6 +353,12 @@ function update(step) {
 			thisUnit.food += 20;
 			thisUnit.seeds += rand(0, 2);
 		}
+		if (thisTile == 'city') {
+			if (rand(0,1)) {
+				joinCity(thisUnit, thisUnit.x, thisUnit.y);
+				return;
+			}
+		}
 		if (thisTile == 'treeFruit') {
 			changeTileType(thisUnit.x, thisUnit.y, 'tree');
 			thisUnit.food += 10;
@@ -357,7 +375,6 @@ function update(step) {
 
 	var r = read(god.map);
 	for (var u in r) {
-		if (!rand(0,1)) continue;
 		var tile = r[u];
 		var adjacentTiles = getAdjacentTiles(tile);
 		if (tile.data.tileType == 'tree') {
@@ -366,6 +383,17 @@ function update(step) {
 				tile.data.age = 0;
 				tile.data.tileType = 'treeFruit';
 			}
+		}
+		if (tile.data.tileType == 'city') {
+			if (!tile.data.nextbirth) tile.data.nextbirth = 0;
+			while (tile.data.nextbirth >= 1) {
+				tile.data.nextbirth--;
+				generateUnit(tile.x, tile.y, 'human');
+			}
+			var pop = tile.data.population;
+			var r = rand(0, pop);
+			tile.data.nextbirth += (r / 100);
+
 		}
 		if (tile.data.tileType == 'dirt' && tile.plant) {
 			tile.plant--;
@@ -388,9 +416,6 @@ function update(step) {
 	drawMap();
 
 	var tm = god.units.length + 1;
-
-	clearInterval(updateStuff);
-	updateStuff = setInterval(update, tm);
 }
 function getAdjacentTiles(tile) {
 	var ts = [];
@@ -435,6 +460,11 @@ function unitsHere(x, y) {
 		if (ut.x == x && ut.y == y) uts.push(uh)
 	}
 	return uts;
+}
+function createCity(x, y) {
+	changeTileType(x, y, 'city');
+	god.map[y][x].data.population = 0;
+	god.map[y][x].data.cityType = 'village';
 }
 $(document).on('keypress', function(evt) {
 	var k = String.fromCharCode(evt.which).toLowerCase();

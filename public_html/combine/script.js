@@ -94,7 +94,7 @@ function update(step) {
 	if (step == 'game_monsters' || !step) doc('game_monsters').innerHTML = getMonsterList();
 
 	var ex = '';
-	if (select.length >= 2) ex = '<input class="btn btn-default" value="Combine These Monsters!" onclick="combination()">';
+	if (select.length >= 2) ex = '<input class="btn btn-default" style="position: fixed; bottom: 0px; right: 50%" value="Combine These Monsters!" onclick="combination()">';
 	if (step == 'game_combo' || !step) doc('game_combo').innerHTML = getMonsterList(1) + ex;
 
 	doc('game_combo2').innerHTML = '';

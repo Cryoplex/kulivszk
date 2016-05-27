@@ -1,12 +1,15 @@
-/*
-0.1.0.0 Started changelog (Kinda late?)
-0.2.0.0 Added sounds
-0.2.1.0 Shop now discards old items
-0.2.2.0 Added a little delay before the losing message appears
-0.2.3.0 Battles now start with all weapons ready.
-0.2.4.0 Hit chances for weapons are now shown.
-
-*/
+var changelog = [
+'- Alpha',
+'- Added sounds',
+'-- Shop now discards old items',
+'-- Added a little delay before the losing message appears',
+'-- Battles now start with all weapons ready.',
+'-- Hit chances for weapons are now shown.',
+'--- HP bars now do not show bigger when hp is below zero.',
+'--- Combat window does not close after winning/losing a match.',
+'--- Fixed secondary weapons not using their damage while attacking (Using a default 1 damage for all)',
+];
+document.title = 'Space Survival v'+changes().latestVersion;
 
 var snd_attack = new Audio('sound/laser.wav');
 var snd_hit = new Audio('sound/hit.wav');
@@ -288,7 +291,7 @@ function combat(action) {
 		if (action == 1) {
 			if (!isWeaponReady(ship, 1)) return;
 			ship.secondaryWeapon.used = 0;
-			def = ship.secondaryWeapon.def;
+			atk = ship.secondaryWeapon.atk;
 			accuracy = ship.secondaryWeapon.accuracy;
 			console.log('Weapon atk/acc '+ship.secondaryWeapon.atk+' '+ship.secondaryWeapon.accuracy);
 		}
@@ -342,6 +345,7 @@ function drawShipElement(ship, enemy, hpbar) {
 
 	if (hpbar) {
 		var wid1 = (ship.hp / ship.hpx) * 100;
+		if (wid1 < 0) wid1 = 0;
 		var wid2 = 100 - wid1;
 		var hp = '<span class="hpfilled" style="width: '+wid1+'%; height: 16px"></span>'+
 		'<span class="hpempty" style="width: '+wid2+'%; height: 16px"></span>';
@@ -384,7 +388,6 @@ function newTurn() {
 		game.turn = -1;
 		setTimeout(function() {
 			game.money = Math.floor(game.money / 4);
-			$('#combatTest').slideUp(100);
 			game.enemyShip = undefined;
 			$('#enemyShip').fadeOut(100);
 			alert(translate('Has perdido el combate y algo de dinero.|You lost combat and some money.'));
@@ -396,13 +399,15 @@ function newTurn() {
 		setTimeout(function() {
 			$('#enemyShip').effect('explode', 2500);
 			playSound(snd_explode);
-			$('#combatTest').delay(1000).slideUp(100);
 			var value = Math.floor(getShipPrice(game.enemyShip) / 2);
 			game.money += value;
 			notification(translate('Recibes '+value+'ç|You receive '+value+'ç'));
 
 			game.enemyShip = undefined;
 		}, 1000);
+		setTimeout(function() {
+			$('#seekBattle').fadeIn(100);
+		}, 1001);
 		
 		return;
 	}
