@@ -1,0 +1,124 @@
+<!-- -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title></title>
+
+    <link type="text/css" rel="stylesheet" href="../bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="stylesheet.css">
+  </head>
+
+  <body>
+    <div class="skills">
+      <div class="gameLogo" onclick="resetVariables(1);">(Borrar datos)</div><div class="skillWrapper">
+        <div class="hotSkillButton">1</div>
+        <div class="hotSkillButton">2</div>
+        <div class="hotSkillButton">3</div>
+        <div class="hotSkillButton">4</div>
+        <div class="hotSkillButton">5</div>
+        <div class="hotSkillButton">6</div>
+        <div class="hotSkillButton">7</div>
+        <div class="hotSkillButton">8</div>
+        <div class="hotSkillButton">9</div>
+        <div class="hotSkillButton">0</div>
+      </div>
+    </div>
+    <span id="mapDiv" onclick="$('#mapDiv').slideUp(1000)"></span>
+    <input type="button" onclick="showMap()" value="Mostrar Mapa (Prueba)">
+    
+    <div class="leftBar">
+      <div class="leftClan">
+        Clanes:
+        <div id="clanList"></div>
+        
+        <hr>
+      </div>
+      
+      <div class="leftClanChat">
+        chat clan
+        
+        <hr>
+      </div>
+      
+      <div class="leftChat">
+        chat general
+        
+        <hr>
+      </div>
+      
+      <div class="leftLog">
+        Registro de combate
+        <div id="gameLog"></div>
+      </div>
+    </div>
+    
+    <div class="rightBar">
+      <div id="playerStats"></div>
+      
+      <div id="skillSelectorDiv" onclick="toggleSkillSelector()">Cambiar habilidades</div>
+    </div>
+    
+    <div class="game gameContainer" id="gameWindow">
+      <div class="container">
+        <div id="classSelector">
+          Nombre: <input type="text" id="playerName"><br>
+          Profesión: 
+          <select id="roleSelector">
+            <option>Guardián</option>
+            <option>Cazador</option>
+            <option>Rastreador</option>
+            <option>Ilusionista</option>
+          </select><br>
+          Clan:
+          <select id="clanSelector">
+            
+          </select>
+          
+          <br>
+          
+          <input type="button" class="btn btn-default" onclick="newPlayer()" value="Crear personaje">
+        </div>
+
+        <div id="gameInventory">
+
+        </div>
+        
+        <div id="gameMapTest">
+          <div id="mapTest" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto">
+          </div>
+          <input class="moveButton" style="position: absolute; top: 32px; right: 32px" type="button" onclick="moveGuy(0)" value="▲">
+          <input class="moveButton" style="position: absolute; top: 64px; right: 0px" type="button" onclick="moveGuy(1)" value="►">
+          <input class="moveButton" style="position: absolute; top: 96px; right: 32px" type="button" onclick="moveGuy(2)" value="▼">
+          <input class="moveButton" style="position: absolute; top: 64px; right: 64px" type="button" onclick="moveGuy(3)" value="◄">
+
+          <i class="sprite sprite_chest mapButton" onclick="showInventory(0)" style="position: absolute; top: 0px; right: 96px;" title="Mostrar Inventario"></i>
+          <i class="sprite sprite_world mapButton" onclick="seeMap('gameMap'); showInventory(1)" style="position: absolute; top: 0px; right: 64px;" title="Ver mapa del mundo"></i>
+          <i class="sprite sprite_map mapButton" onclick="seeMap('placeMap'); showInventory(1)" style="position: absolute; top: 0px; right: 32px;" title="Ver mapa"></i>
+          <i class="sprite sprite_house mapButton" onclick="seeMap('screenMap'); showInventory(1)" style="position: absolute; top: 0px; right: 0px;" title="Volver al juego"></i>
+        </div>
+        
+        <div id="gameButtons">
+          <input type="button" class="btn btn-default" onclick="levelUpTest()" value="Matar monstruo (Prueba)"><br>
+          <input type="number" id="enemyLevelTest" min="1" value="1" oninput="calculateLevelTest()"> Nivel del monstruo<br>
+          <br>
+          <input type="button" class="btn btn-default" onclick="healPlayer(0, 10)" value="Curar al jugador"><br>
+          <input type="button" class="btn btn-default" onclick="healPlayer(0, -10)" value="Hacer daño al jugador"><br>
+        </div>
+      </div>
+    </div>
+
+    <div class="container bottomBar">
+      <footer>
+        <span></span>>&copy; 2016 Eyemdy Entertainment & Arch Lemon Studios</span> <input type="button" onclick="showChangeLog()" value="Mostrar cambios en la versión">
+      </footer>
+    </div>
+    <script src="common.js"></script>
+  	<script src="jquery-2.1.4.min.js"></script>
+  	<script src="jquery-ui.min.js"></script>
+  	<script src="script.js"></script>
+  	<script src="script_alt.js"></script>
+  </body>
+</html>
