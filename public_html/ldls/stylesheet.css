@@ -201,16 +201,16 @@ sup {
 	}
 }
 .gameMapMarker {
-	width: 144px;
-	height: 144px;
+	width: 160px;
+	height: 160px;
 	padding: 8px;
 	font-size: 9px;
 	background-color: rgba(128, 128, 128, 0.5);
 	display: inline-block;
 }
 .placeMapMarker {
-	width: 80px;
-	height: 80px;
+	width: 96px;
+	height: 96px;
 	padding: 8px;
 	font-size: 8px;
 	background-color: rgba(128, 128, 128, 0.5);

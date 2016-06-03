@@ -54,6 +54,7 @@ var changelog = [
 '--- Añadidos nuevos sprites de prueba (cofre, bolsa, espada, escudo)',
 '--- Ahora es posible acceder al inventario pulsando el icono del cofre, lo cual oculta el mapa.',
 '--- Los objetos ahora muestran un icono al lado del nombre, por defecto es el icono de la bolsa.',
+'---- Arreglados algunos fallos críticos al iniciar el "juego".',
 ];
 
 function drawInventory(player) {
@@ -138,6 +139,7 @@ function toggleSkillSelector() {
 }
 function getMap(which) {
     var gm = '';
+    if (!ldls || !ldls.players || !ldls.players[0]) return;
     var playerPos = ldls.players[0].position;
     for (var y in gameMap) {
         if (which != 'gameMap') break;
@@ -346,12 +348,18 @@ function loadGame() {
 function update(step) {
     document.title = gameInfo.name+' '+gameInfo.version;
 
+    if (!ldls) return;
+    if (!ldls.players) return;
+
     if (ldls.players[0]) {
     	playerStats.innerHTML = printPlayerData(ldls.players[0]);
     	classSelector.style.display = 'none';
     	drawInventory(ldls.players[0]);
     }
-    if (!ldls.players[0]) classSelector.style.display = 'inline-block';
+    if (!ldls.players[0]) {
+        classSelector.style.display = 'inline-block';
+        mapTest.style.display = 'none';
+    }
     clanList.innerHTML = drawSquadList();
     getMap(selectedMap);
 }

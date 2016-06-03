@@ -126,6 +126,7 @@ function newPlayer(name, role) {
     var clanID = clanSelector.selectedIndex;
     ldls.players.push(new Player(name, role, clanID));
     $('#classSelector').fadeOut(1000);
+    mapTest.style.display = 'inline-block';
     $('#gameButtons').slideDown(1000);
     update();
 }
