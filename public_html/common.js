@@ -596,6 +596,39 @@ function showChangeLog() {
 
 	document.body.innerHTML += l;
 }
+function alsoTry() {
+	var moreStuff = [
+		{'name': 'artillery', 'url': '../artillery/index.html'},
+		{'name': 'Quimera Cards', 'url': '../cards/index.html'},
+		{'name': 'Lemontastic! Casino', 'url': '../casino/home.html'},
+		{'name': 'cell', 'url': '../cell/index.html'},
+		{'name': 'Combine!', 'url': '../combine/index.html'},
+		{'name': 'Lemontactics!', 'url': '../coonwars/index.html'},
+		{'name': 'Crypt', 'url': '../crypt/home.html'},
+		{'name': 'god', 'url': '../god/index.html'},
+		{'name': 'home', 'url': '../home/index.html'},
+		{'name': 'ldls', 'url': '../ldls/index.html'},
+		{'name': 'Lemontastic!', 'url': '../lemontastic/home.html'},
+		{'name': 'Lemontastic! BETA', 'url': '../lemontastic/beta/home.html'},
+		{'name': 'LODO', 'url': '../lodo/index.html'},
+		{'name': 'Catch the Mice', 'url': '../mice/index.html'},
+		{'name': 'php', 'url': '../php/index.html'},
+		{'name': 'RiPPER', 'url': '../ripper/index.html'},
+		{'name': 'Random World', 'url': '../rw/home.html'},
+		{'name': 'Space Survival', 'url': '../spaces/index.html'},
+		{'name': 'Stalk Market', 'url': '../stalk/index.html'},
+		{'name': 'td', 'url': '../td/index.html'},
+		{'name': 'Diogenesis', 'url': '../test/flohmarkt/index.html'},
+		{'name': 'Ship WIP', 'url': '../test/ship/index.html'},
+		{'name': 'Painter', 'url': '../test/painter.html'},
+		{'name': 'Prng', 'url': '../test/prng.html'},
+		{'name': 'zoonbie killa', 'url': '../test/zk.html'},
+		{'name': 'waitQuest', 'url': '../waitquest/index.html'},
+		{'name': '#YOLOFly', 'url': '../yolofly/index.html'},
+	];
+	var sel = read(moreStuff);
+	return translate('Prueba también <a href="'+sel.url+'">'+sel.name+'</a>|Also try <a href="'+sel.url+'">'+sel.name+'</a>');
+}
 
 
 romanNumber(1);
