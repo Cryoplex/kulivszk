@@ -1,6 +1,9 @@
 .jumbotron {
-	background-image: url(jum.png);
 	height: 500px;
+	background: linear-gradient(rgb(255, 128, 0), rgb(0, 128, 255));
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
 }
 .jumbotron .container {
 	position: absolute;
@@ -36,4 +39,31 @@ sup {
 }
 .ourgames h2 {
 	font-size: 24px;
+}
+.wraithie_part {
+	position: absolute;
+}
+.wraithie_void, .wraithie_flesh {
+	background-color: transparent;
+	pointer-events: none;
+}
+.wraithie_mouth {
+	background-color: rgba(255, 255, 255, 0.8);
+	z-index: 9; 
+	border-radius: 100%;
+	cursor: crosshair;
+}
+.wraithie_eye {
+	z-index: 10;
+	border-radius: 100%;
+	cursor: crosshair;
+}
+.wraithie_body {
+	background-color: rgb(0, 0, 0);
+	z-index: 5;
+	transition: all 0.5s;
+	cursor: crosshair;
+}
+.wraithie {
+	position: absolute;
 }
