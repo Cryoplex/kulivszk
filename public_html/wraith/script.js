@@ -2,8 +2,20 @@ var changelog = [
 '-- Alpha',
 ];
 
+snd_hit = new Audio('sound/hit.wav');
+snd_miss = new Audio('sound/miss.wav');
+snd_kill = new Audio('sound/kill.wav');
+
+var PIXEL_SIZE = 3;
+
+var wind = $(window);
+var SCREEN_WIDTH = wind.width() / PIXEL_SIZE;
+var SCREEN_HEIGHT = wind.height() / PIXEL_SIZE;
+
 function increaseValue(num) {
-	wraith.wraithies.push(new Wraithie());
+	var last = wraith.wraithies.length;
+	wraith.wraithies[last] = new Wraithie(last);
+	moveWraithie(wraith.wraithies[last]);
 	update();
 }
 function resetVariables() {
@@ -14,11 +26,15 @@ function saveGame() {
 	notification('Game Saved');
 	also_try.innerHTML = alsoTry();
 }
-function Wraithie() {
-	this.hp = 3;
-	this.x = rand(0, 100);
-	this.y = rand(0, 50);
+function Wraithie(id) {
+	this.hp = 1;
+	this.x = rand(0, SCREEN_WIDTH);
+	this.y = rand(0, SCREEN_HEIGHT);
 	this.z = 2;
+	this.id = id;
+	this.condition = '';
+	this.speed = rand(1, 10);
+
 	this.eyecolor = 'rgb('+rand(170, 255)+', '+rand(170, 255)+', '+rand(170, 255)+')';
 	this.shape = [];
 	for (var y = 0; y < 10; y++) {
@@ -42,17 +58,77 @@ function Wraithie() {
 	this.shape = expandArray(this.shape, 'wraithie_void');
 	//Outline
 	infectAll(this.shape);
+
+	var el = document.createElement('div');
+	el.innerHTML = drawWraithie(this, this.id);
+	el.className = 'wraithie';
+	this.element = el;
+	doc('wraithy').appendChild(this.element);
 }
-function tickWraithies() {
+function tickWraithies(force) {
 	if (!wraith.wraithies) wraith.wraithies = [];
+
+	var r = read(wraith.wraithies);
+	tickWraithie(r);
+
+	if (!force) return;
 	for (var tw in wraith.wraithies) {
-		if (!rand(0,1)) continue;
 		var wth = wraith.wraithies[tw];
 
-		if (!isArrayClean(wth.shape, 'wraithie_flesh')) {
-			wth.shape = expandArray(wth.shape, 'wraithie_void');
-			infectAll(wth.shape);
-		}
+		tickWraithie(wth);
+	}
+}
+function regenerateWraithie(wth) {
+	var el = document.createElement('div');
+	if (!wth) return;
+	el.innerHTML = drawWraithie(wth, wth.id);
+	el.className = 'wraithie';
+	wth.element = el;
+	doc('wraithy').appendChild(wth.element);
+
+	moveWraithie(wth);
+}
+function tickWraithie(wth) {
+	if (!wth) return;
+	moveWraithie(wth);
+	if (!isArrayClean(wth.shape, 'wraithie_flesh')) {
+		wth.shape = expandArray(wth.shape, 'wraithie_void');
+		infectAll(wth.shape);
+		var changed = drawWraithie(wth, wth.id, true);
+		if (changed) wth.element.innerHTML = drawWraithie(wth, wth.id);
+	}
+}
+function moveWraithie(wraithie) {
+	var width = wraithie.shape[0].length;
+	var height = wraithie.shape.length;
+
+	var max = PIXEL_SIZE * wraithie.speed;
+
+	wraithie.x += rand(-max, max);
+	wraithie.y += rand(-max, max);
+
+	if (wraithie.x <= 0) wraithie.x = 0;
+	if (wraithie.y <= 0) wraithie.y = 0;
+
+	var realX = wraithie.x + width;
+	var realY = wraithie.y + height;
+
+	if (realX >= SCREEN_WIDTH) wraithie.x = (SCREEN_WIDTH - width);
+	if (realY >= SCREEN_HEIGHT) wraithie.y = (SCREEN_HEIGHT - height);
+
+
+	if (!wraithie.x) wraithie.x = 0;
+	if (!wraithie.y) wraithie.y = 0;
+	wraithie.element.style.top = (wraithie.y * PIXEL_SIZE)+'px';
+	wraithie.element.style.left = (wraithie.x * PIXEL_SIZE)+'px';
+
+	wraithie.element.title = 'x:'+wraithie.x+' y:'+wraithie.y+' width:'+width+' height:'+height;
+}
+function moveTile(array, x, y, empty) {
+	var rdir = read([0, 2, 4, 6]);
+	if (getDirection(array, x, y, rdir) == empty && tileHere(array, x, y) == 'wraithie_body') {
+		getDirection(array, x, y, rdir, tileHere(array, x, y));
+		tileHere(array, x, y, empty);
 	}
 }
 function infectAll(array) {
@@ -99,8 +175,26 @@ function trimArray(array, empty) {
 
 	//Trimming left
 	var firstIndex = 0;
-	if (isArrayEmpty(array, empty, firstIndex)) {
+	var cleanFirst = true;
+	var cleanLast = true;
+	for (var z in array) {
+		if (array[z][0] != empty) {
+			cleanFirst = false;
+			break;
+		}
+	}
+	for (var z in array) {
+		var last = array[z].length - 1;
+		if (array[z][last] != empty) {
+			cleanLast = false;
+			break;
+		}
+	}
+	if (cleanFirst) {
 		for (var z in array) array[z].splice(0, 1);
+	}
+	if (cleanLast) {
+		for (var z in array) array[z].pop();
 	}
 
 	//Trimming right
@@ -152,6 +246,7 @@ function infect(array, x, y, toInfect, newInfection, deadTile, chance) {
 	tileHere(array, x, y, deadTile);
 }
 function tileHere(array, x, y, newTile) {
+	if (!array || !array[y]) return;
 	if (newTile) array[y][x] = newTile;
 	return array[y][x];
 }
@@ -173,28 +268,48 @@ function getDirection(array, x, y, direction, newTile) {
 function randomBorder() {
 	return 'border-top-left-radius: '+rand(0, 100)+'%; border-top-right-radius: '+rand(0, 100)+'%; border-bottom-left-radius: '+rand(0, 100)+'%; border-bottom-right-radius: '+rand(0, 100)+'%;';
 }
-function drawAllWraithies() {
-	var daw = '';
-	for (var ww in wraith.wraithies) daw += drawWraithie(wraith.wraithies[ww], ww);
-	return daw;
-}
 function shoot(wraithID, x, y) {
+	console.log('Shootin...');
 	var w = wraith.wraithies[wraithID];
 	var h = tileHere(w.shape, x, y);
 	var sur = getSurroundings(w.shape, x, y);
-	if (sur.indexOf('wraithie_body') >= 0) {
+	if (sur.indexOf('wraithie_body') >= 0 && rand(0,1)) {
 		console.log('Shot sucesfull!');
 		w.hp -= 1;
 		if (h == 'wraithie_body') tileHere(w.shape, x, y, 'wraithie_void');
+		if (w.hp <= 0) {
+			wraith.wraithies.splice(wraithID, 1);
+			snd_kill.play();
+			$(w.element).effect('explode', 1000);
+			setTimeout(function() {
+				killWraithie(wraithID);
+			}, 1000);
+		}
+		else {
+			snd_hit.play();
+		}
 	}
-	if (w.hp <= 0) wraith.wraithies.splice(wraithID, 1);
+	else {
+			snd_miss.play();
+	}
 	update();
 }
-function drawWraithie(wraithie, wraithID) {
-	var pixelSize = 5;
+function killWraithie(wraithID) {
+	var wth = wraith.wraithies[wraithID];
+	doc('wraithy').removeChild(wth.element);
+	wraith.wraithies.splice(0, wraithID);
+}
+function drawWraithie(wraithie, wraithID, peek) {
+	var pixelSize = PIXEL_SIZE;
 	if (!wraithie) return;
 	var s = wraithie.shape;
-	var l = '<div class="wraithie" style="top: '+(pixelSize * wraithie.y)+'px; transform: scale('+wraithie.z+'); left: '+(pixelSize * wraithie.x)+'px">';
+
+	var condition = s.join('').replace(new RegExp('wraithie_', 'g'), '');
+	if (condition == wraithie.condition && peek) return false;
+	if (peek) return true;
+	wraithie.condition = condition;
+
+	var l = '';
 	for (var y in s) {
 		for (var x in s[y]) {
 			var ex = '';
@@ -202,7 +317,7 @@ function drawWraithie(wraithie, wraithID) {
 			var mou = 1;
 			if (s[y][x] == 'wraithie_mouth') mou = 2;
 			if (s[y][x] == 'wraithie_eye') ex = 'background-color: '+wraithie.eyecolor+'; box-shadow: 0 0 '+(pixelSize * 2)+'px '+(pixelSize / 2)+'px '+wraithie.eyecolor;
-			if (s[y][x] == 'wraithie_body') extra = 'box-shadow: 0 0 '+(pixelSize / 8)+'px '+(pixelSize / 16)+'px rgb(0, 0, 0); transform: rotate('+rand(0,360)+'deg) scale('+(rand(50, 200) / 100)+'); '+randomBorder();
+			//if (s[y][x] == 'wraithie_body') extra = 'box-shadow: 0 0 '+(pixelSize / 8)+'px '+(pixelSize / 16)+'px rgb(0, 0, 0); transform: rotate('+rand(0,360)+'deg) scale('+(rand(50, 200) / 100)+'); '+randomBorder();
 			l += '<div style="top: '+(y * pixelSize)+'px; left: '+(x * pixelSize)+'px;'+
 			'width: '+pixelSize+'px; height: '+(pixelSize * mou)+'px; '+ex+'; '+extra+'"'+
 			' class="wraithie_part '+
@@ -210,18 +325,18 @@ function drawWraithie(wraithie, wraithID) {
 			'" onclick="shoot('+wraithID+', '+x+', '+y+')"></div>';
 		}
 	}
-	l += '</div>';
+	l += '';
 	return l;
 }
 function loadGame() {
 	var losto = localStorage.getItem('wraith');
 	if (!losto) return;
 	wraith = JSON.parse(losto);
+	for (var w in wraith.wraithies) regenerateWraithie(wraith.wraithies[w]);
 	notification('Game Loaded');
 }
 function update(step) {
 	tickWraithies();
-	wraithy.innerHTML = drawAllWraithies();
 
 	document.title = gameInfo.name+' '+gameInfo.version;
 }
