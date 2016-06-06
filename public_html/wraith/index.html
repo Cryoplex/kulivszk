@@ -14,11 +14,12 @@
   </head>
 
   <body>
+    <div class="topbar2" id="pointsTopBar">9999999999999999 puntos</div>
     <div class="topbar" onclick="reload()" id="ammoTopBar"><i id="ammunition"></i>
     </div>
-    <div class="jumbotron game" onclick="checkShoot()">
+    <div class="jumbotron game" onclick="checkShoot(true)" onmousedown="shooting = true" onmouseup="shooting = false;">
       <div class="container">
-        <div style="position: fixed; top: 0px; left: 32px;">
+        <div style="position: fixed; top: 32px; left: 32px;">
           <div id="wraithy"></div>
         </div>
       </div>
