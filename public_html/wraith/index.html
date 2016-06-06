@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, 
     user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0" />
 
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="img/favicon.png">
 
     <title>Game</title>
 
@@ -14,31 +14,16 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="topbar" onclick="reload()" id="ammoTopBar"><i id="ammunition"></i>
+    </div>
+    <div class="jumbotron game" onclick="checkShoot()">
       <div class="container">
-        <div class="navbar-header">
-          <ul>
-            <!-- Tabs -->
-	          <li><a href="#">Game</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <div class="jumbotron game">
-      <div class="container">
-        <input type="button" class="btn btn-default" onclick="increaseValue(1)" value="Click Me!"><output id="game_value"></output>
-        <div style="position: fixed; top: 0px; left: 0px;">
+        <div style="position: fixed; top: 0px; left: 32px;">
           <div id="wraithy"></div>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <footer>
-        <p>&copy; 2016 Arch Lemon Studios</p> <input type="button" onclick="showChangeLog()" value="Mostrar cambios en la versión"> <i id="also_try"></i>
-      </footer>
-    </div>
     <script src="../common.js"></script>
   	<script src="../jquery-2.1.4.min.js"></script>
   	<script src="../jquery-ui.min.js"></script>

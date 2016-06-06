@@ -2,15 +2,23 @@ var changelog = [
 '-- Alpha',
 ];
 
-snd_hit = new Audio('sound/hit.wav');
-snd_miss = new Audio('sound/miss.wav');
-snd_kill = new Audio('sound/kill.wav');
+snd_hit = new Audio('./sound/hit.wav');
+snd_miss = new Audio('./sound/miss.wav');
+snd_kill = new Audio('./sound/kill.wav');
+snd_oom = new Audio('./sound/oom.wav');
+snd_reload = new Audio('./sound/reload.wav');
 
-var PIXEL_SIZE = 3;
+var PIXEL_SIZE = 5;
 
 var wind = $(window);
 var SCREEN_WIDTH = wind.width() / PIXEL_SIZE;
 var SCREEN_HEIGHT = wind.height() / PIXEL_SIZE;
+
+var gun = {
+	'bullets': 20,
+	'clipSize': 20,
+	'reloadTime': 1200,
+}
 
 function increaseValue(num) {
 	var last = wraith.wraithies.length;
@@ -24,7 +32,6 @@ function resetVariables() {
 function saveGame() {
 	localStorage.setItem('wraith', JSON.stringify(wraith));
 	notification('Game Saved');
-	also_try.innerHTML = alsoTry();
 }
 function Wraithie(id) {
 	this.hp = 1;
@@ -33,9 +40,8 @@ function Wraithie(id) {
 	this.z = 2;
 	this.id = id;
 	this.condition = '';
-	this.speed = rand(1, 10);
+	this.speed = rand(1, 5);
 
-	this.eyecolor = 'rgb('+rand(170, 255)+', '+rand(170, 255)+', '+rand(170, 255)+')';
 	this.shape = [];
 	for (var y = 0; y < 10; y++) {
 		this.shape[y] = [];
@@ -69,16 +75,21 @@ function tickWraithies(force) {
 	if (!wraith.wraithies) wraith.wraithies = [];
 
 	var r = read(wraith.wraithies);
-	tickWraithie(r);
+	if (r && !r.dead) tickWraithie(r);
 
 	if (!force) return;
 	for (var tw in wraith.wraithies) {
 		var wth = wraith.wraithies[tw];
+		if (wth.dead) continue;
 
 		tickWraithie(wth);
 	}
 }
-function regenerateWraithie(wth) {
+function regenerateWraithie(wth, id) {
+	if (wth.dead) {
+		wraith.wraithies.splice(0, id);
+		return;
+	}
 	var el = document.createElement('div');
 	if (!wth) return;
 	el.innerHTML = drawWraithie(wth, wth.id);
@@ -99,6 +110,7 @@ function tickWraithie(wth) {
 	}
 }
 function moveWraithie(wraithie) {
+	if (wraithie.ddead) return;
 	var width = wraithie.shape[0].length;
 	var height = wraithie.shape.length;
 
@@ -122,7 +134,7 @@ function moveWraithie(wraithie) {
 	wraithie.element.style.top = (wraithie.y * PIXEL_SIZE)+'px';
 	wraithie.element.style.left = (wraithie.x * PIXEL_SIZE)+'px';
 
-	wraithie.element.title = 'x:'+wraithie.x+' y:'+wraithie.y+' width:'+width+' height:'+height;
+	wraithie.element.title = '(id: '+wraithie.id+') x:'+wraithie.x+' y:'+wraithie.y+' width:'+width+' height:'+height;
 }
 function moveTile(array, x, y, empty) {
 	var rdir = read([0, 2, 4, 6]);
@@ -268,40 +280,118 @@ function getDirection(array, x, y, direction, newTile) {
 function randomBorder() {
 	return 'border-top-left-radius: '+rand(0, 100)+'%; border-top-right-radius: '+rand(0, 100)+'%; border-bottom-left-radius: '+rand(0, 100)+'%; border-bottom-right-radius: '+rand(0, 100)+'%;';
 }
+function reload(force) {
+	if (gun.bullets < gun.clipSize && !force && !gun.reloading) {
+		gun.reloading = true;
+		playSound(snd_reload);
+		setTimeout(function() {reload(true)}, gun.reloadTime);
+	}
+	if (force) {
+		gun.bullets = gun.clipSize;
+		gun.reloading = false;
+	}
+}
+function ammoUpdate() {
+	ammoTopBar.className = 'topbar';
+	if (gun.bullets <= 0) ammoTopBar.className = 'topbar outOfAmmo';
+	var c = '';
+	for (var e = 0; e < gun.clipSize; e++) {
+		var aex = '';
+		if (e >= gun.bullets) aex = 'ammoDepleted';
+		c += '<div class="ammo '+aex+'"></div>';
+	}
+	ammoTopBar.innerHTML = c;
+}
+function checkShoot(x, y) {
+	ammoUpdate();
+	if (gun.reloading) return;
+	var cx = Math.floor(cursorX / PIXEL_SIZE);
+	var cy = Math.floor(cursorY / PIXEL_SIZE);
+
+	x = cx;
+	y = cy;
+
+	var deviation = 2;
+
+	if (gun.bullets <= 0) {
+		playSound(snd_oom);
+		return;
+	}
+	gun.bullets--;
+
+	for (var cw in wraith.wraithies) {
+		var wth = wraith.wraithies[cw];
+		var dim = getWraithDimensions(wth);
+
+		var minx = Math.floor(wth.x);
+		var maxx = Math.floor(minx + dim.width);
+
+		var miny = Math.floor(wth.y);
+		var maxy = Math.floor(miny + dim.height);
+
+		if ((cx + deviation) >= minx && (cx - deviation) <= maxx) {
+			if ((cy + deviation) >= miny && (cy - deviation) <= maxy) {
+				var wx = cx - minx;
+				var wy = cy - miny;
+
+				shoot(cw, wx, wy);
+			}
+		}
+		else {
+			playSound(snd_miss);
+		}
+	}
+}
+function playSound(sound) {
+	sound.pause();
+	sound.currentTime = 0;
+	sound.play();
+}
+function getWraithDimensions(wth) {
+	var width = wth.shape[0].length;
+	var height = wth.shape.length;
+
+	return {
+		'width': width,
+		'height': height,
+	}
+}
 function shoot(wraithID, x, y) {
-	console.log('Shootin...');
 	var w = wraith.wraithies[wraithID];
+	if (!w || w.dead) return 'is dead';
 	var h = tileHere(w.shape, x, y);
 	var sur = getSurroundings(w.shape, x, y);
-	if (sur.indexOf('wraithie_body') >= 0 && rand(0,1)) {
+	if (sur.indexOf('wraithie_body') >= 0) {
 		console.log('Shot sucesfull!');
 		w.hp -= 1;
 		if (h == 'wraithie_body') tileHere(w.shape, x, y, 'wraithie_void');
 		if (w.hp <= 0) {
-			wraith.wraithies.splice(wraithID, 1);
-			snd_kill.play();
-			$(w.element).effect('explode', 1000);
+			playSound(snd_kill);
+
+			w.dead = true;
 			setTimeout(function() {
 				killWraithie(wraithID);
 			}, 1000);
+			return;
 		}
 		else {
-			snd_hit.play();
+			playSound(snd_hit);
 		}
-	}
-	else {
-			snd_miss.play();
 	}
 	update();
 }
 function killWraithie(wraithID) {
 	var wth = wraith.wraithies[wraithID];
-	doc('wraithy').removeChild(wth.element);
+	if (!wth) return;
+	if (wth.element) doc('wraithy').removeChild(wth.element);
 	wraith.wraithies.splice(0, wraithID);
+
+	for (var kw in wraith.wraithies) wraith.wraithies[kw].id = kw;
 }
 function drawWraithie(wraithie, wraithID, peek) {
 	var pixelSize = PIXEL_SIZE;
 	if (!wraithie) return;
+	if (wraithie.dead) return;
 	var s = wraithie.shape;
 
 	var condition = s.join('').replace(new RegExp('wraithie_', 'g'), '');
@@ -312,17 +402,15 @@ function drawWraithie(wraithie, wraithID, peek) {
 	var l = '';
 	for (var y in s) {
 		for (var x in s[y]) {
-			var ex = '';
 			var extra = '';
 			var mou = 1;
 			if (s[y][x] == 'wraithie_mouth') mou = 2;
-			if (s[y][x] == 'wraithie_eye') ex = 'background-color: '+wraithie.eyecolor+'; box-shadow: 0 0 '+(pixelSize * 2)+'px '+(pixelSize / 2)+'px '+wraithie.eyecolor;
-			//if (s[y][x] == 'wraithie_body') extra = 'box-shadow: 0 0 '+(pixelSize / 8)+'px '+(pixelSize / 16)+'px rgb(0, 0, 0); transform: rotate('+rand(0,360)+'deg) scale('+(rand(50, 200) / 100)+'); '+randomBorder();
+			if (s[y][x] == 'wraithie_body') extra = 'transform: rotate('+rand(0,360)+'deg) scale('+(rand(100, 200) / 100)+'); '+randomBorder();
 			l += '<div style="top: '+(y * pixelSize)+'px; left: '+(x * pixelSize)+'px;'+
-			'width: '+pixelSize+'px; height: '+(pixelSize * mou)+'px; '+ex+'; '+extra+'"'+
+			'width: '+pixelSize+'px; height: '+(pixelSize * mou)+'px; '+extra+'"'+
 			' class="wraithie_part '+
 			s[y][x]+
-			'" onclick="shoot('+wraithID+', '+x+', '+y+')"></div>';
+			'"></div>';
 		}
 	}
 	l += '';
@@ -332,13 +420,19 @@ function loadGame() {
 	var losto = localStorage.getItem('wraith');
 	if (!losto) return;
 	wraith = JSON.parse(losto);
-	for (var w in wraith.wraithies) regenerateWraithie(wraith.wraithies[w]);
+	for (var w in wraith.wraithies) regenerateWraithie(wraith.wraithies[w], w);
 	notification('Game Loaded');
 }
 function update(step) {
+	ammoUpdate();
 	tickWraithies();
 
 	document.title = gameInfo.name+' '+gameInfo.version;
+}
+function addWraithies() {
+	if (!rand(0,1)) return;
+	if (wraith.wraithies.length >= 8) return;
+	increaseValue();
 }
 
 var wraith = {};
@@ -352,4 +446,5 @@ loadGame();
 resetVariables();
 update();
 var t = setInterval(saveGame, 60000);
-var tt = setInterval(update, 100);
+var tt = setInterval(update, 200);
+var ttt = setInterval(addWraithies, 500);
