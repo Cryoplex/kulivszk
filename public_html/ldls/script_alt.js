@@ -18,6 +18,7 @@ function Player(name, role, clanID) {
     this.clan = clanID;
     this.gold = 1000; //El jugador empieza con 1000 oro.
     this.inventory = [];
+    this.equipment = new Equipment();
     
     this.posX = 0;
     this.posY = 0;
@@ -52,6 +53,14 @@ function Player(name, role, clanID) {
         this.health -= 50;
         this.attack -= 50;
     }
+}
+function Equipment() {
+    this.weapon = -1;
+    this.head = -1;
+    this.body = -1;
+    this.boots = -1;
+    this.accesory = -1;
+    this.shield = -1;
 }
 function calculateLevelUp(player) {
     var nextLevel = player.level + 1;
@@ -102,9 +111,24 @@ function addExperience(player, amount) {
     player.experience += amount;
     calculateLevelUp(player);
 }
-function getPlayerData(player, dat) {
+function getEquipmentModifier(player, stat) {
+    var equip = player.equipment;
+    var add = 0;
+    for (var equipedItem in equip) {
+        var item = equip[equipedItem];
+        if (item < 0) continue;
+        item = player.inventory[parseInt(item)];
+        if (!item) return 0;
+        if (item[stat]) add += item[stat];
+    }
+    return add;
+}
+function getPlayerData(player, dat, equipMode) {
     var levelModifier = (player.level / 100);
     var extra = 5;
+    var equipMod = getEquipmentModifier(player, dat);
+    if (equipMode) return equipMod;
+    extra += equipMod;
     if (dat == 'health') extra += 15;
     if (dat == 'action') extra += 5;
     

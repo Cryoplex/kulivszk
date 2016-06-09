@@ -55,25 +55,87 @@ var changelog = [
 '--- Ahora es posible acceder al inventario pulsando el icono del cofre, lo cual oculta el mapa.',
 '--- Los objetos ahora muestran un icono al lado del nombre, por defecto es el icono de la bolsa.',
 '---- Arreglados algunos fallos críticos al iniciar el "juego".',
+'-- Añadido equipamiento.',
+'--- En la pantalla del inventario, puedes arrastrar y soltar objetos del inventario al equipo.',
+'--- Los sitios donde se pueden soltar objetos están marcados con "head, body, weapon" etc.',
+'--- Puedes soltar CUALQUIER objeto en ellos, siempre y cuando no esté equipado ya.',
+'--- En la barra de características del personaje (A la derecha de la pantalla) ahora se muestran las características tras el cálculo del equipo.',
+'---- Al lado de cada característica ahora aparecerá: TOTAL (+EQUIPO) CARACTERÍSTICA, por ejemplo: "10 (+5) ATQ" significa que todas las armas equipadas aumentan +5 el ataque, y el total (base + equipo) es 10.',
 ];
 
 function drawInventory(player) {
     var di = '<h2 style="text-align: center">Inventario</h2><br>';
     for (var h in player.inventory) {
-        di += '<div class="shopItem" title="'+JSON.stringify(player.inventory[h])+'">'+showItemData(player.inventory[h])+'</div>';
+        var it = player.inventory[h];
+        var pr = it.basePrice;
+
+        di += '<div class="shopItem inventoryItem" id="itemSlot_'+h+'" title="'+showItemData(player.inventory[h], 1)+'">'+'<span class="goldie">'+pr+'G</span>'+showItemData(player.inventory[h])+'</div>';
     }
     if (player.inventory.length <= 0) di += '<i>Parece que no tienes ningún objeto...</i>';
+
+    di += '<div class="equipment"><h2>Equipo</h2>';
+    if (!player.equipment) player.equipment = new Equipment();
+
+    for (var slot in player.equipment) {
+        di += showEquip(player, slot);
+    }
+
+    di += '</div>';
+
     di += '<div class="button bottomButton" onclick="showInventory(1)">(Volver al mapa)</div>';
+
     gameInventory.innerHTML = di;
+
+    $('.inventoryItem').draggable({stop: function(event, ui) {
+        console.log(ui.helper.position());
+    }});
+
+    $('.equipmentSlot').droppable({accept: '.inventoryItem', drop: function(event, ui) {
+        var id = ui.draggable[0].id;
+        id = id.split('_')[1];
+        var item = player.inventory[id];
+        console.log('item: '+JSON.stringify(item));
+
+        var slot = this.id.split('_')[1];
+        equipItem(player, id, slot);
+
+        ui.draggable.detach().appendTo($(this));
+        drawInventory(player);
+    }});
 }
-function showItemData(item) {
-    var r = '<i class="sprite '+item.sprite+'"></i>';
-    r += item.name+' ('+item.basePrice+'G)';
-    if (item.attack) r += '<br>+'+item.attack+'ATQ';
-    if (item.defense) r += '<br>+'+item.defense+'DEF';
+function showEquip(player, slot) {
+    var wid = player.equipment[slot];
+    var it = (wid < 0) ? {'name': slot, 'sprite': 'sprite_none'} : player.inventory[wid];
+    return '<div class="shopItem inventoryItem equipmentSlot" onclick="unequip(\''+slot+'\')" id="slot_'+slot+'" title="'+showItemData(it, true)+'">'+showItemData(it)+'</div>';
+}
+function unequip(slot) {
+    var pl = ldls.players[0];
+    pl.equipment[slot] = -1;
+    drawInventory(pl);
+}
+function equipItem(player, itemID, slot) {
+    itemID = parseInt(itemID);
+    var equip = player.equipment;
+    for (var search in equip) {
+        if (itemID == equip[search]) {
+            itemID = -1;
+            break;
+        }
+    }
+
+    if (itemID >= 0) player.equipment[slot] = parseInt(itemID);
+    drawInventory(player);
+}
+function showItemData(item, tooltip) {
+    var r = '<i class="itemSprite sprite '+item.sprite+'"></i>';
+    if (!tooltip) return r+'<b class="itemName">'+item.name+'</b>';
+    r = item.name+'';
+    if (item.attack) r += '\n+'+item.attack+'ATQ';
+    if (item.defense) r += '\n+'+item.defense+'DEF';
     return r;
 }
 function showInventory(reverse) {
+    drawInventory(ldls.players[0]);
     if (!reverse) {
         $('#gameInventory').fadeIn(100);
         $('#gameMapTest').fadeOut(100);
@@ -92,13 +154,13 @@ function printPlayerData(player) {
     l += 'Jugador '+player.name+' el '+getPlayerData(player, 'role')+'<br>'+
     'Clan: '+ldls.squads[player.clan].name+'<br>'+
     'Nv. '+player.level+' ('+player.experience+'/'+Math.pow((player.level + 1), 3)+' experiencia)<br>'+
-    dataBar(player.pv, getPlayerData(player, 'health'), '#23cf12')+' PV<br>'+
-    dataBar(player.pa, getPlayerData(player, 'action'), '#a8190e')+' PA<br>'+
+    dataBar(player.pv, getPlayerData(player, 'health'), '#23cf12')+' (+'+getPlayerData(player, 'health', true)+') PV<br>'+
+    dataBar(player.pa, getPlayerData(player, 'action'), '#a8190e')+' (+'+getPlayerData(player, 'action', true)+') PA<br>'+
     player.ph+' PH<br>'+
-    getPlayerData(player, 'attack')+' ATQ<br>'+
-    getPlayerData(player, 'defense')+' DEF<br>'+
-    getPlayerData(player, 'speed')+' VEL<br>'+
-    getPlayerData(player, 'knowledge')+' SAB<br>';
+    getPlayerData(player, 'attack')+' (+'+getPlayerData(player, 'attack', true)+') ATQ<br>'+
+    getPlayerData(player, 'defense')+' (+'+getPlayerData(player, 'defense', true)+') DEF<br>'+
+    getPlayerData(player, 'speed')+' (+'+getPlayerData(player, 'speed', true)+') VEL<br>'+
+    getPlayerData(player, 'knowledge')+' (+'+getPlayerData(player, 'knowledge', true)+') SAB<br>';
     
     return l;
 }
@@ -198,7 +260,10 @@ function drawShop(itemIDs) {
     for (var e in itemIDs) {
         var id = itemIDs[e];
         var item = itemList[id];
-        i += '<div class="button shopItem" title="'+JSON.stringify(item)+'" onclick="buyItem('+id+', '+item.basePrice+')">'+item.name+' ('+item.basePrice+'G)</div>';
+        var available = '';
+        if (item.basePrice > ldls.players[0].gold) available = 'unavailable';
+
+        i += '<div class="button '+available+' shopItem" title="'+JSON.stringify(item)+'" onclick="buyItem('+id+', '+item.basePrice+')">'+item.name+' ('+item.basePrice+'G)</div>';
     }
     return i;
 }
@@ -354,7 +419,6 @@ function update(step) {
     if (ldls.players[0]) {
     	playerStats.innerHTML = printPlayerData(ldls.players[0]);
     	classSelector.style.display = 'none';
-    	drawInventory(ldls.players[0]);
     }
     if (!ldls.players[0]) {
         classSelector.style.display = 'inline-block';

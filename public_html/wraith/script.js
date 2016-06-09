@@ -8,13 +8,14 @@ snd_kill = new Audio('./sound/kill.wav');
 snd_oom = new Audio('./sound/oom.wav');
 snd_reload = new Audio('./sound/reload.wav');
 
-var PIXEL_SIZE = 3;
+var PIXEL_SIZE = 5;
 
 var wind = $(window);
 var SCREEN_WIDTH = wind.width() / PIXEL_SIZE;
 var SCREEN_HEIGHT = wind.height() / PIXEL_SIZE;
 
 var shooting = false;
+var soundEnabled = true;
 
 var gun = {
 	'bullets': 20,
@@ -26,9 +27,9 @@ var gun = {
 
 var points = 0;
 
-function increaseValue(num) {
+function increaseValue(over) {
 	var last = wraith.wraithies.length;
-	wraith.wraithies[last] = new Wraithie(last);
+	wraith.wraithies[last] = new Wraithie(last, over);
 	moveWraithie(wraith.wraithies[last]);
 	update();
 }
@@ -39,25 +40,30 @@ function saveGame() {
 	localStorage.setItem('wraith', JSON.stringify(wraith));
 	notification('Game Saved');
 }
-function Wraithie(id) {
-	this.hp = 1;
-	this.x = rand(0, SCREEN_WIDTH);
+function Wraithie(id, shape) {
+	var dif = Math.floor(wraith.difficulty);
+	this.hp = 1 + dif;
+	this.x = 0;
 	this.y = rand(0, SCREEN_HEIGHT);
 	this.z = 2;
 	this.id = id;
 	this.condition = '';
-	this.speed = rand(1, PIXEL_SIZE);
+	this.speed = 1 + dif;
 
 	this.shape = [];
-	for (var y = 0; y < 10; y++) {
+	for (var y = 0; y < 20; y++) {
 		this.shape[y] = [];
-		for (var x =  0; x < 10; x++) this.shape[y][x] = 'wraithie_void';
+		for (var x =  0; x < 20; x++) {
+			var addShape = 'wraithie_void'
+
+			this.shape[y][x] = addShape;
+		}
 	}
 	//Add eyes
 	var estart = 0;
 	var efinish = 2;
-	this.shape[0][estart] = 'wraithie_eye';
-	this.shape[0][efinish] = 'wraithie_eye';
+	this.shape[10][estart] = 'wraithie_eye';
+	this.shape[10][efinish] = 'wraithie_eye';
 
 	//Add mouth
 	var mstart = estart + 1;
@@ -116,8 +122,10 @@ function moveWraithie(wraithie) {
 
 	var max = PIXEL_SIZE * wraithie.speed;
 
-	wraithie.x += rand(-max, max);
-	wraithie.y += rand(-max, max);
+	wraithie.x += rand(-1, max);
+
+	if (wraithie.y > (SCREEN_HEIGHT * 0.8)) wraithie.y--;
+	if (wraithie.y < (SCREEN_HEIGHT * 0.8)) wraithie.y++;
 
 	if (wraithie.x <= 0) wraithie.x = 0;
 	if (wraithie.y <= 0) wraithie.y = 0;
@@ -125,8 +133,8 @@ function moveWraithie(wraithie) {
 	var realX = wraithie.x + width;
 	var realY = wraithie.y + height;
 
-	if (realX >= SCREEN_WIDTH) wraithie.x = (SCREEN_WIDTH - width);
-	if (realY >= SCREEN_HEIGHT) wraithie.y = (SCREEN_HEIGHT - height);
+	if (realX >= (SCREEN_WIDTH * 0.8)) wraithie.x = Math.floor(SCREEN_WIDTH * 0.8);
+	if (realY >= (SCREEN_HEIGHT * 0.8)) wraithie.y = Math.floor(SCREEN_HEIGHT * 0.8);
 
 
 	if (!wraithie.x) wraithie.x = 0;
@@ -284,7 +292,6 @@ function reload(force) {
 	if (gun.bullets < gun.clipSize && !force && !gun.reloading) {
 		gun.reloading = true;
 		playSound(snd_reload);
-		setTimeout(function() {reload(true)}, gun.reloadTime);
 	}
 	if (force) {
 		gun.bullets = gun.clipSize;
@@ -292,29 +299,18 @@ function reload(force) {
 	}
 }
 function ammoUpdate() {
+	soundButton.className = (soundEnabled) ? 'nosound' : 'sound';
 	ammoTopBar.className = 'topbar';
 	if (gun.bullets <= 0) ammoTopBar.className += ' outOfAmmo';
-	if (shooting) ammoTopBar.className += ' shooting';
-	var c = '';
-	for (var e = 0; e < gun.clipSize; e++) {
-		var aex = '';
-		if (e >= gun.bullets) aex = 'ammoDepleted';
-		c += '<div class="ammo '+aex+'"></div>';
-	}
-	ammoTopBar.style.height = (gun.clipSize * 12)+'px';
-	ammoTopBar.innerHTML = c;
+	if (gun.reloading) ammoTopBar.className += ' shooting';
 }
-function checkShoot(force) {
+function checkShoot(x, y) {
 	ammoUpdate();
 	gun.shotDelay--;
 	if (gun.reloading) return;
-	if (!shooting && !force) return;
-	if (shooting && !force) {
-		if (gun.shotDelay > 0) return;
-		gun.shotDelay = gun.shotDelayMax;
-	}
-	var cx = Math.floor(cursorX / PIXEL_SIZE);
-	var cy = Math.floor(cursorY / PIXEL_SIZE);
+
+	var cx = Math.floor((cursorX - 32) / PIXEL_SIZE);
+	var cy = Math.floor((cursorY - 32) / PIXEL_SIZE);
 
 	var x = cx;
 	var y = cy;
@@ -340,8 +336,6 @@ function checkShoot(force) {
 				var wx = cx - minx;
 				var wy = cy - miny;
 
-				console.log('wx '+wx+' wy '+wy);
-
 				var s = shoot(cw, wx, wy);
 				if (s) pointsHere(x, y, s);
 			}
@@ -351,7 +345,11 @@ function checkShoot(force) {
 		}
 	}
 }
-function playSound(sound) {
+function playSound(sound, timeStretch) {
+	if (!soundEnabled) return;
+	if (!timeStretch) timeStretch = 1;
+	if (timeStretch < 0.5) timeStretch = 0.5;
+	sound.playbackRate = timeStretch;
 	sound.pause();
 	sound.currentTime = 0;
 	sound.play();
@@ -384,10 +382,11 @@ function shotHere(x, y) {
 
 		el.style.top = ((y * PIXEL_SIZE) - (hh))+'px';
 		el.style.left = ((x * PIXEL_SIZE) - (ww))+'px';
-	}, 50);
 
+		el.style.transform = 'rotate('+rand(0, 360)+'deg)';
+	}, 50);
+	$(el).fadeOut(400);
 	setTimeout(function() {
-		$(el).effect('explode', 400);
 		doc('wraithy').removeChild(el);
 	}, 400);
 }
@@ -416,16 +415,21 @@ function shoot(wraithID, x, y) {
 	if (!w) return 'is dead';
 	var h = tileHere(w.shape, x, y);
 	var sur = getSurroundings(w.shape, x, y);
-	if (sur.indexOf('wraithie_body') >= 0) {
+	playSound(snd_miss, 0.8);
+	if (h == 'wraithie_body' || h == 'wraithie_mouth' || h == 'wraithie_eye') {
 		console.log('Shot sucesfull!');
 		w.hp -= 1;
 		if (h == 'wraithie_body') tileHere(w.shape, x, y, 'wraithie_void');
 		if (w.hp <= 0) {
-			playSound(snd_kill);
 
 			var dimensions = getWraithDimensions(w);
 			var size = dimensions.width + dimensions.height;
 			points += size;
+			wraith.difficulty += (size / 1000);
+
+			var mm = 16 / size;
+
+			playSound(snd_kill, mm);
 
 			killWraithie(wraithID);
 			return size;
@@ -460,7 +464,7 @@ function drawWraithie(wraithie, wraithID, peek) {
 			var extra = '';
 			var mou = 1;
 			if (s[y][x] == 'wraithie_mouth') mou = 2;
-			//if (s[y][x] == 'wraithie_body') extra = 'transform: rotate('+rand(0,360)+'deg) scale('+(rand(100, 200) / 100)+'); '+randomBorder();
+			if (s[y][x] == 'wraithie_body') extra = 'transform: rotate('+rand(0,360)+'deg) scale('+(rand(100, 200) / 100)+'); '+randomBorder();
 			l += '<div style="top: '+(y * pixelSize)+'px; left: '+(x * pixelSize)+'px;'+
 			'width: '+pixelSize+'px; height: '+(pixelSize * mou)+'px; '+extra+'"'+
 			' class="wraithie_part '+
@@ -475,10 +479,30 @@ function loadGame() {
 	var losto = localStorage.getItem('wraith');
 	if (!losto) return;
 	wraith = JSON.parse(losto);
+	if (!wraith.difficulty) wraith.difficulty = 0;
 	for (var w in wraith.wraithies) regenerateWraithie(wraith.wraithies[w], w);
 	notification('Game Loaded');
 }
 function update(step) {
+	if (!wraith.difficulty) wraith.difficulty = 0;
+	var dif = wraith.difficulty;
+	var v1 = Math.ceil(255 / (dif * 16));
+	var v2 = Math.ceil(255 / (dif * 8));
+	var v3 = Math.ceil(255 / (dif * 4));
+	var v4 = Math.ceil(255 / (dif * 2));
+
+	if (v1 > 255) v1 = 255;
+	if (v2 > 255) v2 = 255;
+	if (v3 > 255) v3 = 255;
+	if (v4 > 255) v4 = 255;
+
+	console.log(v1, v2, v3, v4, 'v1v2v3v4');
+
+	var c1 = 'rgb(0, '+v1+', '+v3+')';
+	var c2 = 'rgb(0, '+v2+', '+v4+')';
+
+	doc('gameWindow').style.background = 'linear-gradient('+c1+', '+c2+')';
+
 	ammoUpdate();
 	tickWraithies();
 	updateReload();
@@ -505,12 +529,32 @@ function updatePoints() {
 	if (!wraith.points) wraith.points = 0;
 	pointsTopBar.innerHTML = wraith.points+' '+translate('puntos|points');
 
+	var r = read($('.wraithie_body'));
+	if (!r) return;
+	var min = PIXEL_SIZE / 2;
+	var max = PIXEL_SIZE * 2;
+	r.style.transform = 'rotate('+rand(0, 360)+'deg) scale('+(rand(100, 200) / 100)+')';
+	r.style.borderRadius = rand(0, 100)+'% '+rand(0, 100)+'% '+rand(0, 100)+'% '+rand(0, 100)+'%';
+
 }
 function updateReload() {
 	if (gun.reloading) {
 		gun.bullets++;
-		if (gun.bullets > gun.clipSize) gun.bullets = gun.clipSize;
+		if (gun.bullets > gun.clipSize) {
+			gun.bullets = gun.clipSize;
+			gun.reloading = false;
+		}
+
 	}
+
+	var c = '';
+	for (var e = 0; e < gun.clipSize; e++) {
+		var aex = '';
+		if (e >= gun.bullets) aex = 'ammoDepleted';
+		c += '<div class="ammo '+aex+'"></div>';
+	}
+	ammoTopBar.style.height = (gun.clipSize * 12)+'px';
+	ammoTopBar.innerHTML = c;
 }
 
 var wraith = {};
@@ -524,7 +568,7 @@ loadGame();
 resetVariables();
 update();
 var t = setInterval(saveGame, 60000);
-var tt = setInterval(update, 200);
-var ttt = setInterval(addWraithies, 1000);
-var tttt = setInterval(updatePoints, 30);
+var tt = setInterval(update, 400);
+var ttt = setInterval(addWraithies, 4000);
+var tttt = setInterval(updatePoints, 60);
 var ttttt = setInterval(updateReload, 100);
