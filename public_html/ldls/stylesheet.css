@@ -321,3 +321,17 @@ sup {
 .sprite_item    { background-position: -128px 0px; }
 .sprite_sword    { background-position: -160px 0px; }
 .sprite_shield    { background-position: -192px 0px; }
+
+.tile {
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	background-color: rgb(128, 64, 96);
+}
+.tile_void {
+	background-color: rgb(16, 32, 0);
+}
+.tile_room {
+	background-color: rgb(32, 192, 8);
+}

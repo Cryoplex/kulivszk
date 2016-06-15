@@ -1,3 +1,6 @@
+var CHUNK_WIDTH = 40;
+var CHUNK_HEIGHT = 30;
+
 function Player(name, role, clanID) {
     this.name = name;
     this.role = role; //Rol seleccionado por el usuario
@@ -309,6 +312,78 @@ function MapArea(name) {
     }
 }
 function Place(type) {
+    this.type = type;
+
+    //this.squares = new Dungeon(CHUNK_WIDTH, CHUNK_HEIGHT); //DEBUG
+}
+function Dungeon(width, height) {
+    var arr = [];
+
+    //Genera un mapa vacío
+    for (var y = 0; y < height; y++) {
+        arr[y] = [];
+        for (var x = 0; x < width; x++) {
+            arr[y][x] = new Square(x, y, 'void');
+        }
+    }
+
+    //Genera habitaciones al azar
+    var attempts = 10; //El número máximo de fallos que se permiten cometer a la hora de colocar habitaciones
+    while (attempts > 0) {
+        console.log('Dungeon geenrator attempts '+attempts);
+        //Elige un tamaño de la habitación, que es un número del 0*2+5 (5) al 3*2+5 (11), conteniendo sólo números inpares
+        var sizex = (rand(0, 3) * 2) + 5;
+        var sizey = (rand(0, 3) * 2) + 5;
+
+        //Selecciona dos coordenadas al azar.
+        //Empieza a contar 3 casillas desde 0 y no se pasa de la longitud de la habitación, para evitar que esté muy cerca del borde
+        var maxwidth = width - sizex - 3;
+        var maxheight = height - sizey - 3;
+        var rx = rand(3, maxwidth);
+        var ry = rand(3, maxheight);
+        var maxx = rx + sizex;
+        var maxy = ry + sizey;
+
+        //Comprueba si no hay otra habitación en el área
+        var from = {'x': rx, 'y': ry};
+        var to = {'x': maxx, 'y': maxy};
+        var clean = checkForRooms(arr, from, to);
+
+        if (clean) checkForRooms(arr, from, to, true); //Genera un cuarto
+        if (!clean) {
+            //Si no puede crear una habitación ahí, elimina uno de los intentos.
+            attempts--;
+        }
+        if (rand(0,1)) attempts--; //DEBUG: Rompe el ciclo un 50% de las veces.
+    }
+
+    //Genera caminos al azar
+
+    return arr;
+}
+function checkForRooms(array, from, to, drawMode) {
+    var ry = from.y;
+    var rx = from.x;
+    var maxy = to.y;
+    var maxx = to.x;
+
+    var clean = true;
+    for (var cy = ry; cy < maxy; cy++) {
+        for (var cx = rx; cx < maxx; cx++) {
+            if (drawMode) {
+                array[cy][cx] = new Square(cy, cx, 'room');
+            }
+            if (array[cy][cx].type == 'room' && !drawMode) {
+                clean = false;
+                break;
+            }
+        }
+    }
+    return clean;
+}
+function Square(x, y, type) {
+    this.x = x;
+    this.y = y;
     this.type = type;
 }
 function Item(prototype) {

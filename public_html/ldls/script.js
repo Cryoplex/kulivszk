@@ -61,6 +61,9 @@ var changelog = [
 '--- Puedes soltar CUALQUIER objeto en ellos, siempre y cuando no esté equipado ya.',
 '--- En la barra de características del personaje (A la derecha de la pantalla) ahora se muestran las características tras el cálculo del equipo.',
 '---- Al lado de cada característica ahora aparecerá: TOTAL (+EQUIPO) CARACTERÍSTICA, por ejemplo: "10 (+5) ATQ" significa que todas las armas equipadas aumentan +5 el ataque, y el total (base + equipo) es 10.',
+'-- Añadido el generador de mazmorras.',
+'--- Al entrar en una zona, aparecerá la mazmorra de esa zona, si se entra por primera vez, una mazmorra será generada.',
+'--- Las mazmorras ahora cuentan con habitaciones, esparcidas aleatoriamente con un tamaño de 5 a 11 cuadrados.',
 ];
 
 function drawInventory(player) {
@@ -147,6 +150,15 @@ function showInventory(reverse) {
         $('#gameButtons').fadeIn(100);
 
     }
+}
+function displayDungeon(array) {
+    var dis = '';
+    for (var yy in array) {
+        for (var xx in array[yy]) {
+            dis += '<div class="tile tile_'+array[yy][xx].type+'" style="top: '+(yy * 16)+'px; left: '+(xx * 16)+'px"></div>';
+        }
+    }
+    return dis;
 }
 function printPlayerData(player) {
     var l = '';
@@ -238,12 +250,16 @@ function getMap(which) {
     }
     if (which == 'screenMap') {
         var btype = placeMap[playerPos.areaMap.y][playerPos.areaMap.x];
+        var dun = btype.squares;
+        if (!btype.squares || btype.squares.length <= 0) btype.squares = new Dungeon(CHUNK_WIDTH, CHUNK_HEIGHT);
+
         var f = btype.type+'.png';
         mapTest.style.background = 'url(./img/test/'+f+')';
         mapTest.style.width = '480px';
         mapTest.style.height = '480px';
         mapTest.style.backgroundSize = '480px 480px';
         var i = '';
+        i = displayDungeon(dun);
         if (btype.type == 'town' || btype.type == 'city' || btype.type == 'capital') {
             i = '<h2>Tienda de '+btype.type+'</h2>';
             var items = [0, 1, 2, 3, 4];
