@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link type=text/css rel="stylesheet" href="crypt.css"/>
 	
 	<style>
@@ -9,6 +9,7 @@
 </head>
 <body style="margin-top: 6em">
 <h2 id="cryptGame"></h2>
+<div id="pointsDisplay"></div>
 <table style="width: 100%; font-size: 1.6em; font-weight: bolder">
 	<tr>
 		<td id="anim" style="display: none">Encriptado:</td><td id="cryptAnim"></td>
@@ -22,13 +23,20 @@
 	<input id="playbtn" type="button" onclick="help()" value="Instrucciones"/>
 
 	<input style="display: none" id="butHints" type="button" onclick="hints()" value="Pista"/>
+	<br><br>
+	<input type="text" id="guessIndex" onfocus="this.value = ''">
+	<input type="text" id="guessGuess" onfocus="this.value = ''">
 	<input style="display: none" id="butGuess" type="button" onclick="guess()" value="Hacer suposición"/>
+	<br><br>
+	<input type="text" id="solveText" onfocus="this.value = ''" placeholder="Tu respuesta aquí.">
 	<input style="display: none" id="butSolve" type="button" onclick="solve()" value="Resolver"/>
 </center>
 <table id="guesses">
 	
 </table>
 
+<script src="../jquery.min.js"></script>
+<script src="../jquery-ui.min.js"></script>
 <script src="../common.js"></script>
 <script src="crypt.js"></script>
 <script src="cryptdb.js"></script>

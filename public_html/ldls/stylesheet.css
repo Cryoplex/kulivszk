@@ -335,3 +335,15 @@ sup {
 .tile_room {
 	background-color: rgb(32, 192, 8);
 }
+.tile_wall, .tile_bwall, .tile_corner {
+	background-color: rgb(32, 128, 8);
+}
+.tile_door {
+	background-color: rgb(255, 128, 0);
+}
+.tile_path {
+	background-color: rgb(64, 200, 16);
+}
+.tile_path_raw {
+	background-color: rgb(64, 200, 16);
+}

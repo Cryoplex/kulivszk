@@ -1,5 +1,5 @@
-var CHUNK_WIDTH = 40;
-var CHUNK_HEIGHT = 30;
+var CHUNK_WIDTH = 39;
+var CHUNK_HEIGHT = 29;
 
 function Player(name, role, clanID) {
     this.name = name;
@@ -330,8 +330,8 @@ function Dungeon(width, height) {
     //Genera habitaciones al azar
     var attempts = 10; //El número máximo de fallos que se permiten cometer a la hora de colocar habitaciones
     while (attempts > 0) {
-        console.log('Dungeon geenrator attempts '+attempts);
-        //Elige un tamaño de la habitación, que es un número del 0*2+5 (5) al 3*2+5 (11), conteniendo sólo números inpares
+        console.log('Dungeon generator attempts '+attempts);
+        //Elige un tamaño de la habitación, que es un número del 0*2+5 (5) al 3*2+5 (11), conteniendo sólo números impares
         var sizex = (rand(0, 3) * 2) + 5;
         var sizey = (rand(0, 3) * 2) + 5;
 
@@ -340,7 +340,9 @@ function Dungeon(width, height) {
         var maxwidth = width - sizex - 3;
         var maxheight = height - sizey - 3;
         var rx = rand(3, maxwidth);
+        if (rx % 2 != 0) rx--;
         var ry = rand(3, maxheight);
+        if (ry % 2 != 0) ry--;
         var maxx = rx + sizex;
         var maxy = ry + sizey;
 
@@ -354,12 +356,69 @@ function Dungeon(width, height) {
             //Si no puede crear una habitación ahí, elimina uno de los intentos.
             attempts--;
         }
-        if (rand(0,1)) attempts--; //DEBUG: Rompe el ciclo un 50% de las veces.
+    }
+    //Genera caminos al azar
+    while (getNewOddVoid(arr)) {
+        var oddVoid = getNewOddVoid(arr);
+        arr[oddVoid.y][oddVoid.x] = new Square(oddVoid.x, oddVoid.y, 'path_raw');
+        expandPath(arr, oddVoid.x, oddVoid.y);
     }
 
-    //Genera caminos al azar
 
     return arr;
+}
+function expandPath(array, x, y, direction) {
+    var directions = {
+    'left': {'x': (x - 2), 'y': y},
+    'right': {'x': (x + 2), 'y': y},
+    'top': {'x': x, 'y': (y - 2)},
+    'bottom': {'x': x, 'y': (y + 2)},
+    };
+    var directions2 = {
+    'left': {'x': (x - 1), 'y': y},
+    'right': {'x': (x + 1), 'y': y},
+    'top': {'x': x, 'y': (y - 1)},
+    'bottom': {'x': x, 'y': (y + 1)},
+    };
+    if (!direction) direction = read(['left', 'right', 'top', 'bottom']);
+
+    var minx = 0;
+    var miny = 0;
+    var maxx = array[0].length;
+    var maxy = array.length;
+
+    var dir = directions[direction];
+    var dir2 = directions2[direction];
+    if (isLimit(array, dir.x, dir.y)) return;
+    var check = array[dir.y][dir.x];
+    var check2 = array[dir2.y][dir2.x];
+
+    if (check.type == 'path') {
+        array[dir2.y][dir2.x] = new Square(dir2.x, dir2.y, 'path');
+    }
+    array[y][x] = new Square(x, y, 'path');
+}
+function pathFind(array, from, to) {
+
+}
+function isLimit(array, checkx, checky) {
+    var minx = 0;
+    var miny = 0;
+    var maxx = (array[0].length - 1);
+    var maxy = (array.length - 1);
+
+    if (checkx <= minx || checkx >= maxx) return true;
+    if (checky <= miny || checky >= maxy) return true;
+}
+function getNewOddVoid(array) {
+    for (var y in array) {
+        if (y % 2 == 0) continue;
+        for (var x in array[y]) {
+            if (x % 2 == 0) continue;
+            var square = array[y][x];
+            if (square.type == 'void') return {'x': x, 'y': y};
+        }
+    }
 }
 function checkForRooms(array, from, to, drawMode) {
     var ry = from.y;
@@ -367,17 +426,56 @@ function checkForRooms(array, from, to, drawMode) {
     var maxy = to.y;
     var maxx = to.x;
 
+    if (!drawMode) {
+        rx--;
+        ry--;
+        maxx++;
+        maxy++;
+    }
+
     var clean = true;
+    var bwalls = [];
     for (var cy = ry; cy < maxy; cy++) {
         for (var cx = rx; cx < maxx; cx++) {
             if (drawMode) {
-                array[cy][cx] = new Square(cy, cx, 'room');
+                if (cx == rx || cx == (maxx - 1) || cy == ry || cy == (maxy - 1)) {
+                    var corners = {
+                        'topleft': (cx == rx && cy == ry),
+                        'topright': (cx == (maxx - 1) && cy == ry),
+                        'botleft': (cx == rx && cy == (maxy - 1)),
+                        'botright': (cx == (maxx - 1) && cy == (maxy - 1)),
+                    }
+                    if (corners.topleft || corners.topright || corners.botright || corners.botleft) {
+                        array[cy][cx] = new Square(cy, cx, 'corner');
+                    }
+                    else {
+                        if (cx % 2 == 1 || cy % 2 == 1) {
+                            array[cy][cx] = new Square(cy, cx, 'bwall');
+                            bwalls.push({'x': cx, 'y': cy});
+                        }
+                        else {
+                            array[cy][cx] = new Square(cy, cx, 'wall');
+                        }
+                    }
+                }
+                else {
+                    array[cy][cx] = new Square(cy, cx, 'room');
+                }
             }
             if (array[cy][cx].type == 'room' && !drawMode) {
                 clean = false;
                 break;
             }
         }
+    }
+    if (drawMode) {
+        do {
+            //Selecciona un muro aleatorio (rompible)
+            var rw = read(bwalls);
+            var rwx = rw.x;
+            var rwy = rw.y;
+            array[rwy][rwx] = new Square(rwx, rwy, 'door');
+        } while (rand(0,1));
     }
     return clean;
 }

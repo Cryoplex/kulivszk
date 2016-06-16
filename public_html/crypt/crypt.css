@@ -10,7 +10,8 @@ input {
 	color: lime;
 }
 table {
-	width: 50%;
+	width: 10%;
+	font-size: 8px;
 	margin: 8px auto;
 }
 b {
@@ -18,4 +19,22 @@ b {
 }
 h1 {
 	font-size: 1.4em;
+}
+#guessIndex, #guessGuess {
+	width: 1em;
+	height: 1em;
+	display: none;
+}
+#solveText {
+	display: none;
+}
+#guesses {
+	position: fixed;
+	top: 8px;
+	right: 8px;
+}
+#pointsDisplay {
+	position: fixed;
+	top: 8px;
+	left: 8px;
 }
