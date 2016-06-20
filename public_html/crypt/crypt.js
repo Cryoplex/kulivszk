@@ -2,15 +2,15 @@ var lastTry = "";
 var newPhrase = 'CryP7'
 var solution = "";
 var myAttempt = "";
-var playing = false;
 var hinted = [];
 var hintAttempts = 3;
 var gameAttempts = 3;
 var points = 0;
 var gamePoints = 0;
+var HINT_MODIFIER = 0.512; //The lower the more difficult
+var MIN_HINTS = 1; //The higher the easier
 
 function animateCryptHeader() {
-	if (playing) return;
 	var h = animCrypt(newPhrase, lastTry);
 	lastTry = h;
 	echo('cryptAnim', h)
@@ -80,16 +80,82 @@ function cryptCrypt(text) {
 	return tx;
 }
 function updatePoints() {
-	pointsDisplay.innerHTML = points+' puntos';
+	pointsDisplay.innerHTML = points+' puntos'+drawAlphabet();
 	cryptGame.innerHTML = 'Descifra la siguiente frase por '+gamePoints+' puntos';
+	guessIt();
+}
+function guessThis(id, value) {
+	guess(id, value);
+}
+function editable(cryptoIndexChar, placeholder) {
+	if (!placeholder) placeholder = '?';
+	cryptoIndexChar = cryptoIndexChar.toUpperCase();
+	return '<input type="text" class="editAlpha" value="'+placeholder+'" onclick="this.value = \'\'" onblur="guessThis(\''+cryptoIndexChar+'\', this.value)">';
+}
+function drawAlphabet() {
+	var l = '<br><br>';
+	var n = 65;
+	var alpha = [];
+	for (var e in abcd) {
+		var myGuess = guesses[e];
+		var hasGuess = Boolean(myGuess);
+		var abindex = abcd[e];
+		console.log('Alpha phase 1: abindex:'+abindex+' abcd/e:'+abcd[e]+' e:'+e);
+		if (!hasGuess) myGuess = editable(abindex);
+		if (hasGuess) myGuess = myGuess.toUpperCase();
+
+		alpha[abcd[e]] = myGuess;
+	}
+	for (var e = 65; e < 91; e++) {
+		var let = String.fromCharCode(e);
+		var cl = 'maybe';
+		var index = abcd.indexOf(let);
+		if (guesses[index]) {
+			var ln = letNo(index).toUpperCase();
+			var g = guesses[index].toUpperCase();
+			cl = 'hinted';
+			if (ln != g) cl = 'failed';
+		}
+		if (hinted[index]) cl = 'hinted';
+		//Check if letter exists
+		var letix = cryptCrypt(solution).toUpperCase().indexOf(let);
+		if (letix < 0) cl = 'unconfirmed';
+
+		var edit = alpha[let];
+		var abindex = getAlphaFromIndex(index);
+		console.log('Alpha phase 2: index:'+index+' abindex:'+abindex.original+' crypto:'+abindex.crypto);
+		if (cl == 'failed') {
+			edit = editable(abindex.crypto, edit);
+		}
+
+		l += '<div class="alpha '+cl+'">'+let+': '+edit+'</div>';
+		n++;
+	}
+	return l;
+}
+function startNewGame(phrase) {
+	newPhrase = solution.toUpperCase();
+	echo('cryptGame', phrase);
+	echo('hints', '');
+	var elems = [
+	'#butHints', '#butSolve', '#sup',
+	];
+
+	hinted = [];
+	guesses = [];
+
+	for (var e in elems) $(elems[e]).fadeOut();
+	$('#playbtn').fadeIn();
 }
 function newGame() {
-	hintAttempts = 3;
 	gameAttempts = 3;
 	newDictionary();
 	var len = cryptDataBase.length-1;
 	solution = cryptDataBase[rand(0,len)];
+	var words = solution.split(' ').length;
+	hintAttempts = Math.floor(words * HINT_MODIFIER) + MIN_HINTS;
 	newPhrase = cryptCrypt(solution);
+	lastTry = solution;
 
 	gamePoints = (10 * newPhrase.length);
 	var ll = 'Descifra la siguiente frase: ';
@@ -99,49 +165,78 @@ function newGame() {
 
 	document.getElementById('butHints').style.display = 'inline';
 	updateHints();
-	document.getElementById('butGuess').style.display = 'inline';
-	document.getElementById('butSolve').style.display = 'inline';
-
-	document.getElementById('guessIndex').style.display = 'inline';
-	document.getElementById('guessGuess').style.display = 'inline';
-	document.getElementById('solveText').style.display = 'inline';
 
 	document.getElementById('sup').style.display = 'table-row';
 	document.getElementById('anim').style.display = 'table-cell';
 
+	$('#cryptGameTable').fadeIn();
+
 	guessIt();
 }
-function guess(index, solution) {
-	if (!index) index = guessIndex.value.toUpperCase();
-	if (!solution) solution = guessGuess.value.toLowerCase();
+function getAlphaFromIndex(index, inverse) {
+	var realChar = letNo(index);
+	var cryptoChar = abcd[index];
 
+	if (inverse) {
+		var cryptoChar = letNo(index).toUpperCase();
+		var realIndex = abcd.indexOf(cryptoChar);
+		var realChar = letNo(realIndex);
+	}
+	return {
+		'original': realChar.toLowerCase(),
+		'crypto': cryptoChar.toLowerCase(),
+	}
+}
+function guess(index, solut) {
 	var index = abcd.indexOf(index);
-	if (!hinted[index]) guesses[index] = solution;
+	if (!hinted[index]) {
+		guesses[index] = solut;
+		//Checks if letter is correct or incorrect
+		var alpha = getAlphaFromIndex(index);
 
-	guessTable();
+		var shouldBe = alpha.original;
+		if (shouldBe == solut) {
+
+		}
+		else {
+			notification('La letra no es correcta. Inténtalo de nuevo.');
+			reduceGamePoints();
+			gameAttempts--;
+			var cl = checkLose();
+			if (cl) return;
+			updateHints();
+		}
+	}
+	updatePoints();
 }
-function solve() {
-	var value = solveText.value;
-	if (!value) return;
-	checkWin(value, true);
+function reduceGamePoints() {
+	gamePoints = Math.ceil(gamePoints * 0.5);
 }
-function checkWin(newP, manual) {
+function checkLose() {
+	if (gameAttempts <= 0) {
+		var losemsg = 'Has agotado el número máximo de intentos.';
+		notification(losemsg);
+		cryptGame.innerHTML = losemsg;
+		startNewGame('¿Volver a intentarlo?');
+		return true;
+	}
+	return false;
+}
+function checkWin(newP, manual, peek) {
 	console.log('Checking for '+newP);
 	if (newP.toUpperCase() == solution.toUpperCase()) {
 		cryptWin();
+		if (peek) return true;
 		return;
 	}
 	if (manual) {
-		gamePoints = Math.ceil(gamePoints / 2);
+		reduceGamePoints();
 		gameAttempts--;
-		if (gameAttempts <= 0) {
-			notification('Has agotado el número máximo de intentos.');
-			newGame();
-			return;
-		}
+		checkLose();
 		notification('La respuesta no es correcta. Inténtalo de nuevo.');
 		updateHints();
 	}
+	if (peek) return false;
 	return newP;
 }
 function hints() {
@@ -150,7 +245,6 @@ function hints() {
 		notification('Has agotado el número máximo de intentos.');
 		return;
 	}
-	playing = true;
 	var hh = false;
 	do {
 		var no = rand(0,25);
@@ -166,9 +260,8 @@ function hints() {
 	guesses[no] = h1;
 	hinted[no] = true;
 	echo('hints', ll);
-	guessTable();
 	hintAttempts--;
-	gamePoints = Math.ceil(gamePoints / 2);
+	reduceGamePoints();
 	updateHints();
 	updatePoints();
 }
@@ -176,8 +269,6 @@ function updateHints() {
 	butHints.value = 'Pista ('+hintAttempts+')';
 	if (hintAttempts <= 0) butHints.style.opacity = 0.5;
 	if (hintAttempts > 0) butHints.style.opacity = 1;
-
-	butSolve.value = 'Resolver ('+gameAttempts+')';
 }
 function cryptWin() {
 	echo('cryptGame', 'Enhorabuena, has dado con la respuesta correcta.');
@@ -186,18 +277,7 @@ function cryptWin() {
 		newPhrase = solution;
 		
 	}
-	newGame();
-}
-function guessTable() {
-	var ll = "<caption>Tus suposiciones</caption> \
-	<tr><th>Letra</th><th>Suposición</th></tr>";
-
-	for (i = 0; i < 26; i++) {
-		if (guesses[i] == undefined) continue;
-		ll+='<tr><td>'+abcd[i]+'</td><td>'+guesses[i]+'</td></tr>'
-	}
-	echo('guesses', ll);
-	guessIt();
+	startNewGame('Has ganado '+gamePoints+' puntos. ¿Volver a jugar?');
 }
 function clean(text, i) { return text.replace(new RegExp('<\/*b>', i),""); }
 function guessIt() {
@@ -212,19 +292,32 @@ function guessIt() {
 		if (index >= 0) {
 			var gss = guesses[index];
 			if (gss) {
-				console.log('Chara '+chara+' index '+index+' gss '+gss);
-				splitString[ss] = '<b>'+gss+'</b>';
 				splitStringClean[ss] = gss;
+
+				var shouldBe = getAlphaFromIndex(index);
+				if (gss != shouldBe.original) {
+					splitString[ss] = '<b class="failed">'+splitString[ss]+'</b>';
+				}
+				else {
+					splitString[ss] = '<b>'+gss.toUpperCase()+'</b>';
+				}
+			}
+			else {
+				splitString[ss] = '<span class="unconfirmed">'+splitString[ss]+'</span>';
 			}
 		}
 		if (index < 0) {
-			splitString[ss] = '<b>'+splitString[ss]+'</b>';
+			splitString[ss] = '<b>'+splitString[ss].toUpperCase()+'</b>';
 		};
 	}
 	str = splitString.join('');
 	var strc = splitStringClean.join('');
 
-	checkWin(strc);
+	var peek = checkWin(strc, false, true);
+	if (peek) {
+		checkWin(strc);
+		return;
+	}
 	echo('cryptSolve', str);
 }
 var t = setInterval(animateCryptHeader, 20);

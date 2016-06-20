@@ -1,6 +1,6 @@
 body {
 	background-color: black;
-	font-family: Nimbus Mono L;
+	font-family: monospace, Nimbus Mono L;
 	color: lime;
 	text-align: center;
 }
@@ -15,18 +15,10 @@ table {
 	margin: 8px auto;
 }
 b {
-	color: red;
+	color: lime;
 }
 h1 {
 	font-size: 1.4em;
-}
-#guessIndex, #guessGuess {
-	width: 1em;
-	height: 1em;
-	display: none;
-}
-#solveText {
-	display: none;
 }
 #guesses {
 	position: fixed;
@@ -35,6 +27,32 @@ h1 {
 }
 #pointsDisplay {
 	position: fixed;
-	top: 8px;
-	left: 8px;
+	top: 1vh;
+	left: 1vh;
+	font-size: 3vh;
+}
+.unconfirmed {
+	color: white;
+	opacity: 0.2;
+}
+.hinted {
+	color: rgb(0, 255, 0);
+	font-weight: bolder;
+}
+.failed {
+	color: rgb(255, 0, 0);
+	font-style: italic;
+}
+.maybe {
+	color: rgb(255, 255, 0);
+	font-style: italic;
+}
+.alpha {
+	font-size: 2.75vh;
+	margin: 0px;
+}
+.editAlpha {
+	width: 1em;
+	border: none;
+	border-bottom: 1px dotted white;
 }

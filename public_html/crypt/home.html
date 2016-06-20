@@ -2,15 +2,12 @@
 <html>
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link type=text/css rel="stylesheet" href="crypt.css"/>
-	
-	<style>
-	/* CSS */
-	</style>
+	<link rel="icon" href="./favicon.png">
 </head>
 <body style="margin-top: 6em">
 <h2 id="cryptGame"></h2>
 <div id="pointsDisplay"></div>
-<table style="width: 100%; font-size: 1.6em; font-weight: bolder">
+<table style="width: 70%; font-size: 0.8em; font-weight: bolder" id="cryptGameTable">
 	<tr>
 		<td id="anim" style="display: none">Encriptado:</td><td id="cryptAnim"></td>
 	</tr>
@@ -23,15 +20,7 @@
 	<input id="playbtn" type="button" onclick="help()" value="Instrucciones"/>
 
 	<input style="display: none" id="butHints" type="button" onclick="hints()" value="Pista"/>
-	<br><br>
-	<input type="text" id="guessIndex" onfocus="this.value = ''">
-	<input type="text" id="guessGuess" onfocus="this.value = ''">
-	<input style="display: none" id="butGuess" type="button" onclick="guess()" value="Hacer suposición"/>
-	<br><br>
-	<input type="text" id="solveText" onfocus="this.value = ''" placeholder="Tu respuesta aquí.">
-	<input style="display: none" id="butSolve" type="button" onclick="solve()" value="Resolver"/>
 </center>
-<table id="guesses">
 	
 </table>
 
