@@ -33,7 +33,7 @@ h1 {
 }
 .unconfirmed {
 	color: white;
-	opacity: 0.2;
+	opacity: 0.5;
 }
 .hinted {
 	color: rgb(0, 255, 0);

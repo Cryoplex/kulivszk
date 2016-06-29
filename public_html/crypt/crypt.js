@@ -85,6 +85,7 @@ function updatePoints() {
 	guessIt();
 }
 function guessThis(id, value) {
+	if (!value) return;
 	guess(id, value);
 }
 function editable(cryptoIndexChar, placeholder) {

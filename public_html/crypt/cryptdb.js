@@ -1,4 +1,5 @@
 var cryptDataBase = [
+/*
 "He estado en París durante un breve periodo de tiempo.",
 "La gente tímida puede desarrollar dependencia a la droga como una defensa.",
 "El pensamiento pitagórico estuvo dominado por la matemática, pero también era profundamente místico.",
@@ -87,4 +88,11 @@ var cryptDataBase = [
 "Cualquier hombre puede llegar a ser feliz con una mujer, con tal de que no la ame. ", 
 "Cualquiera puede simpatizar con las penas de un amigo, simpatizar con sus éxitos requiere una naturaleza delicadísima. ", 
 "Cuando alguien dice teóricamente, realmente quiere decir no. ",
+*/
+
+
+//------------- TEST START
+
+//------------- TEST END
+
 ];
