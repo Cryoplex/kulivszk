@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+	<style>
+	.dungen_tile {
+		width: 8px;
+		height: 8px;
+	}
+	.dungen_empty {
+		background-color: #000;
+	}
+	.dungen_room {
+		background-color: #fff;
+	}
+	.dungen_corridor {
+		background-color: #aaa;
+	}
+	.dungen_door {
+		background-color: #fa0;
+	}
+	</style>
+</head>
+<body>
+	<div id="output" style="position: absolute; width: 640px; height: 480px; background-color: #fea"></div>
+
+	<input type="button" style="position: absolute; top: 0px; right: 0px" onclick="d = new Dungeon(79, 59); output.innerHTML = d.draw(); initializeDungeon(d)" value="Generar mazmorra">
+
+	<input type="button" style="position: absolute; top: 32px; right: 0px" onclick="pathFinderRandom();" value="Ir hacia punto aleatorio">
+
+
+
+	<script src="dungen.js"></script>
+	<script src="../../common.js"></script>
+</body>
+</html>

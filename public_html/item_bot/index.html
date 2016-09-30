@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head><title>Succubu5</title>
+<style>
+	.cmsg {
+		background-color: rgba(0, 255, 128, 0.2);
+		width: 256px;
+		height: 100vh;
+		float: left;
+		border: 1px solid transparent;
+	}
+	.cmsg:hover {
+		background-color: rgba(0, 128, 255, 0.3);
+	}
+	.cmsg:active {
+		background-color: rgba(0, 255, 255, 0.5);
+	}
+	msgsender {
+		position: fixed;
+		bottom: 0px;
+		left: 0px;
+	}
+	#userList {
+		position: fixed;
+		right: 0px;
+		top: 0px;
+	}
+</style>
+</head>
+<body>
+	<output id="chatMessages"></output>
+	<output id="userList"></output>
+	<msgsender><input type="text" id="messageSender"><input type="button" onclick="send()" value="Enviar"></msgsender>
+
+	<script src="socket.js"></script>
+	<script>
+	var socket = io();
+	var chatHistory = {};
+	var knownUsers = {};
+
+	var focusId = '';
+
+	socket.emit('ping');
+
+	socket.on('pong', function() {
+		console.log('Pong!');
+	});
+
+	socket.on('message', function(msg) {
+		console.log('Got a mesage!');
+		console.log(msg);
+		var id = msg.chat.id;
+		var chatWindow = 'chatMessages_'+id;
+		newWindowForId(id);
+		document.getElementById(chatWindow).innerHTML += '<li>'+getFullMessage(msg);
+	});
+
+	socket.on('database', function(dat) {
+		chatHistory = dat;
+		regenChatHistory();
+	});
+
+	socket.on('userList', function(ul) {
+		knownUsers = ul;
+		regenKnownUsers();
+	});
+
+	function newWindowForId(id) {
+		var chatWindow = 'chatMessages_'+id;
+		var doc = document.getElementById(chatWindow);
+		if (!doc) {
+			chatMessages.innerHTML += '<div onclick="focusConversation('+id+')" class="cmsg" id="'+chatWindow+'"></div>';
+		}
+	}
+	function focusConversation(id) {
+		console.log('Focusing on id '+id);
+		focusId = id;
+	}
+	function getNameFromMsg(msg) {
+	  return msg.chat.first_name+' '+msg.chat.last_name;
+	}
+	function getFullMessage(msg) {
+	  return '['+getNameFromMsg(msg)+'] '+msg.text;
+	}
+	function send() {
+		var id = focusId;
+		var msg = messageSender.value;
+
+		console.log('Preparing to send. (msg:'+msg+') to (id:'+id+')');
+
+		if (id && msg) {
+			console.log('All ok, sending message.');
+			sendMessage(id, msg);
+		}
+	}
+	function sendMessage(to, msg) {
+		socket.emit('say', {'to': to, 'text': msg});
+	}
+	function regenChatHistory() {
+		for (var u in chatHistory) {
+			newWindowForId(u);
+			var msgs = chatHistory[u];
+			var chatWindow = 'chatMessages_'+u;
+			document.getElementById(chatWindow).innerHTML = '';
+			for (var m in msgs) {
+				
+				document.getElementById(chatWindow).innerHTML += '<br>'+msgs[m];
+			}
+		}
+	}
+	function focus(id) {
+		focusConversation(id);
+		newWindowForId(id);
+	}
+	function regenKnownUsers() {
+		userList.innerHTML = '';
+		for (var u in knownUsers) {
+			var uz = knownUsers[u];
+			userList.innerHTML += '<br><user onclick="focus('+uz.id+')">#'+uz.id+' '+uz.name+'</user>';
+		}
+	}
+	</script>
+</body>
+</html>

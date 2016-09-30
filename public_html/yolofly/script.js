@@ -998,6 +998,9 @@ document.onkeypress = function(key) {
 	if (kee == 'p' || kee == 'P') {
 		warpToWorldMap();
 	}
+	if (kee.toLowerCase() == 'm') {
+		maggotCare();
+	}
 
 }
 

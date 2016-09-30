@@ -7,6 +7,8 @@
 <body>
 <div id="container" onmouseup="charging = false" onmousedown="charging = true">
 <div id="containerMap"></div>
+<div id="maggotMap"></div>
+<div id="maggotInfo"></div>
 <div id="pause" style="display: none; color: white; position: fixed; left: 16px; width: 80%; top: 32px">
 	<div class="button" style="width: 128px" onclick="pause = !pause">Resume game</div>
 
@@ -21,7 +23,7 @@
 	<div id="energy"></div>
 	<div id="extra" style="text-align: center; font-size: 11px"></div>
 <div class="spaceship" id="sship"></div>
-<div id="gameover">
+<div id="gameover" >
 <div class="button" onclick="gameover.style.display = 'none'; resetStats()">PLAY AGAIN</div>
 
 
@@ -35,17 +37,19 @@
 </div>
 </div>
 <div id="aud"></div>
+<!--
 <div id="gameoverClick">
 <div class="button" onclick="this.display = 'none'">
 	GAME OVER!
 </div>
 </div>
-
+-->
 
 <span id="log"></span>
 <script src="../common.js"></script>
 <script src="script.js"></script>
 <script src="yolo.js"></script>
+<script src="maggot.js"></script>
 
 </body>
 </html>

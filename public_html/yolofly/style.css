@@ -18,7 +18,7 @@ body {
 	-ms-user-select: none;
 	user-select: none;
 }
-.spaceship {
+.spaceship, .fly {
 	background-image: url(img/fly_idle.png);
 	height: 32px;
 	width: 32px;
@@ -273,4 +273,38 @@ mark {
 	50% {
 		background-color: #222;
 	}
+}
+.maggot {
+	background-image: url(img/maggot.png);
+	height: 32px;
+	width: 32px;
+	animation: movingMaggot 2s steps(20) infinite;
+}
+@keyframes movingMaggot {
+	0% {background-position: 0px 0px}
+	50% {background-position: -640px 0px}
+	100% {background-position: 0px 0px}
+}
+#maggotInfo {
+	position: fixed;
+	right: 0px;
+	top: 0px;
+	font-size: 8px;
+	color: rgba(255, 255, 255, 0.8);
+	background-color: rgba(0, 0, 0, 0.8);
+}
+.pupa {
+	background-color: #827B61;
+	width: 16px;
+	height: 4px;
+	border-radius: 10%;
+}
+.egg {
+	background-color: #FFF4BF;
+	width: 8px;
+	height: 2px;
+	border-radius: 100%;
+}
+.bicho {
+	font-size: 8px;
 }

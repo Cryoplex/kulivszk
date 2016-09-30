@@ -28,10 +28,6 @@ function loadGame() {
 function update(step) {
 	if (step == 'game_value' || !step) doc('game_value').innerHTML = shortNum(cell.value);
 }
-function drawCell(generation, strain, mutation) {
-	var l = 'cell_g'+generation+'_s'+strain+'_m'+mutation;
-	return '<i class="cell '+l+'"></i>';
-}
 function nextGeneration(generation, strain, mutation) {
 	if (!genlist[generation + 1]) generation--;
 	var nextgen = genlist[generation + 1];
@@ -53,6 +49,8 @@ function Bacteria(father) {
 		'size': 1,
 		'hue': rand(0, 360),
 		'energy': 1,
+		'body': createBody(5, 5),
+		'shape': randomShape(),
 	}
 	this.father = {
 		'generation': father.generation,
@@ -62,6 +60,8 @@ function Bacteria(father) {
 		'posY': father.posY,
 		'size': father.size,
 		'energy': father.energy,
+		'body': father.body,
+		'shape': father.shape,
 	}
 
 	var nuGen = newGeneration(father);
@@ -75,24 +75,27 @@ function Bacteria(father) {
 	this.posY = this.father.posY;
 	this.motionX = red(-1, 1) * Math.random();
 	this.motionY = red(-1, 1) * Math.random();
-	this.rot = rand(0, 360);
+	//this.rot = rand(0, 360);
 	this.size = 1 + (father.size / 10);
 	this.hue = father.hue + rand(-10, 10);
 	this.energy = father.energy / 2;
 	this.lastEnergy = 0;
 
-	this.element = document.createElement('span');
-	this.element.className = 'cell cell_g'+this.generation+'_s'+this.strain+'_m'+this.mutation;
+	this.shape = father.shape;
+	this.body = evolveBody(father.body, randomShape());
+
+	this.element = document.createElement('cell');
+	this.element.innerHTML = drawBody(this.body, this.hue);
+
 	this.element.style.top = this.posY+'px';
 	this.element.style.left = this.posX+'px';
-	this.element.style.zoom = 2;
-	this.element.style.transform = 'rotate('+this.rot+'deg)';
-	//this.element.style.webkitFilter = 'hue-rotate('+this.hue+'deg)';
 
 	doc('gaem').appendChild(this.element);
 }
+function addBacteria() {
+	cell.bacterias.push(new Bacteria());
+}
 function tickAllBacteria() {
-	if (!rand(0,1000)) cell.bacterias.push(new Bacteria());
 	tickBacteria(cell.bacterias[checkin], checkin);
 	checkin++;
 	if (checkin >= cell.bacterias.length) checkin = 0;
@@ -108,6 +111,16 @@ function updateHUD() {
 			var ex = (bk.energy < bk.lastEnergy) ? 'red' : 'normal';
 			game_value.innerHTML += '<br><small class="'+ex+'">bacteria ('+getType(bk)+'): '+yy+' age: '+shortNum(bk.age)+'  energy: '+shortNum(bk.energy)+'</small>';
 		}
+	}
+	if (co2 > o2) {
+		var h = Math.floor(co2 * 0.1);
+		co2 -= h;
+		o2 += h;
+	}
+	else {
+		var h = Math.floor(o2 * 0.1);
+		o2 -= h;
+		co2 += h;
 	}
 }
 function bacteriaRespiration() {
@@ -219,22 +232,19 @@ function tickBacteria(bact, bactID) {
 	var elem = bact.element;
 
 	if (!elem.style) {
-		bact.element = document.createElement('span');
+		bact.element = document.createElement('cell');
 		doc('gaem').appendChild(bact.element);
 	}
-	elem.className = 'cell cell_g'+bact.generation+'_s'+bact.strain+'_m'+bact.mutation;
-	elem.style.top = (bact.posY - 9)+'px';
-	elem.style.left = (bact.posX - 9)+'px';
-	elem.style.zoom = 2;
-	elem.style.transform = 'rotate('+bact.rot+'deg)';
-	elem.style.webkitFilter = 'hue-rotate('+bact.hue+'deg)';
+	elem.innerHTML = drawBody(bact.body, bact.hue);
+	elem.style.top = (bact.posY)+'px';
+	elem.style.left = (bact.posX)+'px';
 
-	if (bact.age > 2 && !rand(0,10)) splitBacteria(bactID);
+	if (bact.age > 10 && !rand(0,10)) splitBacteria(bactID);
 }
 
 var cell = {};
-var o2 = 2500;
-var co2 = 2500;
+var o2 = 100;
+var co2 = 100;
 var checkin = 0;
 
 loadGame();
