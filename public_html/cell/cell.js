@@ -39,18 +39,14 @@ function evolveBody(cell, shape) {
 }
 function changePixel(cell, pixel, newPixel) {
 	if (cell[pixel.height] == undefined) {
-		console.log('No available space in height ('+pixel.width+', '+pixel.height+').');
 		cell = expandArray(cell, 0);
 		pixel.width++;
 		pixel.height++;
-		console.log('New coordinates are '+pixel.width+'x'+pixel.height);
 	}
 	if (cell[pixel.height][pixel.width] == undefined) {
-		console.log('No available space in width ('+pixel.width+', '+pixel.height+').');
 		cell = expandArray(cell, 0);
 		pixel.width++;
 		pixel.height++;
-		console.log('New coordinates are '+pixel.width+'x'+pixel.height);
 	}
 	cell[pixel.height][pixel.width] = newPixel;
 	return cell;
@@ -138,10 +134,8 @@ function randomAvailableSpace(cell, pixel, shape) {
 	}
 	var rbs = randomByShape(shape);
 	var selected = avsbydir[rbs];
-	console.log(selected);
 	selected = read(selected);
 	if (selected != undefined) {
-		console.log('Selected ('+rbs+') '+JSON.stringify(selected));
 		return selected;
 	}
 	
@@ -205,7 +199,6 @@ function testEvolution(generations, shape) {
 	if (shape == undefined) shape = randomShape();
 	var evo = '';
 	for (var g = 0; g < generations; g++) {
-		console.log('Gen #'+g);
 		evo += '<gen><sup>'+romanNumber((g + 1))+'</sup> ';
 		evo += drawBody(origin)+'</gen>';
 		origin = evolveBody(origin, shape);
@@ -217,4 +210,9 @@ function testEvolution(generations, shape) {
 function renew(array, shape) {
 	array = evolveBody(array, shape);
 	document.body.innerHTML = drawBody(array);
+}
+function buyCell(price) {
+	if (cell.money < price) return;
+	cell.money -= price;
+	addBacteria();
 }

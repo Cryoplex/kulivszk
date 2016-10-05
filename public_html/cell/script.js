@@ -14,6 +14,7 @@ function increaseValue(num) {
 function resetVariables() {
 	if (!cell.value) cell.value = 0;
 	if (!cell.bacterias) cell.bacterias = [new Bacteria(), new Bacteria];
+	if (cell.money == undefined) cell.money = 1000;
 }
 function saveGame() {
 	localStorage.setItem('cell', JSON.stringify(cell));
@@ -66,7 +67,7 @@ function Bacteria(father) {
 
 	var nuGen = newGeneration(father);
 
-	this.generation = nuGen.generation;
+	this.generation = father.generation + 1;
 	this.strain = nuGen.strain;
 	this.mutation = nuGen.mutation;
 	this.speed = 1;
@@ -96,47 +97,50 @@ function addBacteria() {
 	cell.bacterias.push(new Bacteria());
 }
 function tickAllBacteria() {
-	tickBacteria(cell.bacterias[checkin], checkin);
-	checkin++;
-	if (checkin >= cell.bacterias.length) checkin = 0;
-
 	bacteriaRespiration();
 }
+function buyFood(type) {
+	if (cell.money < 25) return;
+	cell.money -= 25;
+	if (type == 'o2') o2 += 100;
+	if (type == 'co2') co2 += 150;
+}
 function updateHUD() {
-	game_value.innerHTML = 'Bacterias vivas: '+cell.bacterias.length+'<br>O<sub>2</sub>: '+Math.floor(o2)+'<br>CO<sub>2</sub>: '+Math.floor(co2);
+	game_value.innerHTML = 'Dinero: $'+shortNum(cell.money)+'<br>Bacterias vivas: '+cell.bacterias.length+'<br><input type="button" onclick="buyFood(\'o2\')" value="+"> O<sub>2</sub>: '+Math.floor(o2)+'<br><input type="button" onclick="buyFood(\'co2\')" value="+"> CO<sub>2</sub>: '+Math.floor(co2);
 
 	for (var yy = 0; yy < cell.bacterias.length; yy++) {
 		var bk = cell.bacterias[yy];
 		if (bk) {
 			var ex = (bk.energy < bk.lastEnergy) ? 'red' : 'normal';
-			game_value.innerHTML += '<br><small class="'+ex+'">bacteria ('+getType(bk)+'): '+yy+' age: '+shortNum(bk.age)+'  energy: '+shortNum(bk.energy)+'</small>';
+			var ex2 = (ex == 'red') ? 'starving' : 'healthy';
+			var repStatus = canReproduce(bk);
+			if (repStatus.status == 'yes') {
+				repStatus = realDrawBar(100, 100);
+			}
+			else {
+				repStatus = realDrawBar(repStatus.needed, 100);
+			}
+
+			game_value.innerHTML += '<br><small class="'+ex+'">#'+yy.toString(36).toUpperCase()+' a'+bk.age.toFixed(3)+'/🗲'+bk.energy.toFixed(3)+'/✚'+ex2+'/☠'+canDie(bk)+' '+repStatus+'</small>';
 		}
-	}
-	if (co2 > o2) {
-		var h = Math.floor(co2 * 0.1);
-		co2 -= h;
-		o2 += h;
-	}
-	else {
-		var h = Math.floor(o2 * 0.1);
-		o2 -= h;
-		co2 += h;
 	}
 }
 function bacteriaRespiration() {
 	for (var r in cell.bacterias) {
+		tickBacteria(cell.bacterias[r], r);
+
 		var bac = cell.bacterias[r];
 		if (!bac.energy) bac.energy = 1;
 		var type = getType(bac);
 
-		var consume = (bac.age / 10);
+		var consume = (bac.age / 10) + (bac.generation / 100);
 		var breath = 1;
 		bac.lastEnergy = bac.energy;
 		bac.energy -= consume;
 		if (type == 'plant') {
 			if (co2 < breath || bac.energy <= 0) {
 				if (bac.energy <= 0) {
-					killBacteria(r);
+					killBacteria(r);tickAll
 					return;
 				}
 			}
@@ -174,13 +178,28 @@ function getType(bact) {
 	}
 }
 function splitBacteria(bactID) {
-	var father = cell.bacterias[bactID];
-	cell.bacterias.push(new Bacteria(father));
-	cell.bacterias.push(new Bacteria(father));
+	var father = clone(cell.bacterias[bactID]);
+	cell.bacterias.push(new Bacteria(clone(father)));
+	cell.bacterias.push(new Bacteria(clone(father)));
 	
-	killBacteria(bactID);
+	killBacteria(bactID, true);
+}
+function clone(obj) {
+	return JSON.parse(JSON.stringify(obj));
+}
+function getBacteriaValue(bacteria) {
+	var val = 0;
+	if (bacteria.generation > 0) val += bacteria.generation;
+	if (bacteria.age > 0) val += bacteria.age;
+	val += 1;
+	val *= 4.875;
+
+	return Math.floor(val);
 }
 function killBacteria(bactID) {
+	var val = getBacteriaValue(cell.bacterias[bactID]);
+	cell.money += val;
+
 	doc('gaem').removeChild(cell.bacterias[bactID].element);
 	cell.bacterias.splice(bactID, 1);
 }
@@ -207,7 +226,7 @@ function newGeneration(bact) {
 function tickBacteria(bact, bactID) {
 	if (!bact) return;
 	bact.age += 0.01;
-	bact.rot += red(-1, 1);
+	bact.rot += red(-0.5, 0.5);
 	bact.posX += bact.motionX * rand(0, bact.speed);
 	bact.posY += bact.motionY * rand(0, bact.speed);
 
@@ -235,11 +254,28 @@ function tickBacteria(bact, bactID) {
 		bact.element = document.createElement('cell');
 		doc('gaem').appendChild(bact.element);
 	}
-	elem.innerHTML = drawBody(bact.body, bact.hue);
+	if (!elem.innerHTML) elem.innerHTML = drawBody(bact.body, bact.hue);
 	elem.style.top = (bact.posY)+'px';
 	elem.style.left = (bact.posX)+'px';
 
-	if (bact.age > 10 && !rand(0,10)) splitBacteria(bactID);
+	if (canDie(bact) && !rand(0,20)) killBacteria(bactID);
+	if (canReproduce(bact).status == 'yes' && !rand(0,20)) splitBacteria(bactID);
+}
+function canDie(bacteria) {
+	if (bacteria.age > 15) return true;
+	return false;
+}
+function canReproduce(bacteria) {
+	var energyToReproduce = (50 * bacteria.generation);
+	var ageToReproduce = 5;
+	if (bacteria.energy >= energyToReproduce && bacteria.age >= ageToReproduce) return {'status': 'yes'};
+	if (bacteria.energy < energyToReproduce || bacteria.age < ageToReproduce) {
+		var agep = bacteria.age / ageToReproduce;
+		var energyp = bacteria.energy / energyToReproduce;
+		var totalp = (agep * energyp) * 100;
+		if (totalp > 100) totalp = 100;
+		return {'status': 'no', 'needed': totalp};
+	}
 }
 
 var cell = {};
@@ -249,7 +285,7 @@ var checkin = 0;
 
 loadGame();
 resetVariables();
-setInterval(tickAllBacteria, 10);
-setInterval(updateHUD, 100);
+setInterval(tickAllBacteria, 200);
+setInterval(updateHUD, 500);
 
 var t = setInterval(saveGame, 60000);

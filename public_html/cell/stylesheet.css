@@ -139,3 +139,26 @@ gen {
 	width: 100px;
 	height: 100px;
 }
+.commonBlack, .commonFilled, .commonDepleted {
+	color: transparent;
+}
+.commonBlack {
+	background-color: rgba(0, 0, 0, 0.2);
+}
+.commonFilled {
+	animation: rep 1s infinite;
+}
+.commonDepleted {
+	background-color: rgba(192, 192, 192, 0.4);
+}
+@keyframes rep {
+	0%, 90% {
+		background-color: rgba(255, 0, 64, 0.8);
+	}
+	30% {
+		background-color: rgba(255, 32, 32, 0.8);
+	}
+	60% {
+		background-color: rgba(255, 64, 0, 0.8);
+	}
+}
