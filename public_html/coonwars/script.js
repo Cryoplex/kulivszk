@@ -176,8 +176,8 @@ var recommendedHeight = Math.floor(wind.height() / 32) - 3;
 var DEFAULT_WIDTH = 31;
 var DEFAULT_HEIGHT = 13;
 */
-var DEFAULT_WIDTH = recommendedWidth;
-var DEFAULT_HEIGHT = 11;
+var DEFAULT_WIDTH = (recommendedWidth / 2);
+var DEFAULT_HEIGHT = 7;
 
 var UNIT_MAXHP = 30;
 var DEFAULT_TEMPERATURE = 20;
@@ -1006,9 +1006,31 @@ function tileHere(wh, hh) {
 	if (wh < 0 || wh >= DEFAULT_WIDTH || hh < 0 || hh >= DEFAULT_HEIGHT) return 'void';
 	return tiles[wh][hh];
 }
-function updatePanel(range) {
+function updateRange(unit) {
+	range_overlay.innerHTML = '';
+	if (unit == undefined) return '';
+	if (unit.range > 0) {
+		for (var c in coons.units) {
+			var obj = coons.units[c];
+			if (obj == undefined) continue;
+			if (isUnitWithinRange(unit, obj) && obj != unit && obj.team != unit.team) {
+				range_overlay.innerHTML += '<range style="top: '+((obj.height * 32) - 16)+'px; left: '+((obj.width * 32) - 16)+'px"></range>';
+			}
+		}
+
+		for (var s in scouts.units) {
+			var obj = scouts.units[s];
+			if (obj == undefined) continue;
+			if (isUnitWithinRange(unit, obj) && obj != unit && obj.team != unit.team) {
+				range_overlay.innerHTML += '<range style="top: '+((obj.height * 32) - 16)+'px; left: '+((obj.width * 32) - 16)+'px"></range>';
+			}
+		}
+	}
+	return '';
+}
+function updatePanel() {
 	if (!gameStarted) return;
-	//Corrupt
+	moveFocuser();
 
 	var l = '';
 	var width = tiles.length;
@@ -1026,7 +1048,7 @@ function updatePanel(range) {
 					var thisTileObject = {'width': w, 'height': h};
 					var dist = distance(thisTileObject, unit);
 					if (dist <= unit.range) {
-						extraClass = 'rangeOverlay';
+						//extraClass = 'rangeOverlay';
 					}
 				}
 			}
@@ -1040,7 +1062,7 @@ function updatePanel(range) {
 }
 function lifeBar(guy) {
 	var w = (guy.width * 32)+'px';
-	var h = ((guy.height * 32)-16)+'px';
+	var h = ((guy.height * 32))+'px';
 	var barClass = (guy.team == 0) ? 'coonBar' : 'scoutBar';
 	var realbar = realDrawBar(guy.hp, guy.hpx).replace('commonFilled', 'commonFilled '+barClass);
 
@@ -1048,7 +1070,7 @@ function lifeBar(guy) {
 	var pric = (upgrademode) ? translate('Ascenso: |Upgrade: ')+price+'ç' : '';
 	if (guy.team != turn) pric = '';
 	if (!buy(guy.team, price, 1)) pric = '<span class="red">'+pric+'</span>';
-	var bar = '<div class="barContainer" style="left: '+w+'; top: '+h+'"><big style="pointer-events: none; user-select: none">'+pric+'</big><br>'+guy.level+' '+realbar+'</div>';
+	var bar = '<div class="barContainer" style="top: -16px; position: relative"><big style="pointer-events: none; user-select: none">'+pric+'</big><br>'+guy.level+' '+realbar+'</div>';
 	return '<span class="noselect">'+bar+'</span>';
 }
 function getTempColor(unit) {
@@ -1057,6 +1079,20 @@ function getTempColor(unit) {
 
 	if (unit.temp > 5) return 'rgba(255, 128, 0, 0.5)';
 	if (unit.temp >= 10) return 'rgba(255, 128, 0, 1)';
+}
+function getUnitExtraClasses(u, scout) {
+	var ex = (turn == 0) ? 'canMove': '';
+	ex += ' spriteUnit';
+	ex += ' sprite';
+	ex += ' '+u.type;
+	if (!canThisUnitMove(u) && turn == 0)  ex = 'cannotMove';
+	if (u.moved >= u.mov) ex += ' gray';	
+	if (u.poison) ex += ' poisoned';
+	if (u.regen) ex += ' regen';
+	if (u.disease) ex += ' disease';
+	if (u.boss) ex += ' boss';
+	if (scout) ex += ' scout_side';
+	return ex;
 }
 function updateUnits() {
 	var ll = ''
@@ -1067,33 +1103,29 @@ function updateUnits() {
 		var ex = (turn == 0) ? 'canMove': '';
 		if (!canThisUnitMove(u) && turn == 0)  ex = 'cannotMove';
 		if (u.moved >= u.mov) ex = 'gray';
-		if (focusedUnit.unit == uu && focusedUnit.team == 0) ex += ' focused';
 		if (u.poison) ex += ' poisoned';
 		if (u.regen) ex += ' regen';
 		if (u.disease) ex += ' disease';
 		if (u.boss) ex += ' boss';
-		ll += lifeBar(u);
-		ll += '<div id="team_0_unit_'+uu+'" onclick="focusy(0, '+uu+')" class="'+ex+' spriteUnit sprite '+u.type+'" onmouseover="highlightUnit(0, '+uu+')" onmouseleave="highlightUnit(-1)"style="top: '+u.height * 32+'px; left: '+u.width * 32+'px; background-color: '+getTempColor(u)+'"></div>';
+		ll += '<div id="team_0_unit_'+uu+'" onclick="focusy(0, '+uu+')" class="'+ex+' spriteUnit sprite '+u.type+'" onmouseover="highlightUnit(0, '+uu+')" onmouseleave="highlightUnit(-1)"style="top: '+u.height * 32+'px; left: '+u.width * 32+'px; background-color: '+getTempColor(u)+'">'+lifeBar(u)+'</div>';
 	}
 	for (var uu in scouts.units) {
 		var u = scouts.units[uu];
 		if (u.hp <= 0) continue;
 		var ex = (turn == 1) ? 'canMove': '';
 		if (u.moved >= u.mov) ex = 'gray';
-		if (focusedUnit.unit == uu && focusedUnit.team == 1) ex += ' focused';
 		if (u.poison) ex += ' poisoned';
 		if (u.regen) ex += ' regen';
 		if (u.disease) ex += ' disease';
 		if (u.boss) ex += ' boss';
-		ll += lifeBar(u);
-		ll += '<div id="team_1_unit_'+uu+'" onclick="focusy(1, '+uu+')" class="'+ex+' spriteUnit scout_side sprite '+u.type+'" onmouseover="highlightUnit(1, '+uu+')" onmouseleave="highlightUnit(-1)" style="top: '+u.height * 32+'px; left: '+u.width * 32+'px; background-color: '+getTempColor(u)+'"></div>';
+		ll += '<div id="team_1_unit_'+uu+'" onclick="focusy(1, '+uu+')" class="'+ex+' spriteUnit scout_side sprite '+u.type+'" onmouseover="highlightUnit(1, '+uu+')" onmouseleave="highlightUnit(-1)" style="top: '+u.height * 32+'px; left: '+u.width * 32+'px; background-color: '+getTempColor(u)+'">'+lifeBar(u)+'</div>';
 	
 	}
 	return ll;
 }
 function onUnitNotification(team, unit, text, coordinateMode) {
 	var textlength = text.length;
-	//$('#unitNotification').stop();
+
 	var tile = '#team_'+team+'_unit_'+unit;
 	if (coordinateMode) {
 		var tilew = team;
@@ -1101,27 +1133,19 @@ function onUnitNotification(team, unit, text, coordinateMode) {
 		tile = '#tile_'+tilew+'_'+tileh;
 	}
 	var to = $(tile).offset();
-	/*
-	unitNotification.style.top = to.top+'px';
-	unitNotification.style.left = to.left+'px';
-	$('#unitNotification').fadeIn(100);
-	$('#unitNotification').animate({top: '-=32'}, 800).fadeOut(800);
-	unitNotification.innerHTML = text;
-	*/
 
 	var not = document.createElement('span');
 	not.className = 'unitNotification';
-	not.style.top = to.top+'px';
-	not.style.left = to.left+'px';
+	not.style.top = (to.top)+'px';
+	not.style.left = (to.left)+'px';
 	not.innerHTML = text;
 	document.body.appendChild(not);
 	$(not).fadeIn(100);
 	$(not).animate({top: '-=32'}, textlength*100).fadeOut(textlength*100);
-
-	updatePanel();
 }
 function focusy(team, unit) {
 	var fu = focusedUnit;
+	updateRange(teams[team].units[unit]);
 	if (fu) {
 		var fuu = teams[fu.team].units[fu.unit];
 		if (fuu && fuu.archetype == 'fairy') {
@@ -1150,7 +1174,7 @@ function focusy(team, unit) {
 		}
 	}
 	focusedUnit = {'team': team, 'unit': unit};
-	updatePanel();
+	moveFocuser();
 }
 function getUpgradePrice(who) {
 	var p = prototypes[who.type].price;
@@ -1349,7 +1373,8 @@ function changeTile(w, h, newTile) {
 	if (!tiles[w]) return;
 	if (!tiles[w][h]) return;
 	tiles[w][h] = newTile;
-	updatePanel();
+	var n = 'tile_'+w+'_'+h;
+	doc(n).className = 'sprite '+tiles[w][h];
 }
 function breakNexus(sprite) {
 	snd_crack.play();
@@ -1414,7 +1439,7 @@ function resetGame() {
 		battleground.innerHTML = '';
 	});
 }
-function moveUnit(tUnit, direction) {
+function moveUnit(tUnit, direction, unitid) {
 	if (tUnit.moved > tUnit.mov) return;
 	var dirID = Number.isInteger(direction);
 	if (!dirID) dirID = dirs.indexOf(direction);
@@ -1668,7 +1693,17 @@ function moveUnit(tUnit, direction) {
 	if (tUnit.width >= (DEFAULT_WIDTH-2) && raceMode) expandPanel();
 	var tile = '#tile_'+tUnit.width+'_'+tUnit.height;
 	document.body.scrollLeft = ($(tile).offset().left - 256);
-	updatePanel();
+
+	var unit_tile = 'team_'+unitid.team+'_unit_'+unitid.unit;
+
+	doc(unit_tile).style.left = tUnit.width * 32+'px';
+	doc(unit_tile).style.top = (tUnit.height * 32)+'px';
+
+	var exclass = getUnitExtraClasses(tUnit, focusedUnit.team);
+	doc(unit_tile).className = exclass;
+	doc(unit_tile).innerHTML = lifeBar(tUnit);
+
+	moveFocuser();
 	if (there == 'sprite_puddle' || there == 'sprite_mud') {
 		snd_splash.play();
 	}
@@ -1679,6 +1714,8 @@ function moveUnit(tUnit, direction) {
 		snd_step.play();
 	}
 	records[tUnit.team].totalMovements++;
+
+	updateRange(tUnit);
 }
 function unitHere(w, h) {
 	for (var uh in coons.units) {
@@ -1976,7 +2013,7 @@ function randomWallBaseSpot(type) {
 	var baseWallMaxDistance = Math.floor(DEFAULT_HEIGHT/2);
 	if (type == 'trap') baseWallMaxDistance += 2;
 	if (type == 'tower') baseWallMaxDistance -= 2;
-	var baseWidth = (aiTurn == 0) ? 1 : (DEFAULT_WIDTH - 1);
+	var baseWidth = (aiTurn == 0) ? 2 : (DEFAULT_WIDTH - 2);
 	var baseHeight = Math.floor(DEFAULT_HEIGHT/2);
 	var distanceWidth = rand(0, baseWallMaxDistance);
 	if (aiTurn == 1) distanceWidth *= -1;
@@ -2013,8 +2050,25 @@ function aiBuildingSimulator(debug) {
 	var futureBuilding = getBuildingHere(buildmode, where.width, where.height, debug);
 	if (!futureBuilding.error) action(where.width, where.height);
 }
+function moveFocuser() {
+	//Focuser
+	if (focusedUnit != undefined) {
+		if (teams[focusedUnit.team] == undefined) return;
+		var unit = teams[focusedUnit.team].units[focusedUnit.unit];
+		var off = {'top': (unit.height * 32), 'left': (unit.width * 32)};
+		if (off != undefined) {
+			focuser.style.opacity = 1;
+			focuser.style.top = (off.top)+'px';
+			focuser.style.left = off.left+'px';
+		}
+		if (off == undefined) focuser.style.opacity = 0;
+	}
+}
 function artificialIntelligenceMovement() {
 	if (!gameStarted) return;
+
+	moveFocuser();
+
 	if (aiLoop) aiTurn = turn;
 	if (turn != aiTurn) return;
 	if (!canMove(aiTurn)) {
@@ -2616,7 +2670,7 @@ function action(width, height) {
 					if (theUnit.archetype == 'fairy') {
 						snd_magic.play();
 						var str = '#team_'+tgt.team+'_unit_'+tgt.unit;
-						var pos = $('.focused').offset();
+						var pos = $('#focuser').offset();
 						var postgt = $(str).offset();
 						var proj = 'sprite_ammoLove';
 						projectiles.innerHTML = '<div class="projectile sprite '+proj+'" style="top: '+pos.top+'px; left: '+pos.left+'px"></div>';
@@ -2657,7 +2711,7 @@ function action(width, height) {
 						if (!explodeSound) explodeSound = snd_explosion;
 
 						var str = '#team_'+tgt.team+'_unit_'+tgt.unit;
-						var pos = $('.focused').offset();
+						var pos = $('#focuser').offset();
 						var postgt = $(str).offset();
 						var proj = 'sprite_ammoLemon';
 						if (theUnit.projectile) proj = theUnit.projectile;
@@ -2681,8 +2735,8 @@ function action(width, height) {
 					}, wait);
 				}
 			}
-
-			if (willMove) var moved = moveUnit(theUnit, direct);
+			var unitid = {'team': focusedUnit.team, 'unit': toMove}
+			if (willMove) var moved = moveUnit(theUnit, direct, unitid);
 			if (moved && willMove) {
 				if (moved.team != turn) {
 					attack(turn, toMove, moved.unit);
@@ -2692,7 +2746,7 @@ function action(width, height) {
 	}
 
 
-	updatePanel();
+	//updatePanel();
 }
 function unitValue(team, unit) {
 	var u = teams[team].units[unit];

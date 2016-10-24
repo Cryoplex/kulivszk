@@ -281,6 +281,13 @@ function eloCalc(matchesWon, matchesLost, eloWon, eloLost) {
 	var formula = (wonQuo+lostQuo)/matches;
 	return Math.round(formula);
 }
+function checkCollision(from, to) {
+	var c1 = from.x < to.x + to.size;
+	var c2 = from.x + from.size > to.x;
+	var c3 = from.y < to.y + to.size;
+	var c4 = from.y + from.size > to.y;
+	if (c1 && c2 && c3 && c4) return 1;
+}
 var randomColorz = rand(0,360);
 function randomColor(lum) {
 	/*
@@ -457,14 +464,32 @@ function drawBar(minValue,maxValue,returnValue) {
 	return pointArray[depletedValue];
 	}
 }
-function realDrawBar(min, max, alternate) {
+function realDrawBar(min, max, alternate, colors) {
 	var filled = drawBar(min, max, true);
 	var depleted = drawBar(min, max);
+
+	if (colors == undefined) colors = {};
+	if (colors.filled == undefined) colors.filled = 'rgba(64, 255, 32, 0.8)';
+	if (colors.quarter == undefined) colors.quarter = 'rgba(255, 16, 96, 0.8)';
+	if (colors.half == undefined) colors.half = 'rgba(255, 192, 32, 0.8)';
+	if (colors.full == undefined) colors.full = 'rgba(32, 200, 255, 0.8)';
+
+	if (colors.depleted == undefined) colors.depleted = 'rgba(128, 128, 128, 0.5)';
 
 	if (alternate) {
 		filled = Math.ceil((min/max)*200);
 		depleted = Math.floor((1 - (min/max))*200);
-		return '<span class="commonBlack">[</span><span class="commonFilled" style="display: inline-block; width: '+filled+'px">.</span><span class="commonDepleted" style="display: inline-block; width: '+depleted+'px">.</span><span class="commonBlack">]</span>';
+		if (min >= max) {
+			filled = 200;
+			depleted = 0;
+		}
+		var color = colors.filled;
+		var percent = (min / max);
+		if (percent >= 0.9) color = colors.full;
+		if (percent > 0.25 && percent <= 0.5) color = colors.half;
+		if (percent <= 0.25) color = colors.quarter;
+
+		return '<span class="commonBlack">[</span><span class="commonFilled" style="display: inline-block; width: '+filled+'px; background-color: '+color+'">&gt</span><span class="commonDepleted" style="display: inline-block; width: '+depleted+'px;"></span><span class="commonBlack">]</span>';
 	}
 	return '<span class="commonBlack">[</span><span class="commonFilled">'+filled+'</span><span class="commonDepleted">'+depleted+'</span><span class="commonBlack">]</span>';
 }

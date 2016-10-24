@@ -14,14 +14,14 @@ function createBody(width, height) {
 	}
 	return a;
 }
-function drawBody(array, hue) {
+function drawBody(array, hue, sat) {
 	var l = '<cell style="width: '+(array.length * 4)+'px; height: '+(array[0].length * 4)+'px">';
 	for (var h in array) {
 		for (var w in array[h]) {
 			var thisPixel = array[h][w];
 			if (thisPixel > 0) {
 				var lum = (thisPixel == 1) ? '40%' : '60%';
-				var bgc = 'hsla('+hue+', 60%, '+lum+', 0.8)';
+				var bgc = 'hsla('+hue+', '+sat+'%, '+lum+', 0.8)';
 				l += '<pixel class="pixel_'+thisPixel+'" style="top: '+(h * 4)+'px; left: '+(w * 4)+'px; background-color: '+bgc+'"></pixel>'
 			}
 		}
@@ -215,4 +215,10 @@ function buyCell(price) {
 	if (cell.money < price) return;
 	cell.money -= price;
 	addBacteria();
+}
+function resetAll() {
+	cell = {};
+	doc('gaem').innerHTML = '';
+	resetVariables();
+	saveGame();
 }

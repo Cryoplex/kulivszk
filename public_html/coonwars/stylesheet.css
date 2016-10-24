@@ -37,18 +37,43 @@ sup {
 	font-style: italic;
 	font-size: 10px;
 }
+range {
+	animation: rangeOver 0.75s infinite;
+
+	border-radius: 100%;
+
+	width: 64px;
+	height: 64px;
+	position: absolute;
+	display: inline-block;
+}
 .ourgames h2 {
 	font-size: 24px;
 }
-#battleground {
+#battleground, #battleground_overlay, #range_overlay {
 	position: absolute;
-	top: 64px;
+	top: 32px;
 
 	margin: auto;
 	background-image: url("background.png");
 	background-color: red;
 	width: 0px;
 	height: 0px;
+
+	zoom: 2.0;
+}
+#focuser {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+
+	outline: 2px solid #ff0;
+
+	animation: 0.5s focusy infinite;
+
+	transition: 0.2s all;
+
+	pointer-events: none;
 }
 .rangeOverlay {
 	background-color: rgba(255, 0, 0, 0.25);
@@ -56,19 +81,19 @@ sup {
 }
 @keyframes rangeOver {
 	0%, 100% {
-		background-color: rgba(192, 64, 64, 0.3);
+		background: radial-gradient(rgba(255, 0, 0, 0.8), rgba(0, 0, 0, 0));
 	}
 	50% {
-		background-color: rgba(128, 96, 96, 0.4);
+		background: radial-gradient(rgba(255, 0, 0, 0.2), rgba(0, 0, 0, 0));
 	}
 }
+.scout_side {
+	transform: scale(-1, 1);
+}
+
 .sprite {background-image: url(sprites.png); background-repeat: no-repeat; display: inline-block;   width: 32px;    height: 32px;    
 margin: 0px; padding: 0px; border: 0px; float: left;
 image-rendering: pixelated;
-}
-
-.scout_side {
-	transform: scale(-1, 1);
 }
 .sprite_empty { background-position: 0px 0px; pointer-events: none;}
 .sprite_grass { background-position: -32px 0px;}
@@ -299,6 +324,8 @@ animation: water 1s infinite;
 	z-index: 10;
 	width: 32px;
 	height: 32px;
+
+	transition: 0.2s all;
 }
 .projectile {
 	z-index: 30;
@@ -701,6 +728,7 @@ table {
 	padding: 2px;
 	font-size: 10px;
 	display: none;
+	zoom: 2.0;
 }
 .active {
 	border: 32px solid rgb(200, 100, 0);

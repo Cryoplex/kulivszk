@@ -14,12 +14,26 @@
 
   <body>
 
-    <div class="jumbotron game" id="gaem">
-      <div class="container">
-        <output id="game_value"></output>
-      </div>
-    </div>
+    <div class="jumbotron game" id="gaem"></div>
+
+    <output id="game_value"></output>
+    <output id="cell_table">
+      <table>
+        <tr>
+          <th>#</th><th>age</th><th>energy</th><th>food</th><th>reproduction</th>
+        </tr>
+        <tr id="cell_info">
+          <td id="cell_id">?</td>
+          <td id="cell_age">0</td>
+          <td id="cell_energy">0.00</td>
+          <td id="cell_food">null</td>
+          <td id="cell_reproduction">...</td>
+        </tr>
+      </table>
+    </output>
     <input type="button" onclick="buyCell(70)" value="Buy Cell ($70)">
+    <input type="button" onclick="resetAll()" value="Reset Data">
+    <input type="button" onclick="saveGame()" value="Save Data">
     <script src="../common.js"></script>
   	<script src="../jquery-2.1.4.min.js"></script>
   	<script src="../jquery-ui.min.js"></script>
