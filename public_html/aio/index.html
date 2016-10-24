@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Game</title>
+
+    <link type="text/css" rel="stylesheet" href="../bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="stylesheet.css">
+  </head>
+
+  <body>
+    <div id="gameWindow">
+      <form id="characterCreation" style="display: none">
+        <h2>Ficha de Personaje</h2>
+
+        <div class="bubble">
+          <b>Nombre</b><br>
+          <input type="text" value="" id="formName"><br>
+        </div>
+
+        <div class="bubble">
+          <b>Edad</b><br>
+          <input type="number" value="" min="16" max="128" id="formAge">
+        </div>
+
+        <br style="clear: both">
+
+        <div class="bubble">
+          <b>Altura</b><br>
+          <input type="number" value="" min="148" max="200" id="formHeight"><br>
+        </div>
+
+        <div class="bubble">
+          <b>Peso</b><br>
+          <input type="number" value="" min="40" max="170" id="formWeight"><br>
+        </div>
+
+        <br style="clear: both">
+
+        <div class="bubble">
+          <b>Raza</b><br>
+          <select id="formRace">
+            <option value="sprite_boyScout">Humano</option>
+            <option value="sprite_coon">Mapache</option>
+          </select><br>
+        </div>
+
+        <div class="bubble">
+          <b>Profesión</b><br>
+          <select id="formJob">
+            <option value="unemployed">Aprendiz</option>
+            <option value="monk">Monje</option>
+            <option value="fighter">Luchador</option>
+            <option value="paladin">Paladín</option>
+            <option value="thief">Ladrón</option>
+            <option value="necromancer">Nigromante</option>
+            <option value="warlock">Brujo</option>
+            <option value="wizard">Mago</option>
+            <option value="warrior">Guerrero</option>
+            <option value="assasin">Asesino</option>
+            <option value="hunter">Cazador</option>
+          </select><br>
+        </div>
+
+        <div class="bubble">
+          <b>Sexo</b><br>
+          <input type="radio" name="gender" value="male"> Hombre<br>
+          <input type="radio" name="gender" value="female"> Mujer<br>
+          <input type="radio" name="gender" value="other"> Otro<br>
+        </div>
+
+        <div class="bubble">
+          <input type="button" onclick="charSelection.accept()" value="Aceptar">
+        </div>
+      </form>
+
+      <div id="story" class="hid">
+        Tu misión es llegar a lo más alto de la Torre de los Bichos y derrotar al Jefe Bicho.
+        <br><br>
+        <input type="button" onclick="tutorial.k()" value="OK">
+      </div>
+
+      <div id="gameScreen" class="hid">
+        <div id="town">
+          <h2>Pueblo</h2>
+          <input type="button" onclick="goTo('tower')" value="Salir de Caza">
+          <input type="button" onclick="game.players[0].hp = getCombatStat(game.players[0], 'hpx'); update()" value="Curarse">
+          <hr>
+          <h3>Tienda</h3>
+          <shop id="shop"></shop>
+        </div>
+
+        <div id="tower" class="hid" style="zoom: 2.0">
+          <map id="towerMap"></map>
+        </div>
+
+        <div id="battle" class="hid">
+          <h2>Combate</h2>
+          <input type="button" onclick="goTo('flee')" value="Huir">
+        </div>
+
+      </div>
+    </div>
+    <div id="log"></div>
+    <div id="playerstats"></div>
+
+    
+    <script src="../common.js"></script>
+  	<script src="../jquery-2.1.4.min.js"></script>
+  	<script src="../jquery-ui.min.js"></script>
+  	<script src="script.js"></script>
+  </body>
+</html>
