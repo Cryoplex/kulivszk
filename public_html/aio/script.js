@@ -1,3 +1,13 @@
+var changelog = [
+'- Alpha',
+'- Test',
+'--',
+'---',
+'---- Al mostrar la clase del jugador, se muestra el nombre de la clase, y no el predefinido.',
+'---- El nombre de la clase ya no se muestra como "undefined"',
+'---- Las armas ahora muestran Ataque, Defensa, Velocidad, etc, en lugar de ATK/DEF/SPE/MAG/HPX',
+];
+
 var playing = false;
 var initialized = false;
 
@@ -125,7 +135,7 @@ function statBonus(playerID, value) {
 	player[stat] += value;
 	if (player[stat] <= 0) player[stat] = 0;
 	var pm = (value > 0) ? '+' : '';
-	onUnitNotification(playerID, pm+value+' '+stat.toUpperCase());
+	onUnitNotification(playerID, pm+value+' '+getStatName(stat));
 	update();
 }
 function autoAssignStatPoints(player) {
@@ -148,7 +158,21 @@ function autoAssignStatPoints(player) {
 	player.hp += diff;
 	if (player == game.players[0]) update();
 }
-function getJobList() {
+function getJobList(name) {
+	if (name) {
+		return {
+		'monk': 'Monje',
+		'fighter': 'Luchador',
+		'paladin': 'Paladín',
+		'thief': 'Ladrón',
+		'necromancer': 'Nigromante',
+		'warlock': 'Brujo',
+		'warrior': 'Guerrero',
+		'wizard': 'Mago',
+		'assasin': 'Asesino',
+		'hunter': 'Cazador',
+	};
+};
 	return [
 	'monk', 'fighter', 'paladin', 'thief', 'necromancer', 'warlock', 'warrior', 'wizard', 'assasin', 'hunter',
 	];
@@ -410,8 +434,8 @@ function displayItem(item, simple, id) {
 			var excl = 'stat_neutral';
 			if (playerStat > item[stat]) excl = 'stat_bad';
 			if (playerStat < item[stat]) excl = 'stat_good';
-			el += '<stat class="'+excl+'">'+item[stat]+' '+stat.toUpperCase()+'</stat><br>';
-			extra += item[stat]+' '+stat.toUpperCase()+' ';
+			el += '<stat class="'+excl+'">'+item[stat]+' '+getStatName(stat)+'</stat><br>';
+			extra += item[stat]+' '+getStatName(stat)+' ';
 		}
 	}
 	if (simple) return '<span title="'+extra+'">'+name+'</span>';
@@ -421,7 +445,7 @@ function displayItem(item, simple, id) {
 }
 function getPlayerStat(player) {
 	var l = '';
-	l += '<span title=""><b>Nombre</b>   '+player.name+' el '+player.job+'</span><br>';
+	l += '<span title=""><b>Nombre</b>   '+player.name+' el '+getJobList(1)[player.job]+'</span><br>';
 	l += '<span title=""><b>Nivel</b>   '+player.level+'</span><br>';
 	l += '<span title=""><b>$</b> '+player.money+'</span><br>';
 	var lore = 'Los puntos de experiencia se obtienen al ganar combates. Si acumulas los suficientes subirás de nivel.';
@@ -489,6 +513,12 @@ function getPlayerStat(player) {
 
 
 	return l;
+}
+function getStatName(stat) {
+	return {
+		'level': 'Nivel', 'hp': 'Puntos de Impacto', 'str': 'Fuerza', 'dex': 'Destreza', 'end': 'Resistencia', 'int': 'Inteligencia', 'wis': 'Sabiduría',
+		'cha': 'Carisma', 'luk': 'Suerte', 'hpx': 'PI', 'atk': 'Ataque', 'def': 'Defensa', 'spe': 'Velocidad', 'mag': 'Magia',
+	}[stat];
 }
 function getCombatStat(player, stat) {
 	var stats = {
@@ -1111,3 +1141,5 @@ tutorial();
 update();
 generateShop();
 var t = setInterval(saveGame, 60000);
+
+document.title = 'Still Unnamed '+changes().latestVersion;
