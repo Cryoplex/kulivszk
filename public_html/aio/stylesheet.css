@@ -1,7 +1,3 @@
-* {
-	-moz-user-select: none;
-}
-
 .jumbotron {
 	background-image: url(jum.png);
 	height: 500px;

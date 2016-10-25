@@ -3,11 +3,12 @@ var initialized = false;
 
 function resetVariables() {
 	if (!game) game = {};
-	if (!game.log) game.log = '';
 	if (!game.tutorial) game.tutorial = 0;
 	if (!game.players) game.players = [];
 	if (!game.floor) game.floor = 1;
 	if (!game.steps) game.steps = 0;
+
+	delete game.log;
 }
 function saveGame() {
 	game.shop = undefined;
@@ -26,8 +27,8 @@ function toLog(string) {
 	var dat = new Date();
 	dat = dat.getUTCHours()+':'+dat.getUTCMinutes()+':'+dat.getUTCSeconds();
 	string = '<sup>'+dat+'</sup> '+string
-	game.log += string+'<br>';
-	log.innerHTML = game.log;
+	gamelog += string+'<br>';
+	log.innerHTML = gamelog;
     log.scrollTop = log.scrollHeight;
 }
 function notif(string) {
@@ -220,7 +221,7 @@ function player(name, age, height, weight, job, alignment, sex, race) {
 }
 function update(w) {
 	playerstats.innerHTML = getPlayerStats();
-	if (w == 'floor') towerFloor.innerHTML = game.floor;
+	//if (w == 'floor') towerFloor.innerHTML = game.floor;
 }
 function getPlayerStats() {
 	return getPlayerStat(game.players[0]);
@@ -275,6 +276,7 @@ function getItemTypes(type) {
 	return itemTypes.all;
 }
 function getItemRarity(typ) {
+	//'Z: 0.195%, X: 0.391%, S: 0.782%, A: 1.564%, B: 3.128%, C: 6.256%, D: 12.512%, E: 25.024%, F: 50.048%'
 	var rarities = [512, 256, 128, 64, 32, 16, 8, 4, 2, 1];
 	var rarity = [
 		{'name': 'Normal',     'stat': 0.5,  'tier': 'F', 'color': 'rarity_normal'},
@@ -311,7 +313,7 @@ function item(type, level, forceTrash) {
 	if (forceTrash) this.tier = 9;
 
 	var rarity = getItemRarity(this.tier);
-	this.name = '<item class="'+rarity.color+'">'+getItemNames(this.type)+' '+rarity.tier+'</item>';
+	this.name = getItemNames(this.type);
 	this.hpx = 0;
 	this.mag = 0;
 
@@ -394,8 +396,11 @@ function displayItem(item, simple, id) {
 	var oldItem = game.players[0].equip[item.type];
 	if (item.tier >= oldItem.tier && item.tier != 9 && item.level > oldItem.level) recommended = 'recommended';
 
+	var rarity = getItemRarity(item.tier);
+	var name = '<item class="'+rarity.color+'">'+item.name+' '+rarity.name+'</item>';
+
 	var el = '<div class="itemDisplay '+recommended+'" style="opacity: '+op+'" onclick="buyItem('+id+')">';
-	el += item.name+' ($'+item.price+')<br>';
+	el += name+' ($'+item.price+')<br>';
 	var itemStats = ['atk', 'def', 'spe', 'mag', 'hpx'];
 	var extra = '';
 	for (var st in itemStats) {
@@ -409,7 +414,7 @@ function displayItem(item, simple, id) {
 			extra += item[stat]+' '+stat.toUpperCase()+' ';
 		}
 	}
-	if (simple) return '<span title="'+extra+'">'+item.name+'</span>';
+	if (simple) return '<span title="'+extra+'">'+name+'</span>';
 	el += '</div>';
 
 	return el;
@@ -907,6 +912,7 @@ function goTo(where) {
 
 		newFloor(game.floor);
 	}
+	if (where == 'town') slideTrick('#importer', '#town');
 	if (where == 'death') {
 		slideTrick('#tower', '#town');
 		generateShop();
@@ -919,6 +925,9 @@ function goTo(where) {
 	}
 	if (where == 'battle') {
 		slideTrick('#tower', '#battle');
+	}
+	if (where == 'importer') {
+		slideTrick('#town', '#importer');
 	}
 	if (where == 'nextFloor') {
 		game.floor++;
@@ -948,6 +957,23 @@ function getAllTiles() {
 		'sprite_cannon_broken',
 		'sprite_money',
 	];
+}
+function importData() {
+	var str = 'Si mi señora Lilim, me he portado bien y no he hackeado nada.';
+	var answer = prompt('¿De verdad quieres importar estos datos? Mira que como hayas editado alguna parte, podrías corromper tu partida para siempre. Si estás de acuerdo di: "'+str+'" (sin las comillas). De lo contrario pulsa CANCELAR.');
+	mess.innerHTML = 'La importación de datos ha sido cancelada :^) Gallina.';
+	if (answer) mess.innerHTML = 'Tus datos han sido importados (aunque no copiaste mi mensaje, que te crees, ¿que soy tonta?)';
+	if (answer == str) mess.innerHTML = 'No era necesario escribir la frase entera, pero veo que eres leal. Tus datos han sido importados.';
+
+	game = JSON.parse(importexport.value);
+	importexport.value = '';
+	saveGame();
+	
+	update();
+}
+function exportData() {
+	importexport.value = JSON.stringify(game);
+	mess.innerHTML = '¡Buen chico! *Le da una galleta* Ahora abre otra ventana con el juego en otro navegador (o una ventana de incógnito), pega lo que acabas de copiar y pulsa "Importar Datos".';
 }
 function randomMap(width, height) {
 	var tiles = [];
@@ -1069,6 +1095,7 @@ function slideTrick(p1, p2) {
 
 var game = {};
 var charSelection = {};
+var gamelog = 'J-Ner tonto :^)';
 charSelection.accept = function() {
 	game.tutorial = 1;
 	var sex = $("input[type='radio'][name='gender']:checked").val();
