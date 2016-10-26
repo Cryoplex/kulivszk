@@ -4,7 +4,7 @@ body {
 }
 #topbar {
 	width: 100%;
-	background-color: hsl(270, 60%, 80%);
+	background-color: hsl(0, 15%, 75%);
 	height: 96px;
 	margin: 0;
 }
@@ -17,20 +17,39 @@ li {
 	float: left;
 	width: 16%;
 	text-align: center;
-	background-color: hsl(270, 60%, 80%);
+	background-color: #C8C7C7;
+	border-radius: 8px;
 }
 li:hover {
-	background-color: hsl(90, 60%, 20%);
+	background-color: #484747;
 	color: #fff;
+	cursor: pointer;
+}
+li:active {
+	background-color: #000;
+	color: #fff;
+	cursor: pointer;
 }
 ul {
 	margin: 0;
 }
 #yourMoney {
 	position: fixed;
-	top: 8px;
-	right: 8px;
-	margin: 16px;
+	top: 0; right: 0;
+	padding: 8px;
+	background-color: #000;
+	width: 128px;
+	color: rgba(255, 240, 240, 0.8);
+}
+.money_left {
+	width: 10%;
+	text-align: left;
+	display: inline-block;
+}
+.money_right {
+	width: 90%;
+	text-align: right;
+	display: inline-block;
 }
 
 .window {

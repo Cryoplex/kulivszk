@@ -1,0 +1,253 @@
+* {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+}
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+#myMoney {
+	position: absolute;
+	right: 32px;
+	top: 8px;
+}
+.referr {
+	margin: 2px;
+	padding: 8px;
+	border-radius: 8px;
+	background-color: rgba(192, 192, 192, 0.2);
+}
+ad {
+	border-radius: 8px;
+	background-color: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+	color: black;
+	margin: 16px;
+	float: left;
+	padding: 8px;
+	text-align: center;
+	font-family: Ubuntu;
+	font-size: 10px;
+	cursor: pointer;
+
+	width: 144px;
+	height: 60px;
+}
+.btn-danger {
+	opacity: 0.2;
+}
+ad:hover {
+	background-color: rgba(32, 128, 64, 0.8);
+	color: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
+}
+ad:active {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
+}
+footer {
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	text-align: center;
+	width: 100%;
+}
+img {
+	image-rendering: pixelated;
+}
+.clog {
+	color: rgba(0, 64, 128, 0.5);
+}
+.clog:hover {
+	color: rgba(0, 128, 255, 0.8);
+	cursor: pointer;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+#home, #register, #tos, #realGame {
+	width: 100%;
+	display: none;
+	position: relative;
+}
+#register {
+	width: 75%;
+	margin: auto;
+	position: relative;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+#game_ads, #game_refer, #game_barker {
+	overflow-y: scroll;
+	height: 80vh;
+	display: inline-block;
+}
+#bark_info {
+	font-size: 10px;
+	color: rgba(128, 128, 128, 0.8);
+}
+#tutorial {
+	background-color: rgba(0, 0, 0, 0.5);
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+	z-index: 99;
+}
+tut {
+	background-color: rgba(255, 255, 255, 1);
+	color: rgba(0, 0, 0, 0.9);
+	border-radius: 8px;
+	padding: 8px;
+	box-shadow: 0 0 8px black;
+	position: absolute;
+	z-index: 100;
+}
+#realGame {
+	height: 100px;
+	display: inline-block;
+}
+#troll_1, #troll_2 {
+	color: red;
+}
+quote {
+	margin-left: 8px;
+}
+bark {
+	padding: 16px;
+	width: 100%;
+	height: 64px;
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	clear: both;
+	float: left;
+}
+.intext {
+	width: 384px;
+	height: 40px;
+	padding: 8px;
+	margin: 2px;
+}
+.navbar {
+	position: relative;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+	cursor: pointer;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+.es:lang(en) {
+	display: none;
+}
+.en:lang(es) {
+	display: none;
+}
+td {
+	width: 50%;
+}
+
+.rarity_normal { color: black; }
+.rarity_common { color: black; font-weight: bold; }
+.rarity_special { color: rgb(128, 128, 128); }
+.rarity_sparse { color: rgb(255, 128, 0); }
+.rarity_rare { color: rgb(128, 0, 0); }
+.rarity_epic {
+	color: rgb(255, 0, 0);
+	animation: epic 8s infinite;
+}
+@keyframes epic {
+	0%, 100% {
+		color: rgb(255, 0, 0);
+	}
+	25% {
+		color: rgb(64, 192, 0);
+	}
+	50% {
+		color: rgb(192, 64, 0);
+	}
+}
+.rarity_mythical {
+	color: rgb(0, 255, 0);
+	animation: mythical 4s infinite;
+}
+@keyframes legendary {
+	0%, 100% {
+		color: rgb(0, 255, 0);
+	}
+	25% {
+		color: rgb(255, 0, 255);
+	}
+	50% {
+		color: rgb(128, 128, 128);
+	}
+}
+.rarity_legendary {
+	color: rgb(0, 0, 255);
+	animation: legendary 2s infinite;
+
+	font-style: italic;
+}
+@keyframes mythical {
+	0%, 100% {
+		color: rgb(0, 0, 255);
+	}
+	50% {
+		color: rgb(255, 0, 255);
+	}
+}
+.rarity_unique {
+	animation: unique 1s infinite;
+	font-weight: bolder;
+
+	text-shadow:
+	-1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+@keyframes unique {
+	0%, 100% {color: hsl(0, 100%, 50%);}
+	10% {color: hsl(36, 100%, 50%);}
+	20% {color: hsl(72, 100%, 50%);}
+	30% {color: hsl(108, 100%, 50%);}
+	40% {color: hsl(144, 100%, 50%);}
+	50% {color: hsl(180, 100%, 50%);}
+	60% {color: hsl(216, 100%, 50%);}
+	70% {color: hsl(252, 100%, 50%);}
+	80% {color: hsl(288, 100%, 50%);}
+	90% {color: hsl(324, 100%, 50%);}
+}
+.rarity_shit { color: rgba(0, 0, 0, 0.5); font-style: italic; }

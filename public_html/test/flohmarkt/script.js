@@ -661,7 +661,7 @@ var upd = {
 	},
 	'money': function() {
 		var mon = Math.floor(floh.money * 100) / 100;
-		yourMoney.innerHTML = 'Money: $'+mon.toFixed(2);
+		yourMoney.innerHTML = '<span class="money_left">$</span><span class="money_right">'+mon.toFixed(2)+'</span>';
 	}
 }
 

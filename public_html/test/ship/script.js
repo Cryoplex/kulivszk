@@ -26,6 +26,10 @@ var evolution = {
 
 }
 
+var changelog = [
+'-- Added a new background',
+];
+
 //Upgrades
 var upgrade = {
 	'hp': 0,
@@ -1052,3 +1056,4 @@ starfield();
 var t = setInterval(moveStuff, 30);
 var t2 = setInterval(explosionPhase, 100);
 var t3 = setInterval(moveStars, 180);
+document.title = 'Space Fugitive '+changes().latestVersion;

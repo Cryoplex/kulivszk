@@ -9,6 +9,26 @@
 	top: 0;
 	left: 0;
 	-moz-user-select: none;
+
+	background: url(img/bg_dark.png);
+	animation: moveStars steps(1000) 100s infinite;
+}
+@keyframes moveStars {
+	0% {
+		background-position: 0px 0px;
+	}
+	25% {
+		background-position: 128px 2048px;
+	}
+	50% {
+		background-position: 256px 4096px;
+	}
+	75% {
+		background-position: 384px 6144px;
+	}
+	100% {
+		background-position: 512px 8192px;
+	}
 }
 body {
 	-webkit-touch-callout: none;
