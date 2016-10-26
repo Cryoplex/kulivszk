@@ -19,6 +19,9 @@
 	right: 32px;
 	top: 8px;
 }
+upgrade {
+	margin: 2px;
+}
 .referr {
 	margin: 2px;
 	padding: 8px;
@@ -251,3 +254,12 @@ td {
 	90% {color: hsl(324, 100%, 50%);}
 }
 .rarity_shit { color: rgba(0, 0, 0, 0.5); font-style: italic; }
+
+#popup {
+	display: none;
+	position: absolute;
+	top: 0; left: 0; right: 0; bottom: 0;
+	margin: auto;
+	width: 80%;
+	height: 500px;
+}
