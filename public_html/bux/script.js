@@ -6,6 +6,8 @@ var changelog = [
 '- Added Barker',
 '- Added a tutorial',
 '-- Fixed a bug with multi level referrals',
+'- Added upgrades (beta)',
+'-- Fixed a bug that did not load tutorial',
 ];
 
 var BASE_AD_VALUE = 0.0001;
@@ -464,6 +466,7 @@ function registerTroll() {
 		goto('realGame');
 		game.register = true;
 		update();
+		update('reg');
 		saveGame();
 	};
 
