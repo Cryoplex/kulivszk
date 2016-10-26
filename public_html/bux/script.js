@@ -5,6 +5,7 @@ var changelog = [
 '-- Changed max ads to 240',
 '- Added Barker',
 '- Added a tutorial',
+'-- Fixed a bug with multi level referrals',
 ];
 
 var BASE_AD_VALUE = 0.0001;
@@ -390,7 +391,7 @@ function registerTroll() {
 function getReferCPT(peek) {
 	var val = 0;
 	for (var rf in game.bux.refer) {
-		var realTier = (rf + 1);
+		var realTier = (parseInt(rf) + 1);
 		var tierLoss = Math.pow(MONEY_LOSS_PER_REFER_TIER, realTier);
 		var refers = game.bux.refer[rf];
 		var cpt = (BASE_REFER_VALUE * refers * tierLoss);
