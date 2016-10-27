@@ -98,11 +98,21 @@ bot.on('message', function (msg) {
         var calendar = u.calendar;
         var str = '';
         var dailyTarget = 0;
+        /*
         for (var c = 0; c < 7; c++) {
           var td = today(-c);
           dailyTarget += calendar[td];
         }
-        dailyTarget /= 7;
+        */
+        var totdays = 0;
+        for (var c in calendar) {
+          totdays++;
+          dailyTarget += calendar[c];
+        }
+        var tod = today();
+        dailyTarget -= calendar[tod];
+        totdays--;
+        dailyTarget /= totdays;
         dailyTarget *= 1.2;
 
         for (var c = 0; c < 7; c++) {

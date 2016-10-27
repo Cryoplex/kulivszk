@@ -600,11 +600,37 @@ function changes(changelogArray) {
 		var spl = item.split(' ');
 		var i = spl[0];
 		var index = i.length;
+		var update_name = '';
+		var flags = {
+			//Alpha Flags
+			'a': {'name': 'alpha', 'index': 1},
+			'af': {'name': 'add', 'index': 1},
+			'ax': {'name': 'fix', 'index': 2},
+			'ab': {'name': 'bug', 'index': 3},
+
+			//Beta Flags
+			'b': {'name': 'beta', 'index': 0},
+			'bf': {'name': 'add', 'index': 1},
+			'bx': {'name': 'fix', 'index': 2},
+			'bb': {'name': 'bug', 'index': 3},
+
+			//Release Flags
+			'r': {'name': 'release', 'index': 0},
+
+			//Update Flags
+			'uf': {'name': 'update', 'index': 0},
+			'ux': {'name': 'patch', 'index': 1},
+			'ub': {'name': 'hotfix', 'index': 2},
+		}
+		if (flags[i] != undefined) {
+			index = flags[i].index;
+			update_name = '-'+flags[i].name;
+		}
 		version.splice((index + 1));
 
-		if (!version[index]) version[index] = 0;
+		for (var vc = 0; vc <= index; vc++)  if (!version[vc]) version[vc] = 0;
 		version[index] += 1;
-		newChangeLog.push(version.join('.')+' '+spl.slice(1).join(' '));
+		newChangeLog.push(version.join('.')+update_name+' '+spl.slice(1).join(' '));
 	}
 	newChangeLog = newChangeLog.reverse().join('<br>');
 	return {

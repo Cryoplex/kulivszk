@@ -8,6 +8,8 @@ var changelog = [
 '-- Fixed a bug with multi level referrals',
 '- Added upgrades (beta)',
 '-- Fixed a bug that did not load tutorial',
+'ax Fixed random stuff.',
+'ab Fixed upgrades not working properly.',
 ];
 
 var BASE_AD_VALUE = 0.0001;
@@ -109,19 +111,52 @@ function update(step) {
 
 	playerName.innerHTML = translate('Bienvenido, |Welcome, ')+game.userName;
 }
+function arrows() {
+	return '<span class="arrow_1">&gt</span><span class="arrow_2">&gt</span><span class="arrow_3">&gt</span>';
+}
 function getUpgrades() {
 	return {
-		'ad_value': {'desc': 'Aumenta valor de los anuncios'},
-		'ad_chance': {'desc': 'Aumenta cantidad de anuncios mostrados'},
-		'refer_discount': {'desc': 'Reduce el precio de los referidos'},
-		'refer_popularity': {'desc': 'Aumenta los referidos que refieren tus referidos'},
-		'refer_com': {'desc': 'Aumenta las comisiones de los referidos'},
-		'bark_popularity': {'desc': 'Aumenta tu popularidad y seguidores'},
-		'serial_barker': {'desc': 'Reduce el tiempo de espera entre Bark y Bark'},
-		'ad_clicker': {'desc': 'Tus enlaces reciben más clicks'},
-		'autoclick': {'desc': 'Hace click automáticamente en anuncios'},
-		'rare_ads': {'desc': 'Aumenta la probabilidad de anuncios raros'},
-		'autobark': {'desc': 'Barkea automáticamente cada cierto tiempo'},
+		'ad_value': {
+			'desc': translate('Aumenta el dinero obtenido por cada anuncio. \
+				|Increases money obtained with each ad by.'),
+			'name': translate('Pastizal|Pastureland'),
+			'bonus': 'x'+(getUpgradeBonus('ad_value')).toFixed(2)+' '+arrows()+' '+'x'+(getUpgradeBonus('ad_value', 1).toFixed(2))
+		},
+		'ad_chance': {
+			'desc': translate('Aumenta la cantidad de anuncios al resetear. \
+				|Increases ads shown upon resetting.'),
+			'name': translate('Publicista Profesional|Pro Advertiser'),
+			'bonus': '~'+(getUpgradeBonus('ad_chance'))+' '+arrows()+' '+'~'+(getUpgradeBonus('ad_chance', 1))
+		},
+		'refer_discount': {
+			'desc': translate('Reduce el precio de los referidos. \
+				|Decreases referral price.'),
+			'name': translate('No vales Nada|You are Worth Nothing'),
+			'bonus': 'x'+(getUpgradeBonus('refer_discount').toFixed(8))+' '+arrows()+' '+'x'+(getUpgradeBonus('refer_discount', 1).toFixed(8))
+		},
+		'refer_popularity': {
+			'desc': translate('Aumenta los referidos de niveles superiores que consigues pasivamente. \
+				|Increases the higher level referrals that you get passively.'),
+			'name': translate('Sistema Piramidal|Pyramid Scheme'),
+			'bonus': '~'+(getUpgradeBonus('refer_popularity').toFixed(1))+' '+arrows()+' '+'~'+(getUpgradeBonus('refer_popularity', 1).toFixed(1))
+		},
+		'refer_com': {
+			'desc': translate('Aumenta la comisión que recibes por cada referido. \
+				|Increases commision received by each referral.'),
+			'name': translate('Ascenso|Promotion'),
+			'bonus': 'x'+(getUpgradeBonus('refer_com').toFixed(3))+' '+arrows()+' '+'x'+(getUpgradeBonus('refer_com', 1).toFixed(3))
+		},
+		'bark_popularity': {
+			'desc': translate('Aumenta los seguidores que consigues de vez en cuando. \
+				|Increases followers that you get sometimes.'),
+			'name': 'Popular',
+			'bonus': '~'+(getUpgradeBonus('bark_popularity'))+' '+arrows()+' '+'~'+(getUpgradeBonus('bark_popularity', 1))
+		},
+		'serial_barker': {'desc': 'Reduce el tiempo de espera entre Bark y Bark', 'name': 'serial_barker.name'},
+		'ad_clicker': {'desc': 'Tus enlaces reciben más clicks', 'name': 'ad_clicker.name'},
+		'autoclick': {'desc': 'Hace click automáticamente en anuncios', 'name': 'autoclick.name'},
+		'rare_ads': {'desc': 'Aumenta la probabilidad de anuncios raros', 'name': 'rare_ads.name'},
+		'autobark': {'desc': 'Barkea automáticamente cada cierto tiempo', 'name': 'autobark.name'},
 	}
 }
 function displayUpgrade(upgradeID) {
@@ -129,7 +164,10 @@ function displayUpgrade(upgradeID) {
 	if (game.bux.upgrades[upgradeID] == undefined) game.bux.upgrades[upgradeID] = 0;
 	var price = getUpgradePrice(upgradeID);
 	var exbtn = (game.bux.money >= price) ? 'btn-warning' : 'btn-danger';
-	return '<upgrade class="btn '+exbtn+'" onclick="buyUpgrade(\''+upgradeID+'\')">'+upgradeID + ' ('+game.bux.upgrades[upgradeID]+') ç'+getUpgradePrice(upgradeID).toFixed(8)+'</upgrade>';
+	var ug = getUpgrades()[upgradeID];
+
+	var ul = '<b>'+ug.name+'</b><sup>'+game.bux.upgrades[upgradeID]+'</sup> <i>'+ug.desc+'</i><br>'+ug.bonus+'<br>';
+	return '<upgrade>'+ul+' <div class="btn '+exbtn+'" style="font-size: 8px" onclick="buyUpgrade(\''+upgradeID+'\')">'+translate('Comprar|Buy')+' (ç'+getUpgradePrice(upgradeID).toFixed(8)+')</div></upgrade> ';
 }
 function buyUpgrade(upgradeID, peek) {
 	if (game.bux.upgrades == undefined) game.bux.upgrades = {};
@@ -238,7 +276,7 @@ function getReferralPrice() {
 	if (game.bux.refer == undefined) game.bux.refer = [];
 	if (game.bux.refer[0] == undefined) game.bux.refer[0] = 0;
 	var total = game.bux.refer[0];
-	var mod = Math.pow(0.9, buyUpgrade('refer_discount', true));
+	var mod = getUpgradeBonus('refer_discount');
 
 	var pow = 1.1;
 	total *= mod;
@@ -287,7 +325,7 @@ function newBark(from, text) {
 function newBarker(link) {
 	var val = 0;
 	while (rand(0,1) && !link) val++;
-	val += rand(0, buyUpgrade('bark_popularity', true));
+	val += rand(0, getUpgradeBonus('bark_popularity'));
 	var msg = '';
 	if (val > 0) msg += addBarkerFollowers(val, true);
 	if (link) {
@@ -325,7 +363,7 @@ function updateAds() {
 		do {
 			addNewAd();
 		} while (rand(0,1));
-		for (var aaa = 0; aaa < buyUpgrade('ad_chance', true); aaa++) addNewAd();
+		for (var aaa = 0; aaa < getUpgradeBonus('ad_chance'); aaa++) addNewAd();
 	}
 
 	referTiers();
@@ -337,7 +375,7 @@ function addNewAd() {
 	game.bux.ads[newAd.tier].push(newAd);
 }
 function getAdRarity(typ) {
-	var rarities = [19683, 6561, 2187, 729, 243, 81, 27, 9, 3, 1];
+	var rarities = [512, 256, 128, 64, 32, 16, 8, 4, 2, 1];
 	var rarity = [
 		{'name': 'Basura|Trash',     'stat': 1,  'tier': '-', 'color': 'rarity_shit'},
 		{'name': 'Normales|Normal',     'stat': 2.68,  'tier': 'F', 'color': 'rarity_normal'},
@@ -369,8 +407,20 @@ function getAdRarity(typ) {
 function ad() {
 	this.tier = parseInt(getAdRarity());
 	this.name = 'MAKE TONS OF MONEY';
-	var bonus = (1 + (buyUpgrade('ad_value', true) / 10));
+	var bonus = getUpgradeBonus('ad_value');
 	this.value = (bonus * 0.000001 * getAdRarity(this.tier).stat).toFixed(8);
+}
+function getUpgradeBonus(upgradeID, next) {
+	var level = buyUpgrade(upgradeID, true);
+	if (next) level++;
+	return {
+		'ad_value': 1 + (0.84 * level),
+		'ad_chance': level,
+		'refer_discount': Math.pow(0.9, level),
+		'refer_popularity': (level * 1.5),
+		'refer_com': (level * 0.129) + 1,
+		'bark_popularity': level,
+	}[upgradeID]
 }
 function goto(where) {
 	var tabs = ['home', 'register', 'tos', 'realGame'];
@@ -476,7 +526,7 @@ function getReferCPT(peek) {
 	for (var rf in game.bux.refer) {
 		var realTier = (parseInt(rf) + 1);
 		var tierLoss = Math.pow(MONEY_LOSS_PER_REFER_TIER, realTier);
-		var lossMod = (buyUpgrade('refer_com', true) / 10) + 1;
+		var lossMod = getUpgradeBonus('refer_com');
 		tierLoss *= lossMod;
 		var refers = game.bux.refer[rf];
 		var cpt = (BASE_REFER_VALUE * refers * tierLoss);
@@ -490,9 +540,11 @@ function referTiers() {
 	for (var rf in game.bux.refer) {
 		var refers = game.bux.refer[rf];
 		var nextTier = Number(Number(rf) + 1);
-		var r10 = rand(0, Math.ceil(refers * 3));
-		r10 += rand(0, buyUpgrade('refer_popularity', true));
-		if (r10 > 0 && rand(1, 600) == 1) {
+		var r10 = rand(0, Math.ceil(refers * 1.077));
+		r10 += Math.ceil(rand(0, getUpgradeBonus('refer_popularity')));
+		var rr = rand(1,30);
+		console.log(rr);
+		if (r10 > 0 && rr == 1) {
 			if (game.bux.refer[nextTier] == undefined) game.bux.refer[nextTier] = 0;
 			game.bux.refer[nextTier] += r10;
 			newSlaves += r10;
@@ -503,7 +555,7 @@ function referTiers() {
 		notification(translate('Tus referidos han esclavizado '+newSlaves+' referidos nuevos|Your referrals have enslaved '+newSlaves+' new referrals'));
 	}
 
-	if (game.bux.followers > 0 && rand(1, 600) == 1) {
+	if (game.bux.followers > 0 && rand(1, 30) == 1) {
 		var f10 = rand(0, Math.ceil(game.bux.followers / 10));
 		if (f10) {
 			notification(addBarkerFollowers(f10));
