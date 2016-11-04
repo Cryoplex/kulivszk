@@ -105,9 +105,11 @@ bot.on('message', function (msg) {
         }
         */
         var totdays = 0;
+        var totalmade = 0;
         for (var c in calendar) {
           totdays++;
           dailyTarget += calendar[c];
+          totalmade += calendar[c];
         }
         var tod = today();
         dailyTarget -= calendar[tod];
@@ -122,6 +124,7 @@ bot.on('message', function (msg) {
           var status = (value >= dailyTarget) ? 'OK' : ((value / dailyTarget) * 100).toFixed(2)+'%';
           str += '['+td+'] $'+calendar[td].toFixed(3)+' ('+status+')\n';
         }
+        bot.sendMessage(chatId, 'Days: '+totdays+' total: '+totalmade.toFixed(2));
         bot.sendMessage(chatId, 'Esta semana: ('+dailyTarget.toFixed(3)+') \n'+str);
       }
       if (command == '/info') {

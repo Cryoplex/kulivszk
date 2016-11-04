@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head><title>WaitQuest 0.1</title></head>
+<head><title></title>
+<link type="text/css" rel="stylesheet" href="stylesheet.css">
+<link type="text/css" rel="stylesheet" href="../bootstrap.css">
+</head>
 <body>
+	<screen id="game_screen">
+		<sprite class="slime"></sprite>
+	</screen>
 
-	<script src="http://www.archlemon.com/common.js"></script>
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<screen id="battle_screen">
+		<div id="monster_name"></div>
+		
+
+		<img src="img/slime.png" id="monster_img">
+		<messagebox id="battle_messager"></messagebox>
+	</screen>
+
+	<playerstats>
+		<span id="player_name"></span><sup id="room_stuff"></sup>
+		<span id="player_seconds"></span>
+
+		<span id="player_level"></span><br>
+		<span id="player_exp"></span><br>
+		<span id="player_sp"></span><br>
+
+		<span id="player_hp"></span><br>
+		<span id="player_mp"></span><br>
+
+		<span id="player_atk"></span><br>
+		<span id="player_def"></span><br>
+		<span id="player_int"></span><br>
+		<span id="player_spe"></span><br>
+
+		<div id="player_levelup"></div>
+	</playerstats>
+
+	<div id="name_selector">
+		<form id="selector_form">
+			<input type="text" placeholder="Name" style="width: 100%; height: 50%; text-align: center" id="name_textbox"><br>
+			<div class="btn btn-default" onclick="setName()">OK</div>
+		</form>
+	</div>
+
+	<div id="game_clickshield"></div>
+	<div id="game_beaten">
+		<h2>Congratulations! You have beaten the game!</h2>
+		<p>But... Monsters will keep coming deeper in the dungeon, will you be able to accept the challenge?</p>
+
+		<div class="btn btn-primary" style="height: 20%" onclick="endGameDismiss()">Ok</div>
+	</div>
+
+	<div id="updater">
+		
+	</div>
+
+	<script src="../common.js"></script>
+	<script src="../jquery-2.1.4.min.js"></script>
+	<script src="../jquery-ui.min.js"></script>
 	<script src="script.js"></script>
 </body>
 </html>

@@ -27,9 +27,10 @@ h1 {
 }
 #pointsDisplay {
 	position: fixed;
-	top: 1vh;
-	left: 1vh;
-	font-size: 3vh;
+	bottom: 0.5vh;
+	left: 0.5vw;
+	font-size: 1.5vw;
+	clear: both;
 }
 .unconfirmed {
 	color: white;
@@ -47,12 +48,45 @@ h1 {
 	color: rgb(255, 255, 0);
 	font-style: italic;
 }
+.filler {
+	display: inline-block;
+	width: 0.5vw;
+}
 .alpha {
-	font-size: 2.75vh;
-	margin: 0px;
+	font-size: 1vw;
+	margin: 0.5vw 0.3vw;
+	display: inline-block;
+	padding: 0.5vh 0.3vw;
+	width: 9vw;
+	background: linear-gradient(rgba(32, 64, 32, 0.2), rgba(64, 128, 64, 0.5), rgba(128, 255, 128, 0.8));
+	cursor: default;
+}
+.alpha:hover {
+	background: linear-gradient(rgba(16, 64, 16, 0.5), rgba(32, 128, 32, 0.8), rgba(64, 255, 64, 1));
+}
+.grayed {
+	opacity: 0.1;
+	cursor: no-drop;
+	background: none;
+}
+.grayed:hover {
+	background: none;
 }
 .editAlpha {
-	width: 1em;
+	width: 2vw;
+	font-size: 1vw;
+	text-align: center;
 	border: none;
 	border-bottom: 1px dotted white;
+
+	cursor: pointer;
+}
+.editCancel {
+	width: 2vw;
+	font-size: 1vw;
+	text-align: center;
+	border: none;
+	border-bottom: 1px dotted white;
+
+	cursor: no-drop;
 }

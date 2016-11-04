@@ -7,8 +7,11 @@ var hintAttempts = 3;
 var gameAttempts = 3;
 var points = 0;
 var gamePoints = 0;
-var HINT_MODIFIER = 0.512; //The lower the more difficult
+var HINT_MODIFIER = 0.5; //The lower the more difficult
 var MIN_HINTS = 1; //The higher the easier
+
+cryptAnim.style.fontSize = '5vw';
+
 
 function animateCryptHeader() {
 	var h = animCrypt(newPhrase, lastTry);
@@ -89,12 +92,13 @@ function guessThis(id, value) {
 	guess(id, value);
 }
 function editable(cryptoIndexChar, placeholder) {
+	if (cryptoIndexChar == 'void') return '<span class="grayed editCancel">-</span>';
 	if (!placeholder) placeholder = '?';
 	cryptoIndexChar = cryptoIndexChar.toUpperCase();
-	return '<input type="text" class="editAlpha" value="'+placeholder+'" onclick="this.value = \'\'" onblur="guessThis(\''+cryptoIndexChar+'\', this.value)">';
+	return '<input type="text" class="editAlpha" value="'+placeholder+'" oninput="guessThis(\''+cryptoIndexChar+'\', this.value)" onclick="this.value = \'\'">';
 }
 function drawAlphabet() {
-	var l = '<br><br>';
+	var l = '<br>';
 	var n = 65;
 	var alpha = [];
 	for (var e in abcd) {
@@ -124,12 +128,13 @@ function drawAlphabet() {
 
 		var edit = alpha[let];
 		var abindex = getAlphaFromIndex(index);
-		console.log('Alpha phase 2: index:'+index+' abindex:'+abindex.original+' crypto:'+abindex.crypto);
 		if (cl == 'failed') {
 			edit = editable(abindex.crypto, edit);
 		}
+		if (cl == 'unconfirmed') edit = editable('void');
 
-		l += '<div class="alpha '+cl+'">'+let+': '+edit+'</div>';
+		if (cl == 'unconfirmed') cl = 'unconfirmed grayed';
+		l += '<div class="alpha '+cl+'">'+let+' <span class="filler"></span>=<span class="filler"></span> '+edit+'</div>';
 		n++;
 	}
 	return l;
@@ -148,13 +153,23 @@ function startNewGame(phrase) {
 	for (var e in elems) $(elems[e]).fadeOut();
 	$('#playbtn').fadeIn();
 }
+function dictionaryUse(sentence) {
+	sentence = sentence.toUpperCase();
+	var lets = 0;
+	for (var let = 65; let <= 90; let++) {
+		if (sentence.match(String.fromCharCode(let))) lets++;
+	}
+	return lets;
+}
 function newGame() {
+	cryptAnim.style.fontSize = '1.5vw';
 	gameAttempts = 3;
 	newDictionary();
 	var len = cryptDataBase.length-1;
 	solution = cryptDataBase[rand(0,len)];
 	var words = solution.split(' ').length;
-	hintAttempts = Math.floor(words * HINT_MODIFIER) + MIN_HINTS;
+	var lets = dictionaryUse(solution);
+	hintAttempts = Math.floor(lets * HINT_MODIFIER) + MIN_HINTS;
 	newPhrase = cryptCrypt(solution);
 	lastTry = solution;
 
