@@ -62,13 +62,39 @@ h1 {
 	text-align: center;
 	margin: 0;
 }
+.selectable {
+	cursor: pointer;
+}
 .item {
 	width: 192px;
 	height: 64px;
+	padding: 16px;
 	border: 2px solid black;
 	display: inline-block;
+	background-color: rgba(255, 255, 255, 0.5);
 	float: left;
 	margin: 2px;
+	cursor: default;
+}
+.trade {
+	width: 256px;
+	height: 96px;
+	padding: 8px;
+	border: 2px solid rgba(0, 0, 0, 0.8);
+	display: inline-block;
+	background-color: rgba(255, 200, 255, 0.5);
+	float: left;
+	margin: 2px;
+	cursor: pointer;
+}
+.trade:hover {
+	background-color: rgba(255, 192, 255, 0.8);
+}
+.tradeTest {
+	background-color: rgba(255, 128, 255, 0.8);
+}
+.tradeOption {
+	background-color: rgba(200, 192, 255, 0.7);
 }
 .smallItem {
 	width: 120px;
@@ -85,7 +111,7 @@ h1 {
 	display: inline;
 }
 .item:hover, .smallItem:hover {
-	background-color: hsl(270, 60%, 95%);
+	background-color: hsl(270, 60%, 80%);
 }
 
 .black {
@@ -99,14 +125,17 @@ h1 {
 	height: 9999px;
 }
 .dataWindow {
-	background-color: hsl(90, 60%, 80%);
+	background: linear-gradient(rgb(200, 255, 200), rgb(250, 255, 250), rgb(192, 255, 192));
 	position: fixed;
-	top: 25%;
-	left: 25%;
-	width: 480px;
-	height: 320px;
+	padding: 2vh 2vw;
+	top: 10vh;
+	left: 25vw;
+	width: 46vw;
+	height: 76vh;
 	z-index: 2;
 	display: none;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+	color: rgba(0, 0, 0, 0.75);
 }
 .button {
 	background-color: blue;
@@ -127,10 +156,12 @@ h1 {
 	font-size: 10px;
 }
 .colorGreen {
-	color: teal;
+	color: rgba(0, 255, 128, 0.8);
+	font-weight: bolder;
 }
 .colorRed {
-	color: orange;
+	color: rgba(255, 32, 0, 0.8);
+	font-weight: bolder;
 }
 #junkMountain {
 	width: 500px;
@@ -165,11 +196,21 @@ h1 {
 	display: inline-block;
 	position: absolute;
 }
+.fullw {
+	width: 90%;
+	padding-left: 4%;
+	padding-right: 4%;
+	margin-left: 1%;
+	margin-right: 1%;
+	text-align: center;
+	height: 48px;
+}
 .available {
 	opacity: 1;
 }
 .unavailable {
 	opacity: 0.5;
+	cursor: not-allowed;
 }
 #php {
 	opacity: 0;
@@ -190,4 +231,84 @@ div {
 	border-radius: 50%;
 	display: inline-block;
 	position: absolute;
+}
+.pprice {
+	float: right;
+}
+graph {
+	width: 90%;
+	height: 100px;
+	clear: both;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+graph_data {
+	width: 10%;
+	height: 100px;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	font-size: 8px;
+	text-align: left;
+}
+higher {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+average {
+	position: absolute;
+	top: 50%;
+	right: 0px;
+}
+lower {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+}
+.b_green {
+	background: linear-gradient(rgb(0, 255, 0), rgb(128, 255, 128));
+	border-top: 4px solid rgba(0, 255, 0, 0.5);
+}
+.b_red {
+	background: linear-gradient(rgb(255, 0, 0), rgb(255, 128, 128));
+	border-bottom: 4px solid rgba(255, 0, 0, 0.5);
+}
+graphbar {
+	display: inline-block;
+	position: absolute;
+}
+sprite {
+	background: url(img/sprites.png);
+
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	border: 2px solid rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+	image-rendering: pixelated;
+
+	float: left;
+}
+.s_none {
+	background: none;
+}
+.s_ingot {
+	background-position: 0px 0px;
+}
+.s_stick {
+	background-position: -32px 0px;
+}
+.s_rock {
+	background-position: -64px 0px;
+}
+.s_rawingot {
+	background-position: -96px 0px;
+}
+.s_hat {
+	background-position: -128px 0px;
+}
+.s_clip {
+	background-position: -160px 0px;
 }

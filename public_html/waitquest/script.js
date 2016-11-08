@@ -14,13 +14,12 @@ function increaseSeconds(amount = 1) {
 }
 function displayPlayerStat(stat) {
 	var name = 'player_'+stat;
-	var extra = '';
-	if (stat != 'hp' && stat != 'mp') doc(name).innerHTML = getStat(wq.player, stat)+' '+stat.toUpperCase()+' '+extra;
+	if (stat != 'hp' && stat != 'mp') doc(name).innerHTML = getStat(wq.player, stat)+' '+starStat(wq.player, stat);
 	if (stat == 'hp') {
-		doc(name).innerHTML = hpBar(wq.player)+' '+extra;
+		doc(name).innerHTML = hpBar(wq.player)+' '+starStat(wq.player, stat);
 	}
 	if (stat == 'mp') {
-		doc(name).innerHTML = hpBar(wq.player, 'mana')+extra;
+		doc(name).innerHTML = hpBar(wq.player, 'mana')+' '+starStat(wq.player, stat);
 	}
 
 	if (wq.player.skillpoints > 0) {
@@ -32,8 +31,69 @@ function displayPlayerStat(stat) {
 		doc(name).appendChild(el);
 	}
 }
+function getClasses() {
+	return [
+	//Human Classes
+	//Tier 1 classes (Human) (+1.0, -0.5)
+		{'name': 'Monk',        'hp':  1.5,  'mp':  1.5, 'atk': 0.5,},
+		{'name': 'Fighter',     'hp':  1.5,  'atk': 1.5, 'spe': 0.5,},
+		{'name': 'Paladin',     'hp':  1.5,  'def': 1.5, 'spe': 0.5},
+		{'name': 'Thief',       'hp':  1.5,  'spe': 1.5, 'mp':  0.5},
+		{'name': 'Necromancer', 'mp':  1.5,  'atk': 1.5, 'hp':  0.5},
+		{'name': 'Warlock',     'mp':  1.5,  'def': 1.5, 'atk': 0.5},
+		{'name': 'Wizard',      'mp':  1.5,  'spe': 1.5, 'def': 0.5},
+		{'name': 'Warrior',     'atk': 1.5,  'def': 1.5, 'mp':  0.5},
+		{'name': 'Assasin',     'atk': 1.5,  'spe': 1.5, 'def': 0.5},
+		{'name': 'Hunter',      'def': 1.5,  'spe': 1.5, 'hp':  0.5},
+	//Tier 2 classes (Human) (+2.0, -1.0)
+		{'name': 'Guardian',    'hp':   3,   'spe': 0.5, 'mp':   0.5},
+		{'name': 'Psichic',     'mp':   3,   'hp':  0.5, 'atk':  0.5},
+		{'name': 'Barbarian',   'atk':  3,   'mp':  0.5, 'def':  0.5},
+		{'name': 'Angel',       'def':  3,   'atk': 0.5, 'spe':  0.5},
+		{'name': 'Ninja',       'spe':  3,   'def': 0.5, 'hp':   0.5},
+	//Tier 3 classes (Human) (+3.0, -1.5)
+		{'name': 'Knight',      'hp': 2.5,   'def': 2.5, 'mp':  0.25, 'spe': 0.25},
+		{'name': 'Spy',         'atk': 2.5,  'spe': 2.5, 'mp':  0.25, 'hp':  0.25},
+		{'name': 'Sage',        'mp': 4,     'atk': 0.5, 'def':  0.5, 'hp':  0.5},
+
+	//Monster classes
+	//Tier F Monster Classes (Pest) (+1.0, -1.0) (1:1)
+		{'name': 'Slime', 'monsterClass': true, 'tier': 0,  'hp':   2,   'spe':   0.5,   'atk':   0.5, 'img': 'slime.png'},
+		{'name': 'Bat',   'monsterClass': true, 'tier': 0,  'spe':  1.5, 'atk':   1.5,   'def':   0.5,   'hp':   0.5, 'img': 'bat.png'},
+		{'name': 'Rat',   'monsterClass': true, 'tier': 0,  'spe':  2,   'def':   0.5,   'hp':   0.5, 'img': 'rat.png'},
+	//Tier E Monster Classes (Weak Animal) (+1.0, -0.9) (1:0.9)
+		{'name': 'Spider',       'monsterClass': true, 'tier': 1,  'hp':  1.5,   'def':   1.5,   'mp':   0.1, 'img': 'spider.png'},
+		{'name': 'Killer Bee',   'monsterClass': true, 'tier': 1,  'spe': 1.5,   'atk':   1.5,   'hp':   0.1, 'img': 'bee.png'},
+	//Tier D Monster Classes (Animal) (+1.5, -0.5) (2:1)
+		{'name': 'Snake',     'monsterClass': true, 'tier': 2,  'spe': 1.75,   'atk':   1.75,   'mp':   0.5, 'img': 'snake.png'},
+		{'name': 'Scorpion',  'monsterClass': true, 'tier': 2,  'spe': 1.5,    'atk':   2,      'def':   0.5, 'img': 'scorpion.png'},
+	//Tier C Monster Classes (Lesser Creature) (+2.0, -1.0) (2:1)
+		{'name': 'Ghost',   'monsterClass': true, 'tier': 3,  'mp': 3,    'def':   0.75,      'hp':   0.25, 'img': 'ghost.png'},
+		{'name': 'Zombie',  'monsterClass': true, 'tier': 3,   'hp': 2,    'atk':  1.5, 'def': 1.5,  'spe':   0.25, 'mp': 0.75, 'img': 'zombie.png'},
+		{'name': 'Imp',     'monsterClass': true, 'tier': 3,  'spe': 2.5, 'mp':  1.5,  'hp':  0.5,  'def':   0.5, 'img': 'imp.png'},
+		{'name': 'Skeleton','monsterClass': true, 'tier': 3,  'atk': 3,   'def':  0.25,  'hp':  0.75, 'img': 'skeleton.png'},
+	//Tier B Monster Classes (Lesser HUman) (+2.5, -1.0) (2.5:1)
+		{'name': 'Soldier','monsterClass': true, 'tier': 4,  'atk': 2.25,   'def':  2.25,  'mp':  0.5, 'spe': 0.5, 'img': 'soldier.png'},
+		{'name': 'Rogue','monsterClass': true, 'tier': 4,  'spe': 2.25,   'atk':  2.25,  'hp':  0.5, 'mp': 0.5, 'img': 'rogue.png'},
+		{'name': 'Fanatic','monsterClass': true, 'tier': 4,  'mp': 3.5,  'def':  0.5, 'atk': 0.5, 'img': 'fanatic.png'},
+	//Tier A Monster Classes (Human) (+4.5, -1.5)
+		{'name': 'Dark Magician','monsterClass': true, 'tier': 5,  'mp': 5.5,  'def':  0.5, 'hp': 0.5, 'atk': 0.5, 'img': 'magician.png'},
+		{'name': 'Dark Priest','monsterClass': true,   'tier': 5,  'mp': 3.7, 'def': 1.9, 'hp': 1.9,  'atk':  0.25, 'spe': 0.25, 'img': 'priest.png'},
+	//Tier S Monster Classes (Lv 1 Demon, Lv 2 Creature) (+5.0, -1.25)
+		{'name': 'Succubus','monsterClass': true,  'tier': 6,   'mp': 6, 'hp': 0.75, 'atk': 0.5,  'def':  0.5, 'img': 'succ.png'},
+		{'name': 'Vampire','monsterClass': true,   'tier': 6,  'spe': 3.5, 'atk': 2.25, 'def': 2.25,  'hp':  0.5, 'mp': 0.25, 'img': 'vamp.png'},
+		{'name': 'Chimera','monsterClass': true,   'tier': 6,  'atk': 2, 'def': 2, 'hp': 4,  'mp':  0.25, 'spe': 0.5, 'img': 'chimera.png'},
+		{'name': 'Lesser Demon','monsterClass': true,     'hp': 3.5, 'mp': 3.5, 'def':  0.25, 'spe': 0.5, 'img': 'ldemon.png'},
+	//Tier X Monster Classes (Lv 2 Demon, Lv 1 God) (+5.0, -1.0)
+		{'name': 'Death','monsterClass': true,  'tier': 7,   'mp': 5, 'spe': 2, 'def':  0.5, 'hp': 0.5, 'img': 'death.png'},
+		{'name': 'Demon','monsterClass': true,  'tier': 7,   'hp': 5, 'mp': 2, 'def':  0.75, 'spe': 0.25, 'img': 'demon.png'},
+		{'name': 'Dragon','monsterClass': true, 'tier': 7,   'hp': 2, 'atk': 3, 'def': 3, 'spe':  0.75, 'mp': 0.25, 'img': 'dragon.png'},
+	//Tier Z Monster Classes (Lv 2 God) (+7.0, -0.0)
+		{'name': 'Dark Lord','monsterClass': true, 'tier': 8, 'hp': 2, 'atk': 3, 'def': 2, 'spe':  2, 'mp': 3, 'img': 'lord.png'},
+	];
+}
 function getChamberTier(num) {
-	var tier = Math.ceil(num / 30);
+	var tier = Math.floor(num / 30);
 	var name = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][tier];
 	if (num == 0) return 'Player Headquarters';
 	var chambertype = getChamberType(num);
@@ -65,7 +125,7 @@ function update(where) {
 
 	if (where == 'seconds' || !where) player_seconds.innerHTML = displaySeconds(wq.seconds);
 	if (where == 'pname' || !where) {
-		player_name.innerHTML = wq.name;
+		player_name.innerHTML = wq.name+' the '+getClassByID(wq.player.battleClass).name;
 		if (wq.name == undefined) name_selector.style.display = 'block';
 	}
 	if (where == 'room_stuff') room_stuff.innerHTML = getChamberTier(wq.player.roomID)
@@ -74,7 +134,6 @@ function update(where) {
 		player_sp.innerHTML = player.skillpoints+' Skill Points';
 		displayPlayerStat('atk');
 		displayPlayerStat('def');
-		displayPlayerStat('int');
 		displayPlayerStat('spe');
 
 	}
@@ -82,11 +141,11 @@ function update(where) {
 		displayPlayerStat('hp');
 		displayPlayerStat('mp');
 		player_exp.innerHTML = player.exp+'/'+maxExp(player)+' EXP';
+
 	}
 
 	if (!where) {
-		wq.rooms[0] = new Room(true, 0);
-		enterRoom(0);
+		resetHQ();
 	}
 
 	if (!where) {
@@ -103,9 +162,14 @@ function update(where) {
 		battle_screen.style.display = 'block';
 	}
 }
+function resetHQ() {
+	if (wq.rooms == undefined) wq.rooms = [];
+	wq.rooms[0] = new Room(true, 0);
+	enterRoom(0);
+}
 function levelUpPlayer() {
 	var beflevel = wq.player.level;
-	if (wq.player.exp >= maxExp(wq.player)) {
+	while (wq.player.exp >= maxExp(wq.player)) {
 		levelUp(wq.player);
 	}
 	if (wq.player.level > beflevel) {
@@ -166,6 +230,7 @@ function upgradeButton(id, name) {
 }
 function resetDungeon() {
 	wq.rooms = [];
+	resetHQ();
 }
 function buyUpgrade(id, peek) {
 	var baseprices = {
@@ -174,7 +239,6 @@ function buyUpgrade(id, peek) {
 		'trainer_mp': (272 + getStat(wq.player, 'mp', 1) + wq.player.level),
 		'trainer_atk': (160 + getStat(wq.player, 'atk', 1) + wq.player.level),
 		'trainer_def': (160 + getStat(wq.player, 'def', 1) + wq.player.level),
-		'trainer_int': (160 + getStat(wq.player, 'int', 1) + wq.player.level),
 		'trainer_spe': (160 + getStat(wq.player, 'spe', 1) + wq.player.level),
 		'reset_dungeon': wq.player.level * wq.player.level,
 	};
@@ -244,7 +308,7 @@ function enterRoom(num, entry) {
 	newTurn();
 	update('dynamic_stats');
 
-	if (num == 0) {
+	if (num == 0 && wq.name) {
 		updater.style.display = 'inline-block';
 		displayUpdater();
 	}
@@ -252,44 +316,52 @@ function enterRoom(num, entry) {
 }
 function maxExp(player) {
 	var level = (player.level + 1);
-	return Math.pow(level, 3);
+	return Math.ceil(Math.pow(level, 3.11));
 }
 function getStat(player, stat, rawMode) {
+	var classExtra = getClassByID(player.battleClass);
+
 	var mod = player.level / 100;
 	var extra = (rawMode) ? 0 : 5;
-	if (!rawMode) {
-		if (stat == 'mp') extra = 15;
-		if (stat == 'hp') extra = 30;
-	}
 	if (player.extra == undefined) player.extra = newExtra();
 	extra += player.extra[stat];
 	if (player.guard == undefined) player.guard = false;
 	if (stat == 'def' && player.guard) mod *= 2;
-	return Math.ceil(player.base[stat] * mod + extra);
+	var hpmod = 1;
+	if (stat == 'mp') hpmod = 2;
+	if (stat == 'hp') hpmod = 3;
+
+	if (rawMode) hpmod = 1;
+
+	var classMod = 1;
+	if (classExtra[stat] != undefined) {
+		classMod = classExtra[stat];
+	}
+	return Math.ceil((player.base[stat] * mod + extra) * hpmod * classMod);
 }
 function setName() {
 	var name = name_textbox.value;
 	if (name == undefined) return;
 	wq.name = name;
 	update();
-	wq.player = new Player();
+	enterRoom(0);
 	$('#name_selector').fadeOut(500);
 }
 function newExtra() {
-	return {'atk': 0, 'def': 0, 'int': 0, 'spe': 0, 'hp': 0, 'mp': 0};
+	return {'atk': 0, 'def': 0, 'spe': 0, 'hp': 0, 'mp': 0};
 }
 function Player() {
 	this.name = wq.name;
 	this.base = {
 		'atk': 100,
 		'def': 100,
-		'int': 100,
 		'spe': 100,
 		'hp': 100,
 		'mp': 100,
 	};
 	this.extra = newExtra();
 	this.level = 5;
+	setRandomHumanClass(this);
 	this.hp = getStat(this, 'hp');
 	this.mp = getStat(this, 'mp');
 	this.exp = 0;
@@ -304,7 +376,7 @@ function Player() {
 }
 function increaseStat(player, stat, amount) {
 	if (amount == undefined) amount = 1;
-	var stats = ['atk', 'def', 'int', 'spe', 'hp', 'mp'];
+	var stats = ['atk', 'def', 'spe', 'hp', 'mp'];
 	if (stat == undefined || stat == '$') stat = read(stats);
 	if (player.skillpoints >= amount) {
 		player.skillpoints -= amount;
@@ -325,6 +397,40 @@ function getBossPrefix(bosstype) {
 		'lastBoss': 'Final Boss',
 	}[bosstype];
 }
+function getMonsterClass(bosstype) {
+	var availableTiers = {
+		'generic': [0, 1, 2, 3, 4],
+		'midBoss': [5],
+		'boss': [6],
+		'bigBoss': [7],
+		'lastBoss': [8],
+	}
+	if (bosstype == undefined) bosstype = 'generic';
+	var tiers = availableTiers[bosstype];
+	var tier = read(tiers);
+	if (rand(1,10) == 1) {
+		while (rand(0,1)) tier++;
+		if (tier > 7) tier = 7;
+	}
+	var selected = getRandomClassByTier(tier);
+	return selected;
+}
+function setRandomHumanClass(who) {
+	who.battleClass = getRandomClassByTier();
+}
+function getRandomClassByTier(tier) {
+	var classes = getClasses();
+	var valid = [];
+	for (var c in classes) {
+		var cl = classes[c];
+		if (tier == undefined && !cl.monsterClass) valid.push(c);
+		if (cl.tier != undefined && tier != undefined && cl.tier == tier) valid.push(c);
+	}
+	return read(valid);
+}
+function getClassByID(id) {
+	return getClasses()[id];
+}
 function Monster(level, bosstype) {
 	level = (level == undefined) ? 1 : level;
 	var min = level - 3;
@@ -332,10 +438,8 @@ function Monster(level, bosstype) {
 	if (min < 1) min = 1;
 	level = rand(min, max);
 
-	var prefix = getBossPrefix(bosstype)+' ';
-	this.name = prefix+'Slime';
 	this.base = {
-		'atk': rand(1, 255), 'def': rand(1, 255), 'int': rand(1, 255), 'spe': rand(1, 255), 'hp': rand(1, 255), 'mp': rand(1, 255),
+		'atk': 50, 'def': 50, 'spe': 50, 'hp': 50, 'mp': 50,
 	}
 	this.extra = newExtra();
 
@@ -349,12 +453,17 @@ function Monster(level, bosstype) {
 	var bossExtra = (bex) ? bex : 0;
 
 	this.boss = bosstype;
+	this.battleClass = getMonsterClass(bosstype);
+
+	var prefix = getBossPrefix(bosstype)+' ';
+	this.name = prefix+getClassByID(this.battleClass).name;
+
 
 	this.extra.hp += bossExtra;
 	this.base.hp += bossExtra;
 
 	var sp = (5 + (level * 3));
-	var balance = Math.ceil((getAllStats(wq.player, true) + sp) / 2);
+	var balance = Math.ceil((getAllStats(wq.player, true) / 3));
 
 	this.skillpoints = balance;
 
@@ -499,6 +608,7 @@ function goToNextFloor() {
 	var actual = wq.player.roomID;
 	var newFloor = actual + 1;
 	if (actual == 0) newFloor = wq.rooms.length - 1;
+	if (actual == 0 && wq.rooms.length <= 1) newFloor = 1;
 	enterRoom(newFloor);
 }
 function hpBar(player, mp) {
@@ -507,40 +617,30 @@ function hpBar(player, mp) {
 	var percent = (min / max * 100);
 	var man = (mp) ? 'mana' : 'hp';
 	var title = (mp) ? player.mp+'/'+getStat(player, 'mp')+' MP' : player.hp+'/'+getStat(player, 'hp')+' HP';
-	return '<bar title="'+title+'" style="width: 90%"><filled class="'+man+'" style="position: absolute; top: 0; left: 0; width: '+percent+'%"></filled></bar>';
+	return '<bar title="'+title+'" style="width: 70%"><filled class="'+man+'" style="position: absolute; top: 0; left: 0; width: '+percent+'%"></filled></bar><br><small>'+title+'</small>';
+}
+function starStat(player, stat) {
+	var st = getStat(player, stat, true);
+	var tot = getAllStats(player, true, true).value;
+	var p = Math.ceil((st / tot) * 5);
+	var str = '';
+	for (var x = 0; x < p; x++) str += '★';
+	var pp = (5 - p);
+	for (var x = 0; x < pp; x++) str += '☆';
+	return '<span style="font-size: 8px">'+str+' '+stat.toUpperCase()+'</span>';
+}
+function statBar(player) {
+	return starStat(player, 'hp')+' | '+starStat(player, 'mp')+' | '+starStat(player, 'atk')+' | '+starStat(player, 'def')+' | '+starStat(player, 'spe');
 }
 function updateBattleMonster() {
 	var mon = getMonsterList(battlemode.enemy);
 
-	var ubm = mon.name+' Lv. '+mon.level+'<br>'+hpBar(mon)+'<br>'+hpBar(mon, 'mana')+'<br>';
-	ubm += statBar(mon);
+	var ubm = mon.name+' Lv. '+mon.level+'<br>'+hpBar(mon)+'<br>'+hpBar(mon, 'mana')+'<br>'+statBar(mon);
 	monster_name.innerHTML = ubm;
 	update('dynamic_stats');
 }
-function statBar(player) {
-	var atk = getStat(player, 'atk');
-	var def = getStat(player, 'def');
-	var intt = getStat(player, 'int');
-	var spe = getStat(player, 'spe');
-	var total = (atk + def + intt + spe);
+function drawClassSelector() {
 
-	var atk_p = Math.floor((atk / total) * 100);
-	var def_p = Math.floor((def / total) * 100);
-	var int_p = Math.floor((intt / total) * 100);
-	var spe_p = Math.floor((spe / total) * 100);
-	var left = (100 - atk_p - def_p - int_p - spe_p);
-	var h = getHigher([atk, def, intt, spe]);
-	if (h == 0) atk_p += left;
-	if (h == 1) def_p += left;
-	if (h == 2) int_p += left;
-	if (h == 3) spe_p += left;
-
-	return '<div>'+
-	'<filled class="atk" style="width: '+atk_p+'%">'+atk+'</filled>'+
-	'<filled class="def" style="width: '+def_p+'%">'+def+'</filled>'+
-	'<filled class="int" style="width: '+int_p+'%">'+intt+'</filled>'+
-	'<filled class="spe" style="width: '+spe_p+'%">'+spe+'</filled>'+
-	'</div>';
 }
 function getHigher(arr) {
 	var higherx = 0;
@@ -552,23 +652,38 @@ function getHigher(arr) {
 function startBattle(monsterid) {
 	battlemode = {'enemy': monsterid};
 	var mon = getMonsterList()[monsterid];
+
+	monster_img.src = 'img/'+getClassByID(mon.battleClass).img;
 	
 	updateBattleMonster();
 	
 	battle_screen.style.display = 'block';
 	battle_messager.innerHTML = 'A slime appears!<br>'+battleButtons('start');
 }
-function damageFormula(from, to, magic) {
+function damageFormula(from, to, magic, peek) {
 	var atk = getStat(from, 'atk');
 	var def = getStat(to, 'def');
 
 	if (magic) {
-		atk = getStat(from, 'int');
-		def = getStat(to, 'int');
+		atk = getStat(from, 'mp');
+		def = getStat(to, 'mp');
 	}
 
-	var dmg = rand(atk, (atk * 2));
+	var min_atk = atk;
+	var max_atk = (atk*2);
+	var dmg = rand(min_atk, max_atk);
 	dmg -= def;
+	if (peek) {
+		var min_dmg = (min_atk - def);
+		var max_dmg = (max_atk - def);
+		if (min_dmg < 0) min_dmg = 1;
+		if (max_dmg < 0) max_dmg = 1;
+		return {
+			'min': min_dmg,
+			'max': max_dmg,
+		}
+	}
+
 	if (dmg <= 0) dmg = 1;
 
 	return dmg;
@@ -594,20 +709,19 @@ function doAttack(magic) {
 }
 function getSecGain(enemy) {
 	var levelmod = (enemy.level / wq.player.level);
-	var roomMultiplier = wq.player.roomID;
+	var roomMultiplier = (wq.player.roomID / 10);
 	var bossmod = 1;
 	if (enemy.boss == 'midBoss') bossmod = 1.5;
 	if (enemy.boss == 'boss') bossmod = 2;
 	if (enemy.boss == 'bigBoss') bossmod = 3;
 	if (enemy.boss == 'lastBoss') bossmod = 7;
-
-	return Math.ceil(bossmod * roomMultiplier * levelmod);
+	return Math.ceil(bossmod * roomMultiplier * levelmod * enemy.level);
 }
 function checkWin() {
 	if (getEnemy().hp > 0) return;
-	var exp = Math.ceil(maxExp(getEnemy()) / 2);
+	var exp = Math.ceil(maxExp(getEnemy()) / 3.5);
 	wq.player.exp += exp;
-	var secgain = Math.ceil(wq.player.roomID * (getEnemy().level / wq.player.level));
+	var secgain = getSecGain(getEnemy());
 	increaseSeconds(secgain);
 	update('seconds');
 	battle_messager.innerHTML += getEnemy().name+' dies. You win '+exp+' experience points and '+displaySeconds(secgain)+'.'+battleButtons('win');
@@ -645,7 +759,7 @@ function counterAttackMagic(side) {
 	counterAttack(side, 1);
 }
 function attack(from, to, magic) {
-	var dmg = damageFormula(from, to);
+	var dmg = damageFormula(from, to, magic);
 	var act = (magic) ? ' casts a fireball to ' : ' attacks ';
 
 	if (magic) {
@@ -678,6 +792,36 @@ function battleAction(act) {
 	if (act == 'magic') {
 		result = doAttack('magic');
 	}
+	mpPerTurn(getEnemy());
+	mpPerTurn(wq.player);
+}
+function mpPerTurn(who) {
+	who.mp++;
+	if (who.mp > getStat(who, 'mp')) who.mp = getStat(who, 'mp');
+}
+function displayDamage(dmg, to, display) {
+	if (display == 'percent') return '~'+percentHealth(dmg, to)+'%';
+	return '~'+dmg;
+}
+function percentHealth(damage, to) {
+	return ((damage / getStat(to, 'hp')) * 100).toFixed(2);
+}
+function averageDamage(from, to, magic) {
+	var dmg = damageFormula(from, to, magic, true);
+	var min = dmg.min;
+	var max = dmg.max;
+	return max;
+}
+function estimate(enemy, type) {
+	if (type == 'guard') {
+		var dmg = averageDamage(enemy, wq.player);
+		var dmg_m = averageDamage(enemy, wq.player, 'magic');
+
+		return displayDamage(dmg, wq.player, 'percent')+' PD<br>'+displayDamage(dmg_m, wq.player, 'percent')+' MD';
+	}
+	if (type == 'attack') return displayDamage(averageDamage(wq.player, enemy), enemy)+' PD<br>'+displayDamage(averageDamage(wq.player, enemy), enemy, 'percent');
+	if (type == 'magic') return displayDamage(averageDamage(wq.player, enemy, 'magic'), enemy)+' PD<br>'+displayDamage(averageDamage(wq.player, enemy, 'magic'), enemy, 'percent');
+
 }
 function battleButtons(what, magic) {
 	var l = '';
@@ -686,12 +830,13 @@ function battleButtons(what, magic) {
 		l += '<div class="btn btn-default" onclick="flee()" style="width: 50%">Run</div>';
 	}
 	if (what == 'actions') {
-		l += '<div class="btn btn-danger" onclick="battleAction(\'attack\')">Attack</div>';
+		l += '<div class="btn btn-danger" onclick="battleAction(\'attack\')">Attack<br><est>'+estimate(getEnemy(), 'attack')+'</est></div>';
 
-		if (wq.player.mp >= 10) l += '<div class="btn btn-primary" onclick="battleAction(\'magic\')">Magic (10 MP)</div>';
-		if (wq.player.mp < 10) l += '<div class="btn btn-primary" style="opacity: 0.5">Magic (10 MP)</div>';
+		if (wq.player.mp >= 10) l += '<div class="btn btn-primary" onclick="battleAction(\'magic\')">Magic (10 MP)';
+		if (wq.player.mp < 10) l += '<div class="btn btn-primary" style="opacity: 0.5">Magic (10 MP)';
+		l += '<br><est>'+estimate(getEnemy(), 'magic')+'</est></div>';
 
-		l += '<div class="btn btn-warning" onclick="battleAction(\'guard\')">Guard</div>';
+		l += '<div class="btn btn-warning" onclick="battleAction(\'guard\')">Guard<br><est>'+estimate(getEnemy(), 'guard')+'</est></div>';
 		l += '<div class="btn btn-default" onclick="flee()">Run</div>';
 	}
 	if (what == 'initiative') {
@@ -730,16 +875,32 @@ function flee() {
 	battlemode = undefined;
 	battle_screen.style.display = 'none';
 }
-function getAllStats(player, rawMode) {
+function getAllStats(player, rawMode, highMode) {
 	var total = 0;
-	var stats = ['hp', 'mp', 'atk', 'def', 'int', 'spe'];
-	for (var s in stats) total += getStat(player, stats[s], rawMode);
+	var higher = 'hp';
+	var higherv = 0;
+	var stats = ['hp', 'mp', 'atk', 'def', 'spe'];
+	for (var s in stats) {
+		var val = getStat(player, stats[s], rawMode);
+		if (highMode && val > higherv) {
+			higherv = val;
+			higher = stats[s];
+		}
+		total += val;
+	}
+	if (highMode) return {
+		'stat': higher,
+		'value': higherv
+	}
 	return total;
 }
 function resetMovements(player) {
 	var speed = getStat(player, 'spe', 'raw');
 	var total = getAllStats(player, 'raw');
-	var mod = Math.ceil((speed / total) * 5);
+	total -= speed;
+	console.log('Speed: '+speed+' total: '+total);
+	var mod = Math.ceil((speed / total) * 10);
+	if (getRoom().monsters.length <= 0) mod = Infinity;
 	player.moves = mod;
 	return mod;
 }
@@ -881,4 +1042,4 @@ loadGame();
 update();
 setInterval(timePass, 1000);
 setInterval(saveGame, 60000);
-setInterval(aiMove, 500);
+setInterval(aiMove, 100);

@@ -3,6 +3,7 @@
 <head><title></title>
 <link type="text/css" rel="stylesheet" href="stylesheet.css">
 <link type="text/css" rel="stylesheet" href="../bootstrap.css">
+<meta charset="UTF-8">
 </head>
 <body>
 	<screen id="game_screen">
@@ -25,12 +26,13 @@
 		<span id="player_exp"></span><br>
 		<span id="player_sp"></span><br>
 
-		<span id="player_hp"></span><br>
+		<span id="player_hp"></span><br><br>
 		<span id="player_mp"></span><br>
+
+		<br>
 
 		<span id="player_atk"></span><br>
 		<span id="player_def"></span><br>
-		<span id="player_int"></span><br>
 		<span id="player_spe"></span><br>
 
 		<div id="player_levelup"></div>
@@ -39,6 +41,9 @@
 	<div id="name_selector">
 		<form id="selector_form">
 			<input type="text" placeholder="Name" style="width: 100%; height: 50%; text-align: center" id="name_textbox"><br>
+			<select style="width: 100%" id="class_selector">
+				<option value="random">Random Class</option>
+			</select>
 			<div class="btn btn-default" onclick="setName()">OK</div>
 		</form>
 	</div>

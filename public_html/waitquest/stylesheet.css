@@ -22,8 +22,10 @@ playerstats {
 	width: 100%;
 	height: 100%;
 	z-index: 99;
+	display: none;
 }
 #game_beaten {
+	display: none;
 	position: fixed;
 	width: 50%;
 	height: 50%;
@@ -128,7 +130,11 @@ messagebox {
 .spe {
 	background-color: rgba(0, 255, 0, 0.8);
 }
-
+est {
+	font-size: 10px;
+	position: relative;
+	top: 12px;
+}
 
 filled {
 	display: inline-block;
@@ -137,7 +143,7 @@ filled {
 }
 bar {
 	height: 16px;
-	width: 90%;
+	width: 50%;
 	display: inline-block;
 	background-color: rgba(0, 0, 0, 0.5);
 	position: relative;
@@ -258,6 +264,7 @@ sprite {
 	position: absolute;
 	right: 0px;
 	top: 0px;
+	display: none;
 }
 module {
 	width: 90%;

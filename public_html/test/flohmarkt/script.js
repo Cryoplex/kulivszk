@@ -1,4 +1,13 @@
 //$Functions
+var changelog = [
+'a', 'af', 'af', 'af', 'af', 'ax', 'ax',
+'af Added trading. You can now see trade requests in Market. You can select one of various items to trade for another. They are usually the same price or higher.',
+'ax Added the Red Paperclip',
+'ax Added sprites (some)',
+'ax Added color changes to sprites',
+'ax Shoes now decraft into rubber and cloth',
+'ax Added a crafting recipe for Zipper',
+];
 var floh = {};
 floh.inventory = [];
 floh.market = [];
@@ -6,6 +15,7 @@ var s = [
 	'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X',
 	'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX'
 ];
+floh.trade = [];
 floh.temp = {};
 var buying = false;;
 
@@ -44,10 +54,10 @@ function inventory() {
 			if (crafting.length < 1) continue;
 		}
 
-		l += '<div id="item'+x+'" onclick="showData('+x+')" class="item"><p>'+getName(floh.inventory[x])+' '+getQuality(floh.inventory[x])+'<br><span class="desc">'+floh.inventory[x].desc+'</span><br>'
-
-		var colorClass = (priceChanges[thees.id]) ? 'colorGreen' : 'colorRed';
-		l += '<span class="'+colorClass+'">$'+sellItem(x, 1)+'</span></div>';
+		l += '<div id="item'+x+'" onclick="showData('+x+')" class="item"><p>'+getItemSprite(floh.inventory[x])+' '+getName(floh.inventory[x])+' '+getQuality(floh.inventory[x])+'<br><span class="desc">'+floh.inventory[x].desc+'</span><br>'
+		console.log('thees price: '+thees.price+' item price: '+getItemDataFromID(thees.id).basePrice);
+		var colorClass = (sellItem(x, 1) > getItemDataFromID(thees.id).basePrice) ? 'colorGreen' : 'colorRed';
+		l += '<span class="pprice '+colorClass+'">$'+sellItem(x, 1)+'</span></div>';
 
 	}
 	doc('inv').innerHTML = l;
@@ -71,12 +81,19 @@ function inventory() {
 		var p = buyItem(x, 1);
 		var extraClass = 'available';
 		if (!canAfford(p)) extraClass = 'unavailable';
-		l += '<div id="item'+x+'" onclick="showData('+x+', 1)" class="item '+extraClass+'"><p>'+getName(floh.market[x])+' '+getQuality(thees)+'<br><span class="desc">'+floh.market[x].desc+'</span><br>';
+		l += '<div id="item'+x+'" onclick="showData('+x+', 1)" class="item '+extraClass+'"><p>'+getItemSprite(floh.market[x])+' '+getName(floh.market[x])+' '+getQuality(thees)+'<br><span class="desc">'+floh.market[x].desc+'</span><br>';
 
-		colorClass = (priceChanges[thees.id]) ? 'colorGreen' : 'colorRed';
-		l += '<span class="'+colorClass+'">$'+buyItem(x, 1)+'</span></div>';
+		colorClass = (buyItem(x, 1) < getItemDataFromID(thees.id).basePrice) ? 'colorGreen' : 'colorRed';
+		l += '<span class="pprice '+colorClass+'">$'+buyItem(x, 1)+'</span></div>';
 	}
 	doc('marketplace').innerHTML = l;
+
+	var l = '';
+	for (var t in floh.trade) {
+		var trade = floh.trade[t];
+		l += displayTrade(trade, t);
+	}
+	doc('tradeplace').innerHTML = l;
 
 	if (!floh.marketList) return;
 
@@ -126,7 +143,6 @@ function craftingInventory() {
 		if (hideUncraft) {
 			//Check if something is craftable with this.
 			var recipesFor = recipeSearch(thees.id);
-			console.log('Searching recipes for item id '+thees.id+' the result is '+recipesFor);
 			for (var cin in recipesFor) {
 				var thisRecipe = recipesFor[cin];
 				if (canICraftThis(thisRecipe) && isThisItemNeeded(thees.id, thisRecipe)) {
@@ -202,6 +218,10 @@ function isCraftingIngredient(id) {
 	for (var ici in floh.craftSelected) {
 		results[ici] = 0;
 		var thees = floh.inventory[floh.craftSelected[ici]];
+		if (thees == undefined) {
+			floh.craftSelected = [];
+			return;
+		}
 		var rec = recipeSearch(thees.id);
 		for (var ici2 in rec) {
 			var rec2 = floh.craftRecipes[rec[ici2]];
@@ -304,7 +324,7 @@ function craftNow(peek) {
 	var arr = floh.craftSelected.sort();
 	var q = 0;
 	for (var cn = floh.craftSelected.length-1; cn >= 0; cn--) {
-		var rarity = floh.inventory[floh.craftSelected[cn]].rarity;
+		var rarity = 0;
 		if (rarity > q && cc != 'c') q = rarity;
 		if (cc == 'c') q += rarity
 
@@ -345,16 +365,16 @@ function showData(x, fromMarket) {
 	buying = true;
 	$('#black').fadeIn(100);
 	var thees = (!fromMarket) ? floh.inventory[x] : floh.market[x];
-	var l = getName(thees)+' '+getQuality(thees)+'<br><br>'+thees.desc;
-	l += '<br>(Base) Price: $'+getPrice(thees.id, thees);
+	var l = '<graph id="priceChange" style="top: 0px; left: 0px"></graph><graph_data id="graph_data"></graph_data><div style="position: relative; top: 100px; left: 0px">'+getName(thees)+' '+getQuality(thees)+'<br><br>'+thees.desc;
+	l += '<br>(Base) Price: $'+getItemDataFromID(thees.id).basePrice;
 
-	l += '<canvas style="width: 500px; height: 100px; background-color: white" id="priceChangeGraph"></canvas>';
+	l += '';
 
 	console.log('Line 269');
 	if (fromMarket) {
 		l += '<br>'+floh.market[x].value;
 		l += '<br><br><br>';
-		l += '<div class="button" onclick="buyItem('+x+')">Buy this item for $'+buyItem(x, 1)+'</div>';
+		l += '<div class="button" onclick="buyItem('+x+')">Buy this item for $'+buyItem(x, 1)+'</div><br style="clear: both">';
 	}
 	else {
 		l += '<br>'+getItemStatus(floh.inventory[x]);
@@ -384,9 +404,11 @@ function showData(x, fromMarket) {
 	console.log('Line 296');
 	l += '<span id="dErrors"></span>';
 
+	l += '</div>';
+
 	dWindow.innerHTML = l;
 
-	//
+	/*
 	var c=document.getElementById("priceChangeGraph");
 	var ctx=c.getContext("2d");
 	ctx.beginPath();
@@ -399,13 +421,53 @@ function showData(x, fromMarket) {
 		y *= 100;
 		y = 100 - y;
 		ctx.lineTo(x,y);
-		console.log('Stroking to '+x+' '+y);
 	}
 	ctx.stroke();
-	//
+	*/
+	priceChange.innerHTML = graphy(floh.lastPrices[thees.id]);
 
 
 	$('#dWindow').slideDown(100);
+}
+function graphy(priceHistory) {
+	var min = Infinity;
+	var max = -Infinity;
+	var total = 0;
+	for (var p in priceHistory) {
+		var pr = priceHistory[p];
+		if (pr < min) min = pr;
+		if (pr > max) max = pr;
+		total += pr;
+	}
+
+	var min = 0.5;
+	var max = 1.5;
+
+	var w = (100 / priceHistory.length);
+	var avg = total / priceHistory.length;
+
+	var avg = 1;
+	var avgpoint = ((max - avg) * 100);
+
+	var ll = '';
+
+	graph_data.innerHTML = '<higher>x'+max.toFixed(2)+'</higher><average>x'+avg.toFixed(2)+'</average><lower>x'+min.toFixed(2)+'</lower>';
+
+	for (var p in priceHistory) {
+		var price = priceHistory[p];
+		var cl = (price > avg) ? 'b_green' : 'b_red';
+		var pc = Math.ceil(((price - min) / (max - min)) * 100);
+		var wh = Math.floor(100 - pc);
+
+		if (cl == 'b_red') {
+			wh = avgpoint;
+			pc = 100 - pc - avgpoint;
+		}
+
+		if (cl == 'b_green') pc -= (100 - avgpoint);
+		ll += '<graphbar style="width: '+w+'%; top: '+wh+'px; left: '+(w * parseInt(p))+'%; height: '+pc+'%" class="'+cl+'"></graphbar>';
+	}
+	return ll;
 }
 function getItemStatus(obj) {
 	var gis = '';
@@ -416,6 +478,15 @@ function getItemStatus(obj) {
 		}
 	}
 	return gis;
+}
+function getItemPrice(item) {
+	var cost = getPrice(item.id, item);
+
+	if (item.rarity) cost += (item.rarity / 100);
+	var pmod = (item.rarity / 7.5) + 1.8;
+	cost *= pmod;
+
+	return cost;
 }
 function sellItem(id, peek, silent) {
 	var item = floh.inventory[id];
@@ -511,9 +582,128 @@ function addItemToInventory(id, parentQuality) {
 	var val = Math.floor(Math.random()*65535);
 	floh.inventory[index] = new Item(id, i[1], i[2], i[3], val, parentQuality);
 }
+function createItem(id) {
+	var item = floh.items[id];
+	var val = Math.floor(Math.random()*65535);
+	return new Item(id, item[1], item[2], item[3], val);
+}
+function getSimilarItems(itemID) {
+	var item = createItem(itemID);
+	var price = item.price;
+	var maxprice = (price * 1.2);
+	console.log('Similar items for ID:'+item.id+' min price '+price+' max price '+maxprice);
+	var similarItems = [];
+	for (var i in floh.items) {
+		var it = floh.items[i];
+		var itp = it[2];
+		if (i == itemID) continue;
+		if (itp >= price && itp <= maxprice) similarItems.push(createItem(i));
+	}
+	return similarItems;
+}
+function displayTrade(trade, id) {
+	var av = (getItemsByID(trade.askID) > 0) ? 'available' : 'unavailable';
+	var dt = '<div class="trade '+av+'" onclick="tradeWindow('+id+')">';
+	dt += '<b>'+trade.name+'</b><br><sub>wants</sub> '+getItemDataFromID(trade.askID).name+'<br>';
+	dt += '<sub>for</sub> '+displayItem(trade.offer);
+	dt += '</div>';
+	return dt;
+}
+function getItemSprite(item) {
+	var s_class = getItemDataFromID(item.id).sprite;
+	if (s_class == undefined) s_class = 's_none';
+	var tint = (item.tint) ? item.tint : defaultColor(item.id);
+	return '<sprite style="'+tint+'" class="'+s_class+'"></sprite>';
+}
+function defaultColor(id) {
+	var defcolors = {
+		'0': rgb(255, 128, 40), '1': rgb(192, 192, 192), '2': rgb(192, 192, 192), '3': rgb(255, 255, 255), '4': rgb(128, 128, 128),
+		'5': rgb(255, 255, 255), '6': rgb(255, 255, 255), '7': hsl(200, 50, 80), '8': rgb(255, 255, 255),
+		'9': hsl(80, 50, 100), '10': hsl(40, 200, 120), '11': hsl(30, 200, 95), '12': hsl(280, 10, 100),
+		'12': hsl(200, 25, 100), '13': hsl(180, 50, 100), '14': hsl(0, 0, 100), '15': hsl(0, 100, 100), '16': hsl(200, 80, 90),
+		'17': hsl(230, 50, 150), '18': hsl(280, 50, 150), '19': hsl(0, 0, 150), '20': hsl(60, 200, 120), '21': hsl(180, 100, 200),
+		'22': hsl(60, 50, 120), '23': hsl(240, 80, 110), '24': hsl(240, 200, 100), '25': hsl(240, 50, 90),
+		'26': hsl(0, 0, 80), '27': hsl(0, 0, 90), '28': hsl(0, 100, 100), '29': hsl(0, 0, 110), '30': hsl(0, 0, 90),
+		'31': hsl(0, 0, 90), '32': hsl(30, 50, 90), '33': hsl(30, 50, 80), '34': hsl(40, 100, 110),
+		'35': hsl(0, 0, 90), '36': hsl(0, 0, 120), '37': hsl(90, 80, 80), '38': hsl(30, 150, 105), '39': hsl(30, 120, 100), '40': hsl(30, 100, 90),
+		'41': hsl(40, 100, 100), '42': hsl(140, 80, 150), '43': hsl(0, 0, 120),
+
+		'201': hsl(0, 100, 100),
+	};
+	if (defcolors[id] == undefined) return rgb(0, 0, 0);
+	return defcolors[id]
+}
+function hsl(hue, saturation, lum) {
+	var st = 'hue-rotate('+hue+'deg) saturate('+saturation+'%) brightness('+lum+'%)';
+	return 'filter: '+st+'; -webkit-filter: '+st;
+}
+function rgb(r, g, b){
+    r /= 255, g /= 255, b /= 255;
+    var max = Math.max(r, g, b), min = Math.min(r, g, b);
+    var h, s, l = (max + min) / 2;
+
+    if(max == min){
+        h = s = 0; // achromatic
+    }else{
+        var d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch(max){
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+
+    return hsl(Math.floor(h * 360), Math.floor(s * 100), Math.floor(l * 100));
+}
+function displayItem(item) {
+	return getItemSprite(item)+' '+item.name+' '+getQuality(item)+' ($'+getItemPrice(item).toFixed(2)+')<br><i class="desc">'+item.desc+'</i>';
+}
+function Trade(askID, offer) {
+	this.name = red(getMaleName(), getFemaleName());
+	this.askID = askID;
+	this.offer = offer;
+}
+function addItemToTrade(start) {
+	if (floh.trade == undefined) floh.trade = [];
+	var ritem = rand(0, floh.items.length);
+	var trades = getSimilarItems(ritem);
+	if (trades.length > 0) {
+		var offer = read(trades);
+		floh.trade.push(new Trade(ritem, offer));
+	}
+}
+function acceptTrade(tradeID, itemID) {
+	floh.inventory.splice(itemID, 1);
+	floh.inventory.push(JSON.parse(JSON.stringify(floh.trade[tradeID].offer)));
+
+	tradeWindow(tradeID, true);
+	setTimeout(closeAllWindows, 2000);
+	floh.trade.splice(tradeID, 1);
+	inventory();
+}
+function tradeWindow(tradeID, sucess) {
+	var trade = floh.trade[tradeID];
+	var tw = '';
+	tw += '<h3 style="text-align: center">'+trade.name+"'s trade request</h3><br>";
+	tw += '<div class="item available fullw">'+displayItem(trade.offer)+'</div>';
+	if (sucess) tw += '<h2 style="text-align: center">Trade Sucessful!</h2>';
+	if (getItemsByID(trade.askID) > 0) {
+		tw += '<i>Select the item you want to give in exchange for '+trade.offer.name+'</i><br>';
+		if (!sucess) for (var i in floh.inventory) {
+			var item = floh.inventory[i];
+			if (item.id == trade.askID) tw += '<div class="selectable item available fullw" onclick="acceptTrade('+tradeID+', '+i+')">'+displayItem(item)+'</div>';
+		}
+
+		$('#black').fadeIn(100);
+		$('#dWindow').fadeIn(100);
+	}
+	dWindow.innerHTML = tw;
+}
 function addItemToMarket() {
 	if (buying) return;
-	if (floh.market.length > (10 + floh.inventory.length)) {
+	if (floh.market.length > 30) {
 		console.log('Market item list is too long. I am not adding more items, soz. '+floh.market.length);
 		removeMarketItem();
 
@@ -666,6 +856,8 @@ var upd = {
 }
 
 function update() {
+	if (floh.trade == undefined) floh.trade = [];
+
 	upd.inventorySearch();
 	var randy = rand(1,1000);
 	if (randy < 10) {
@@ -673,7 +865,10 @@ function update() {
 	}
 	else if (randy == 100) {
 		removeMarketItem();
+		floh.trade.splice(0, 1);
 	}
+
+	if (floh.trade.length < 20) addItemToTrade();
 
 	if (rand(1,161) == 1) {
 		var r = rand(0,floh.trashItems.length-1);
@@ -827,7 +1022,7 @@ function addBombToJunkyard(quality, peek) {
 	var qty = 20;
 	if (quality > 0) qty = qty * (quality * quality);
 	$('#junkMountain').append('<span class="junk_bomb '+quality+'" style="width: '+qty+'px; height: '+qty+'px"></span>');
-	var scrapHunger = Math.pow((quality - 1), 2);
+	var scrapHunger = quality - 1;
 	var junkHunger = 100 - scrapHunger;
 
 	$('.junk_bomb').draggable({stop: function() {
@@ -987,6 +1182,7 @@ function showRecipesFor(item) {
 
 /* TESTING STUFF KEEP OUT */
 
+/*
 function drawLine(x, y, tox, toy) {
 	var c=document.getElementById("myCanvas");
 	var ctx=c.getContext("2d");
@@ -995,6 +1191,7 @@ function drawLine(x, y, tox, toy) {
 	ctx.lineTo(tox,toy);
 	ctx.stroke();
 }
+*/
 function graph(arr) {
 	var startx = 0;
 	var starty = 50;
@@ -1060,15 +1257,22 @@ function tickItemConditions() {
 		
 	}
 }
+var sinewave = 0;
+function getSineWave(id) {
+	sinewave += Math.random() / 10;
+	return Math.sin((id + sinewave + Math.random()) / 10);
+}
 function changePrices() {
 	tickItemConditions();
+
+	sinewave += Math.random()*2;
 
 	for (cp in floh.items) {
 		var beffy = getPrice(cp);
 
 		if (!floh.lastPrices[cp]) floh.lastPrices[cp] = [];
 		floh.lastPrices[cp][floh.lastPrices[cp].length] = floh.prices[cp] || 1;
-		if (floh.lastPrices[cp].length > 100) floh.lastPrices[cp].splice(0, 1);
+		while (floh.lastPrices[cp].length > 20) floh.lastPrices[cp].splice(0, 1);
 
 		var bef = floh.prices[cp] || 1;
 		var pc = Math.random()+0.5;
@@ -1077,6 +1281,8 @@ function changePrices() {
 		if (pc < 1 && priceChanges[cp] == 1 || pc > 1 && priceChanges[cp] == 0) {
 			pc = Math.random()+0.5;
 		}
+
+		pc = (getSineWave(parseInt(cp)) * (Math.random() / 2)) + 1;
 
 		if (pc < 0.5) pc = 0.5;
 		if (pc > 1.5) pc = 1.5;
@@ -1152,18 +1358,20 @@ function getItemDataFromID(id) {
 		'basePrice': 0,
 		'description': '',
 		'trait': '',
+		'sprite': 's_ingot',
 	}
 	return {
 		'id': item[0],
 		'name': item[1],
 		'basePrice': item[2],
 		'description': item[3],
-		'trait': item[4]
+		'trait': item[4],
+		'sprite': item[5],
 	}
 }
 function dumpItemData(id) {
 	var item = getItemDataFromID(id);
-	return item.id+' '+item.name+' '+item.basePrice+' '+item.description+' '+item.trait;
+	return getItemSprite(item)+item.id+' '+item.name+' '+item.basePrice+' '+item.description+' '+item.trait;
 }
 function dumpRecipeData(id) {
 	var r = floh.craftRecipes[id];
@@ -1204,74 +1412,74 @@ var sg = setInterval(saveGame, 60000); //Saves the game every 30 seconds.
 floh.prices = [];
 floh.items = [
 	//0-9
-	[0, 'Stick',           0.01,     'A plain old stick', 'bkable'],
-	[1, 'Rock',            0.02,     'It rocks!', 'bkable'],
-	[2, 'Scrap Metal',     0.05,     'Who is that metal? It\'s Scrap!'],
-	[3, 'Scrap Iron',      0.01,     'That is a lot of iron you have there.'],
-	[4, 'Scrap Steel',     0.03,     'Just Steel.'],
-	[5, 'Stainless Steel', 0.23,     'Perfect for your frying pans, or cutlery, or, well.'],
-	[6, 'Zinc',            0.15,     'Ka-zinc!'],
-	[7, 'Lead',            0.16,     'Follow the Lead-er!'],
-	[8, 'Aluminium',       0.18,     'Nto "Aluminum" yuo dsylxeic mohtefrukcer!'],
-	[9, 'Magnesium',       0.22,     'Eat it! Better than eating Fish!'],
+	[0, 'Stick',           0.01,     'A plain old stick', 'bkable', 's_stick'],
+	[1, 'Rock',            0.02,     'It rocks!', 'bkable', 's_rock'],
+	[2, 'Scrap Metal',     0.05,     'Who is that metal? It\'s Scrap!', undefined, 's_rawingot'],
+	[3, 'Scrap Iron',      0.01,     'That is a lot of iron you have there.', undefined, 's_rawingot'],
+	[4, 'Scrap Steel',     0.03,     'Just Steel.', undefined, 's_rawingot'],
+	[5, 'Stainless Steel', 0.23,     'Perfect for your frying pans, or cutlery, or, well.', undefined, 's_ingot'],
+	[6, 'Zinc',            0.15,     'Ka-zinc!', undefined, 's_ingot'],
+	[7, 'Lead',            0.16,     'Follow the Lead-er!', undefined, 's_ingot'],
+	[8, 'Aluminium',       0.18,     'Nto "Aluminum" yuo dsylxeic mohtefrukcer!', undefined, 's_ingot'],
+	[9, 'Magnesium',       0.22,     'Eat it! Better than eating Fish!', undefined, 's_ingot'],
 	//10-19
-	[10, 'Brass',           0.40,     'A pain in the Brass'],
-	[11, 'Copper',          0.64,     'Seldom copper to be found in scrap nowadays...'],
-	[12, 'Nickel',          1.30,     'It\'s worth a few nickels!'],
-	[13, 'Tin',             1.42,     'You better scrap all of those soda cans!'],
-	[14, 'Silver',          51.6,     'Wild Silver appeared!'],
-	[15, 'Ruthenium',       176.3,    'Imported from Rus!'],
-	[16, 'Osmium',          1340.4,   'Dat smell'],
-	[17, 'Iridium',         2045.9,   'Yes! Now I can finish my Quantum Armor!'],
-	[18, 'Palladium',       2580.3,   'Fashionable metal'],
-	[19, 'Rhodium',         3492.1,   'You got a rare one, mate!'],
+	[10, 'Brass',           0.40,     'A pain in the Brass', undefined, 's_ingot'],
+	[11, 'Copper',          0.64,     'Seldom copper to be found in scrap nowadays...', undefined, 's_ingot'],
+	[12, 'Nickel',          1.30,     'It\'s worth a few nickels!', undefined, 's_ingot'],
+	[13, 'Tin',             1.42,     'You better scrap all of those soda cans!', undefined, 's_ingot'],
+	[14, 'Silver',          51.6,     'Wild Silver appeared!', undefined, 's_ingot'],
+	[15, 'Ruthenium',       176.3,    'Imported from Rus!', undefined, 's_ingot'],
+	[16, 'Osmium',          1340.4,   'Dat smell', undefined, 's_ingot'],
+	[17, 'Iridium',         2045.9,   'Yes! Now I can finish my Quantum Armor!', undefined, 's_ingot'],
+	[18, 'Palladium',       2580.3,   'Fashionable metal', undefined, 's_ingot'],
+	[19, 'Rhodium',         3492.1,   'You got a rare one, mate!', undefined, 's_ingot'],
 	//20-29
-	[20, 'Gold',   		    3782,     'Golden Shower!'],
-	[21, 'Platinum',        3814.9,   '#1 Greatest hit!'],
-	[22, 'Titanium',        0.55,     'Attack on the Titanium'],
-	[23, 'Vanadium',        1.93,     'The most powerful metal in the world used to make a Frisbee!'],
-	[24, 'Cobalt',          3.07,     'Open Alpha phase!'],
-	[25, 'Tungsten',        3.43,     'AKA Wolfram'],
-	[26, 'Reclaimed Metal', 0.20,     'Better than iron!'],
-	[27, 'Refined Metal',   1.00,     'Overpowered Scrap Metal'],
-	[28, 'Hat',             1.00,     'Heavy Metal Hat!'],
-	[29, 'Pure Iron',       0.10,     ''],
+	[20, 'Gold',   		    3782,     'Golden Shower!', undefined, 's_ingot'],
+	[21, 'Platinum',        3814.9,   '#1 Greatest hit!', undefined, 's_ingot'],
+	[22, 'Titanium',        0.55,     'Attack on the Titanium', undefined, 's_ingot'],
+	[23, 'Vanadium',        1.93,     'The most powerful metal in the world used to make a Frisbee!', undefined, 's_ingot'],
+	[24, 'Cobalt',          3.07,     'Open Alpha phase!', undefined, 's_ingot'],
+	[25, 'Tungsten',        3.43,     'AKA Wolfram', undefined, 's_ingot'],
+	[26, 'Reclaimed Metal', 0.20,     'Better than iron!', undefined, 's_rawingot'],
+	[27, 'Refined Metal',   1.00,     'Overpowered Scrap Metal', undefined, 's_ingot'],
+	[28, 'Hat',             1.00,     'Heavy Metal Hat!', undefined, 's_hat'],
+	[29, 'Pure Iron',       0.10,     '', '', 's_ingot'],
 	//30-39
-	[30, 'Pure Steel',      0.30,     ''],
-	[31, 'Fernico',         3.79,     ''],
-	[32, 'Invar',           1.19,     ''],
-	[33, 'Zamak', 			1.01,     ''],
-	[34, 'Molybdochalkos',  0.68,     'Not Molybdenum at all'],
-	[35, 'Alnico',			3.86,	  ''],
-	[36, 'Duralumin', 		0.69,     ''],
-	[37, 'Billon',          44.40,    'It is worth a billion!'],
-	[38, 'Bronze',			1.75,	  'You end up in the third place.'],
-	[39, 'Cupronickel',      1.64,     ''],
+	[30, 'Pure Steel',      0.30,     '', '', 's_ingot'],
+	[31, 'Fernico',         3.79,     '', '', 's_ingot'],
+	[32, 'Invar',           1.19,     '', '', 's_ingot'],
+	[33, 'Zamak', 			1.01,     '', '', 's_ingot'],
+	[34, 'Molybdochalkos',  0.68,     'Not Molybdenum at all', '', 's_ingot'],
+	[35, 'Alnico',			3.86,	  '', '', 's_ingot'],
+	[36, 'Duralumin', 		0.69,     '', '', 's_ingot'],
+	[37, 'Billon',          44.40,    'It is worth a billion!', '', 's_ingot'],
+	[38, 'Bronze',			1.75,	  'You end up in the third place.', '', 's_ingot'],
+	[39, 'Cupronickel',      1.64,     '', '', 's_ingot'],
 	//40-49
-	[40, 'Copper-Tungsten',     3.45,       'Made out of Copper, and Tungsten.'],
-	[41, 'Corinthian Bronze',	1629.1,		''],
-	[42, 'Chromium',			0.52,           'Google it!'],
-	[43, 'Solder',				0.61,			'Sold all the things!'],
-	[44, 'Magnalium',           0.38,			''],
-	[45, 'Cunife',              2.41,			''],
-	[46, 'Hepatizon',			2770,			''],
-	[47, 'Nickel Silver',       2.32,			''],
-	[48, 'Shakudou',            804,			''],
-	[49, 'Tumbaga',				402.96,			''],
+	[40, 'Copper-Tungsten',     3.45,       'Made out of Copper, and Tungsten.', '', 's_ingot'],
+	[41, 'Corinthian Bronze',	1629.1,		'', '', 's_ingot'],
+	[42, 'Chromium',			0.52,           'Google it!', '', 's_ingot'],
+	[43, 'Solder',				0.61,			'Sold all the things!', '', 's_ingot'],
+	[44, 'Magnalium',           0.38,			'', '', 's_ingot'],
+	[45, 'Cunife',              2.41,			'', '', 's_ingot'],
+	[46, 'Hepatizon',			2770,			'', '', 's_ingot'],
+	[47, 'Nickel Silver',       2.32,			'', '', 's_ingot'],
+	[48, 'Shakudou',            804,			'', '', 's_ingot'],
+	[49, 'Tumbaga',				402.96,			'', '', 's_ingot'],
 	//50-59
-	[50, 'Nitinol',				1.38,			''],
-	[51, 'Nichrome',			1.65,			''],
-	[52, 'Chromel',				2.12,			''],
-	[53, 'Monel',				1.62,			''],
-	[54, 'Electrum',			2875.2,			''],
-	[55, 'Goloid',				1457.19,		''],
-	[56, 'Shibuichi',			22.84,			'Copper-Silver alloy.'],
-	[57, 'Sterling Silver',		58.29,			''],
-	[58, 'Osmiridium',			2539.72,		''],
-	[59, 'Pseudo Palladium',	2657,			''],
+	[50, 'Nitinol',				1.38,			'', '', 's_ingot'],
+	[51, 'Nichrome',			1.65,			'', '', 's_ingot'],
+	[52, 'Chromel',				2.12,			'', '', 's_ingot'],
+	[53, 'Monel',				1.62,			'', '', 's_ingot'],
+	[54, 'Electrum',			2875.2,			'', '', 's_ingot'],
+	[55, 'Goloid',				1457.19,		'', '', 's_ingot'],
+	[56, 'Shibuichi',			22.84,			'Copper-Silver alloy.', '', 's_ingot'],
+	[57, 'Sterling Silver',		58.29,			'', '', 's_ingot'],
+	[58, 'Osmiridium',			2539.72,		'', '', 's_ingot'],
+	[59, 'Pseudo Palladium',	2657,			'', '', 's_ingot'],
 	//60-69
-	[60, 'White Gold',			6318,			''],
-	[61, 'Tungstensteel',		2.79,			''],
+	[60, 'White Gold',			6318,			'', '', 's_ingot'],
+	[61, 'Tungstensteel',		2.79,			'', '', 's_ingot'],
 
 	//Generic Trash Items 62-105
 
@@ -1315,25 +1523,25 @@ floh.items = [
 	[96, 'Old Shoe',			1.3,		'Just find the pair', 'bkable'],
 	[97, 'Gauze',				0.02,		'It has some puss and may be infected with AIDS'],
 	[98, 'Grandma Denture',		0.3,		'Better than keeping your gold teeth'],
-	[99, 'Broken Walking Stick', 1.5,		'Made out of Wood', 'bkable'],
+	[99, 'Broken Walking Stick', 1.5,		'Made out of Wood', 'bkable', 's_stick'],
 	//100-109
-	[100, 'Used Dildo',			5,			'Veins included', 'bkable'],
+	[100, 'Used Dildo',			5,			'Veins included', 'bkable', 's_stick'],
 	[101, 'Chicken Bones',		0.05,		'May still have some chicken and you can have lunch', 'food'],
 	[102, 'Molding Apple',		0.1,		'Blue Apple Variant', 'food'],
 	[103, 'Molding Pear',		0.1,		'Yummy yummy in your tummy', 'food'],
 	[104, 'Molding Tomato',		0.1,		'', 'food'],
-	[105, 'Dog Buns on a Stick', 0.01,		''],
+	[105, 'Dog Buns on a Stick', 0.01,		'', '', 's_stick'],
 	[106, 'Medicine Powder',		0.75,		''],
-	[107, 'Aluminium Hat',		0.87,		'Use it to block Illuminati and Aliens radio transmissions'],
-	[108, '22K Gold',			2836,		''],
-	[109, '18K Gold',			2127,		''],
+	[107, 'Aluminium Hat',		0.87,		'Use it to block Illuminati and Aliens radio transmissions', '', 's_hat'],
+	[108, '22K Gold',			2836,		'', '', 's_ingot'],
+	[109, '18K Gold',			2127,		'', '', 's_ingot'],
 	//110-119
-	[110, '14K Gold',			1595,		''],
-	[111, '9K Gold',				1196,		''],
-	[112, 'Towering Pillar of Hats', 3,		'A-ha-ha! You are as PRESUMPTUOUS as you are POOR and IRISH. Tarnish notte the majesty of my TOWER of HATS.'],
+	[110, '14K Gold',			1595,		'', '', 's_ingot'],
+	[111, '9K Gold',				1196,		'', '', 's_ingot'],
+	[112, 'Towering Pillar of Hats', 3,		'A-ha-ha! You are as PRESUMPTUOUS as you are POOR and IRISH. Tarnish notte the majesty of my TOWER of HATS.', '', 's_hat'],
 
 	[113, 'Wood Powder',		0.01,		''],
-	[114, 'Pebble',				0.01,		''],
+	[114, 'Pebble',				0.01,		'', '', 's_rock'],
 	[115, 'Plastic',			0.06,		''],
 	[116, 'Cotton',				0.01,		''],
 	[117, 'Tobacco',			0.33,		''],
@@ -1428,6 +1636,7 @@ floh.items = [
 	[198, 'Cork',				0.15,		''],
 	[199, 'Zinc Oxide',			0.12,		'ZnO, made in reaction with air.'],
 	[200, 'Zinc Carbonate',		0.1,		'ZnCO<sub>3</sub>, made when reacting ZnO with CO<sub>2</sub>.'],
+	[201, 'Paperclip',          0.05,       'Trade this for a home.', '', 's_clip'],
 ];
 
 //Calculate money value of all items together
@@ -1558,6 +1767,7 @@ floh.craftRecipes = [
 	[[195, 195], 197, 'smash'],			//Porcelain Powder (Porcelain Shard + Porcelain Shard)
 	[[6, 6], 199, 'craft'],	            //Zinc Oxide (Zinc + Zinc)
 	[[199, 199], 200, 'craft'],	        //Zinc Carbonate (Zinc Oxide + Zinc Oxide)
+	[[66, 66, 3], 145, 'craft'],		//Zipper (Defunct Zipper + Defunct Zipper + Scrap Iron)
 ];
 
 floh.deCraftRecipes = [
@@ -1566,7 +1776,7 @@ floh.deCraftRecipes = [
 	[99, [113], 'smash'],			//Broken Walking Stick => Wood Powder
 	[1, [114], 'smash'],				//Rock => Pebble
 	[65, [115], 'cut'],			//Used Toothbrush => Plastic
-	[96, [115, 118], 'cut'],		//Old Shoe => Plastic, Cloth
+	[96, [127, 118], 'cut'],		//Old Shoe => Rubber, Cloth
 	[73, [116], 'cut'],			//Cotton Swab => Cotton
 	[79, [117, 78], 'craft'],		//Almost Depleted Cigarette => Tobacco, Cigarette Butt
 	[90, [118], 'cut'],			//Old T-Shirt => Cloth
@@ -1743,3 +1953,4 @@ var furniture = [
 ];
 floh.furniture = [];
 //$variables (end)
+document.title = 'Diogenesis '+changes().latestVersion;
