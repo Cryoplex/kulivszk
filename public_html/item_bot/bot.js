@@ -20,10 +20,23 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
   bot.sendMessage(fromId, resp);
 });
 
+function getWeeklyBudget(money) {
+  var week = 3/13;
+  var n_rate = 0.5 * week;
+  var w_rate = 0.3 * week;
+  var s_rate = 0.2 * week;
+
+  return {
+    '$_needs': (money * n_rate),
+    '$_wants': (money * w_rate),
+    '$_savings': -(money * s_rate),
+  }
+}
+
 // Any kind of message
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
-  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday'];
+  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday', '/bud'];
   for (var c in commands) {
   	if (msg.text.split(' ')[0] == commands[c]) {
   		var command = commands[c];
@@ -51,6 +64,16 @@ bot.on('message', function (msg) {
         var newDay = split[1];
         haxday += Number(newDay);
         bot.sendMessage(chatId, 'Day changed to ('+newDay+') '+today());
+      }
+      if (command == '/bud') {
+        var money = getAllMoney(u).money;
+        var allow = getWeeklyBudget(money);
+        var bl = '$WB - Total $'+money.toFixed(2)+'\n\n';
+        for (var a in allow) {
+          u.variables[a] += parseFloat(allow[a]);
+          bl += a+' (+$'+allow[a].toFixed(2)+') to $'+u.variables[a].toFixed(2)+'\n';
+        }
+        bot.sendMessage(chatId, bl);
       }
       if (command == '/del') {
         bot.sendMessage(chatId, 'Deleting '+split[1]);
@@ -130,16 +153,9 @@ bot.on('message', function (msg) {
       if (command == '/info') {
         console.log('/info cmd');
         var str = '';
-        var total = 0;
-        var sorted = [];
-        for (var v in u.variables) {
-          total += u.variables[v];
-          sorted.push({
-            'name': v,
-            'total': u.variables[v],
-            'trust': getTrustRating(u, v),
-          })
-        }
+        var sorted = getAllMoney(u).sorted;
+        var total = getAllMoney(u).money;
+
         sorted = sorted.sort(function(a, b) {
           return b.trust - a.trust;
         });
@@ -228,6 +244,27 @@ bot.on('message', function (msg) {
   	}
   }
 });
+
+function getAllMoney(u) {
+  var total = 0;
+  var sorted = [];
+    for (var v in u.variables) {
+      if (v.split('$').length <= 1) {
+        total += u.variables[v];
+      }
+
+      
+      sorted.push({
+        'name': v,
+        'total': u.variables[v],
+        'trust': getTrustRating(u, v),
+      })
+  }
+  return {
+    'money': total,
+    'sorted': sorted,
+  }
+}
 function dayObject() {
   this.hit = 0;
   this.miss = 0;

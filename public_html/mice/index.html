@@ -12,7 +12,18 @@
 
   <body>
     <div class="playable" id="playableBG"></div>
-    <div style="left: 0px; top: 0px; pointer-events: none; position: fixed; color: #000; padding: 8px">Ratones capturados: / Mice caught: <span class="red" id="miceCatched"></span></div>
+    <div style="left: 0px; top: 0px; pointer-events: none; position: fixed; color: #000; padding: 8px">Ratones capturados: / Mice caught: <span class="red" id="miceCatched"></span> Dinero: $<span id="mice_money"></span></div>
+
+    <div style="position: relative; top: 0px; left: 0px; display: inline-block; width: 100px; height: 480px">
+      <div class="btn btn-success" style="position: absolute; top: 0px; left: 0px" onclick="sellMice()">Sell all Mice</div>
+
+      <div class="btn btn-success" style="position: absolute; top: 35px; left: 0px" onclick="buyTrap(0)">Buy Snap Trap $10</div>
+      <div class="btn btn-success" style="position: absolute; top: 70px; left: 0px" onclick="buyTrap(1)">Buy Mouse Poison $30</div>
+      <div class="btn btn-success" style="position: absolute; top: 105px; left: 0px" onclick="buyTrap(2)">Buy Glue Trap $15</div>
+      <div class="btn btn-success" style="position: absolute; top: 140px; left: 0px" onclick="buyTrap(3)">Buy Rat Poison $55</div>
+      <div class="btn btn-success" style="position: absolute; top: 175px; left: 0px" onclick="buyTrap(4)">Buy Mouse-X Bomb $60</div>
+      <div class="btn btn-success" style="position: absolute; top: 210px; left: 0px" onclick="buyTrap(5)">Buy Catower $100</div>
+    </div>
 
     <script src="../common.js"></script>
   	<script src="../jquery-2.1.4.min.js"></script>

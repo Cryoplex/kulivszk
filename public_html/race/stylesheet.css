@@ -1,0 +1,125 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+bar {
+	display: inline-block;
+	height: 32px;
+	background: linear-gradient(rgba(128, 128, 128, 0.2), rgba(128, 128, 128, 0.5));
+}
+.passed {
+	background: linear-gradient(rgba(64, 128, 64, 0.2), rgba(64, 128, 64, 0.5))
+}
+.yourCar {
+	background-color: rgba(0, 0, 255, 0.5);
+}
+.enemyCar {
+	background-color: rgba(255, 0, 0, 0.5);
+}
+road {
+	background-image: url(road.png);
+	width: 100%;
+	display: inline-block;
+	height: 48px;
+	margin: 0;
+	position: absolute;
+	top: 512px;
+	z-index: 8;
+}
+bg1 {
+	background-image: url(bg1.png);
+	width: 100%;
+	display: inline-block;
+	height: 480px;
+	margin: 0;
+	position: absolute;
+	top: 32px;
+	z-index: 4;
+}
+bg2 {
+	background-image: url(bg2.png);
+	width: 100%;
+	display: inline-block;
+	height: 480px;
+	position: absolute;
+	top: 32px;
+	z-index: 6;
+}
+#current_speed {
+	position: fixed;
+	right: 8px;
+	bottom: 8px;
+	width: 128px;
+	padding: 8px;
+	background-color: rgb(16, 16, 16);
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+	border-radius: 8px;
+	z-index: 999;
+	text-align: center;
+	font-size: 18px;
+	color: white;
+}
+car {
+	background-image: url(car.png);
+	position: absolute;
+	display: inline-block;
+	width: 128px;
+	height: 64px;
+	z-index: 11;
+	top: 480px;
+	left: 128px;
+}
+barcar {
+	position: absolute;
+	height: 32px;
+	width: 3px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+wheel {
+	background-image: url(wheel.png);
+	position: relative;
+	width: 24px;
+	height: 24px;
+	display: inline-block;
+	z-index: 9;
+	transition: all 0.25s;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}

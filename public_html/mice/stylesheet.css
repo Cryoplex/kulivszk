@@ -42,13 +42,27 @@ sup {
 	font-size: 24px;
 }
 
-.mouse {
-	background: url(mouse.png);
+.mousey {
 	width: 57px;
 	height: 23px;
 	display: inline-block;
 	z-index: 3;
 	-webkit-user-select: none;
+}
+.mouse {
+	background: url(mouse.png);
+}
+.white_mouse {
+	background: url(white_mouse.png);
+}
+.rat {
+	background: url(rat.png);
+}
+.gray_rat {
+	background: url(gray_rat.png);
+}
+.hamster {
+	background: url(hamster.png);
 }
 .mousePoop {
 	width: 4px;
@@ -58,10 +72,10 @@ sup {
 	background-color: #442;
 	border-radius: 100%;
 }
-.mouse:hover {
+.mousey:hover {
 	animation: catch 1s infinite;
 }
-@keyframes catch {
+@keyframes catch, -moz-@keyframes catch {
 	0%, 100% {
 		outline: 2px solid yellow;
 	}
@@ -126,4 +140,78 @@ sup {
 	width: 640px;
 	height: 480px;
 	-webkit-user-select: none;
+	display: inline-block;
+}
+
+.btn {
+	height: 32px;
+}
+.poisoned {
+	filter: sepia(1) saturate(300%) hue-rotate(220deg);
+	animation: pois 3s infinite;
+}
+@keyframes pois {
+	0%, 100% {
+		filter: sepia(1) saturate(300%) hue-rotate(220deg);
+	}
+	80% {
+		filter: sepia(1) saturate(300%) hue-rotate(80deg);
+	}
+}
+trap {
+	background-image: url(traps.png);
+	width: 32px;
+	height: 32px;
+	display: inline-block;
+	position: absolute;
+
+	z-index: 99;
+}
+.t_snaptrap {
+	background-position: -32px 0px;
+}
+.t_poison {
+	background-position: -64px 0px;
+}
+.t_poison2 {
+	background-position: -64px 0px;
+	filter: hue-rotate(180deg);
+}
+.t_glue {
+	background-position: -96px 0px;
+}
+.t_bomb {
+	background-position: -128px 0px;
+}
+.fuse1 {
+	animation: f1 2s infinite;
+}
+.fuse2 {
+	animation: f2 1s infinite;
+}
+.fuse3 {
+	animation: f2 0.5s infinite;
+}
+@keyframes f1 {
+	0%, 100% {
+		background-color: rgba(255, 0, 0, 0.2);
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+@keyframes f2 {
+	0%, 100% {
+		background-color: rgba(255, 0, 0, 0.5);
+		opacity: 0.8;
+	}
+	50% {
+		opacity: 0.2;
+	}
+}
+.t_catower {
+	background-image: url(catower.png);
+	width: 64px;
+	height: 64px;
 }

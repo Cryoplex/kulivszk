@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Game</title>
+
+    <link type="text/css" rel="stylesheet" href="../bootstrap.css">
+    <link type="text/css" rel="stylesheet" href="stylesheet.css">
+  </head>
+
+  <body>
+    <output id="current_position"></output>
+
+    <output id="current_speed"></output>
+
+    <bg1 id="background_1"></bg1>
+    <bg2 id="background_2"></bg2>
+    <bg3 id="background_3"></bg3>
+    <road id="roady"></road>
+
+    <car id="car_myCar">
+      <wheel id="mc_wheel_1" style="top: 32px; left: 20px"></wheel>
+      <wheel id="mc_wheel_2" style="top: 32px; left: 60px"></wheel>
+    </car>
+
+    <car id="car_enemyCar">
+      <wheel id="ec_wheel_1" style="top: 32px; left: 20px"></wheel>
+      <wheel id="ec_wheel_2" style="top: 32px; left: 60px"></wheel>
+    </car>
+
+
+    <script src="../common.js"></script>
+  	<script src="../jquery-2.1.4.min.js"></script>
+  	<script src="../jquery-ui.min.js"></script>
+  	<script src="script.js"></script>
+  </body>
+</html>
