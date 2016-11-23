@@ -1,12 +1,12 @@
-/*
-0.0.0.0 Added changelog
-0.1.0.0 Added mice
-0.2.0.0 Now you can catch mice with your bare hands
-0.2.1.0 Difficulty increases each 10 mice caught. After 1000 mice, there will be a lot of mice spawned each tick.
-0.2.1.1 Fixed loading bug
-0.2.2 Mice now poop on the floor.
-
-*/
+var changelog = [
+'af Added mice',
+'af You can catch mice with your bare hands',
+'ax Difficulty increases each 10 mice caught.',
+'ab Fixed loading bug',
+'ax Mice now poop on the floor',
+'ax Reduced max mice on screen to 200',
+];
+document.title = 'Catch the Mice '+changes().latestVersion;
 
 var traps = [
 	{'name': 'Snap Trap', 'price': 10, 'desc': 'Kills a single mouse upon contact.', 'img': 't_snaptrap'},
@@ -20,8 +20,10 @@ var traps = [
 var selling = false;
 var placing = false;
 
+var MAX_MICE = 200;
+
 function addMouse(num) {
-	if (miceGame.mice.length > 360) return;
+	if (miceGame.mice.length > MAX_MICE) return;
 	if (num < 1 || num == undefined) num = 1;
 	miceGame.mice.push(new Mouse());
 	moveMice(1);
@@ -279,7 +281,7 @@ function resetVariables() {
 }
 function saveGame() {
 	localStorage.setItem('miceGame', JSON.stringify(miceGame));
-	notification('Game Saved');
+	at.innerHTML = alsoTry();
 }
 function buyTrap(type) {
 	if (type == undefined) type = 0;

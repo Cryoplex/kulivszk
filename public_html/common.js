@@ -9,10 +9,31 @@ if (splitty[1] == 'en') {
 	commonLang = 'en';
 }
 swapLang(commonLang);
+var BASE_62_CHARSET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 
 function swapLang(newLang) {
 	document.body.lang = newLang;
 	commonLang = newLang;
+}
+function b62e(num) {
+	if (!num) return 0;
+    var str = '';
+    while (num > 0) {
+        str = BASE_62_CHARSET[num % 62] + str;
+        num = Math.floor(num/62);
+    }
+    return str;
+}
+function b62d(string) {
+	var v = 0;
+	var str = string.split('').reverse();
+
+	for (var i in str) {
+		var chara = str[i];
+		v += BASE_62_CHARSET.indexOf(chara) * Math.pow(62, i);
+	}
+
+    return v;
 }
 function read(array) {
 	var max = array.length-1;
@@ -35,26 +56,52 @@ function maxNum(num) {
 	if (num >= Number.MAX_SAFE_INTEGER) return true;
 }
 function compress(vari) {
+	vari = JSON.stringify(vari);
+
 	console.log('Start length', vari.length);
-	vari = LZW.compress(vari);
-	console.log('LZW length', JSON.stringify(vari).length);
-
-	for (var e in vari) vari[e] = vari[e].toString(36);
-	vari = vari.join('.');
-	console.log('B36 length', vari.length);
 
 	vari = LZW.compress(vari);
-	console.log('LZW 2', JSON.stringify(vari).length);
 
-	for (var e in vari) vari[e] = vari[e].toString(36);
-	vari = vari.join('.');
-	console.log('B36-2 length', vari.length);
+	var maxl = 0;
+	for (var e in vari) {
+		var b62 = b62e(vari[e]);
+		if (b62.length > maxl) maxl = b62.length;
+	}
 
+	for (var e in vari) {
+		var ta = b62e(vari[e]);
+		while (ta.length < maxl) ta = '$'+ta;
+		vari[e] = ta;
+	}
+
+	vari = vari.join('');
+
+	vari = maxl+'_'+vari;
+
+	console.log('End length', vari);
 
 	return vari;
 }
 function decompress(vari) {
+	vari = vari.split('_');
+	var ilength = vari[0];
+	var reg = '.{'+ilength+'}';
+	var array = vari[1].match(new RegExp(reg, 'g'));
 
+	for (var e in array) {
+		var el = array[e];
+		array[e] = b62d(el.replace('$', ''));
+	}
+
+	array = LZW.decompress(array);
+
+	return JSON.parse(array);
+}
+function tcompress(data) {
+	return JSON.stringify(LZW.compress(JSON.stringify(data)));
+}
+function tdecompress(data) {
+	return JSON.parse(LZW.decompress(JSON.parse(data)));
 }
 //Test shit
 
@@ -758,7 +805,6 @@ function alsoTry() {
 		{'name': 'Lemontastic! BETA', 'url': '../lemontastic/beta/home.html'},
 		{'name': 'LODO', 'url': '../lodo/index.html'},
 		{'name': 'Catch the Mice', 'url': '../mice/index.html'},
-		{'name': 'php', 'url': '../php/index.html'},
 		{'name': 'RiPPER', 'url': '../ripper/index.html'},
 		{'name': 'Random World', 'url': '../rw/home.html'},
 		{'name': 'Space Survival', 'url': '../spaces/index.html'},
@@ -773,7 +819,7 @@ function alsoTry() {
 		{'name': '#YOLOFly', 'url': '../yolofly/index.html'},
 	];
 	var sel = read(moreStuff);
-	return translate('Prueba también <a href="'+sel.url+'">'+sel.name+'</a>|Also try <a href="'+sel.url+'">'+sel.name+'</a>');
+	return translate('Prueba también <a href="'+sel.url+'" target="_blank">'+sel.name+'</a>|Also try <a href="'+sel.url+'">'+sel.name+'</a>');
 }
 
 
