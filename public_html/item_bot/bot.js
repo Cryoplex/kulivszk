@@ -33,10 +33,43 @@ function getWeeklyBudget(money) {
   }
 }
 
+function next25() {
+  var td = new Date();
+  var d = td.getDate();
+  var realday = (d+1)
+  var m = td.getMonth();
+  var y = td.getYear() + 1900;
+
+  
+  if (d <= 25) {
+    var nd = new Date(y, (m-1), 25);
+    console.log('Day is less than 25');
+  }
+  if (d > 25) {
+    m++;
+    if (m > 12) {
+      m = 0;
+      y++;
+    }
+    var nd = new Date(y, (m), 25);
+    console.log('Day is higher than 25');
+  }
+
+  return nd;
+}
+function daysTo(date) {
+  var d = new Date();
+
+  var diff = Math.abs(d.getTime() - date.getTime());
+  diff /= 86400000;
+  
+  return Math.round(diff);
+}
+
 // Any kind of message
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
-  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday', '/bud'];
+  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday', '/bud', '/int'];
   for (var c in commands) {
   	if (msg.text.split(' ')[0] == commands[c]) {
   		var command = commands[c];
@@ -64,6 +97,17 @@ bot.on('message', function (msg) {
         var newDay = split[1];
         haxday += Number(newDay);
         bot.sendMessage(chatId, 'Day changed to ('+newDay+') '+today());
+      }
+      if (command == '/int') {
+        var spent = split[1];
+        var n25 = next25();
+        var days = daysTo(n25);
+
+        var gbleft = 35 - spent;
+
+        var budget = (gbleft / days) * 1024;
+        
+        bot.sendMessage(chatId, 'Spent: '+spent+'GB.\nNext 25: '+n25+'\nDays left: '+days+'\nCan use: '+budget.toFixed(3)+'MB');
       }
       if (command == '/bud') {
         var money = getAllMoney(u).money;

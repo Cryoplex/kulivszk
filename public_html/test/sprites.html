@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	body {
+		background-color: black;
+	}
+	.sprite {
+		background: url(sprites.png);
+		display: inline-block;
+		width: 32px;
+		height: 32px;
+	}
+	.sword {
+		background-position: 0px 0px;
+
+		animation: swordy steps(1) 1s infinite;
+	}
+	.grass {
+		background-position: -32px 0px;
+		animation: grassy steps(1) 0.5s infinite;
+
+		float: left;
+	}
+
+	@keyframes grassy {
+		0% {
+			background-position: -32px 0px;
+		}
+		25% {
+			background-position: -32px -32px;
+		}
+		50% {
+			background-position: -32px -64px;
+		}
+		75% {
+			background-position: -32px -96px;
+		}
+	}
+
+	@keyframes swordy {
+		0% {
+			background-position: 0px 0px;
+		}
+		85% {
+			background-position: 0px -32px;
+		}
+		90% {
+			background-position: 0px -64px;
+		}
+		95% {
+			background-position: 0px -96px;
+		}
+	}
+
+	</style>
+</head>
+<body>
+	<i class="sprite sword"></i>
+
+	<br>
+
+	<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+	<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>	<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+		<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+			<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+				<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+					<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+						<bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg><bg class="sprite grass"></bg>
+</body>
+</html>

@@ -58,7 +58,6 @@ function maxNum(num) {
 function compress(vari) {
 	vari = JSON.stringify(vari);
 
-	console.log('Start length', vari.length);
 
 	vari = LZW.compress(vari);
 
@@ -78,7 +77,6 @@ function compress(vari) {
 
 	vari = maxl+'_'+vari;
 
-	console.log('End length', vari);
 
 	return vari;
 }
@@ -671,7 +669,7 @@ function moveNotif() {
 	doc('tooltipwr').style.opacity = notifObj.opacity;
 	echo('tooltipwr', notifObj.text);
 }
-var commonMoveNotif = setInterval(moveNotif, 10);
+//var commonMoveNotif = setInterval(moveNotif, 10);
 function round(num) {
 	return Math.round(num*100)/100;
 }
