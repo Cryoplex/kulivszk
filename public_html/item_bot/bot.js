@@ -24,7 +24,7 @@ function getWeeklyBudget(money) {
   var week = 3/13;
   var n_rate = 0.5 * week;
   var w_rate = 0.3 * week;
-  var s_rate = 0.2 * week;
+  var s_rate = 1.0 * week;
 
   return {
     '$_needs': (money * n_rate),
@@ -69,7 +69,7 @@ function daysTo(date) {
 // Any kind of message
 bot.on('message', function (msg) {
   var chatId = msg.chat.id;
-  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday', '/bud', '/int'];
+  var commands = ['/objetos', '/compra', '/vende', '/dinero', '/ayuda', '/set', '/info', '/cal', '/hax', '/del', '/resetoday', '/bud', '/int', '/btest'];
   for (var c in commands) {
   	if (msg.text.split(' ')[0] == commands[c]) {
   		var command = commands[c];
@@ -116,6 +116,15 @@ bot.on('message', function (msg) {
         for (var a in allow) {
           u.variables[a] += parseFloat(allow[a]);
           bl += a+' (+$'+allow[a].toFixed(2)+') to $'+u.variables[a].toFixed(2)+'\n';
+        }
+        bot.sendMessage(chatId, bl);
+      }
+      if (command == '/btest') {
+        var money = getAllMoney(u).money;
+        var allow = getWeeklyBudget(money);
+        var bl = '$WB - Total $'+money.toFixed(2)+'\n\n';
+        for (var a in allow) {
+          bl += a+' (+$'+allow[a].toFixed(2)+') to $'+(u.variables[a] + parseFloat(allow[a])).toFixed(2)+'\n';
         }
         bot.sendMessage(chatId, bl);
       }

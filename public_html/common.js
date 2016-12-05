@@ -814,10 +814,9 @@ function alsoTry() {
 		{'name': 'Prng', 'url': '../test/prng.html'},
 		{'name': 'zoonbie killa', 'url': '../test/zk.html'},
 		{'name': 'waitQuest', 'url': '../waitquest/index.html'},
-		{'name': '#YOLOFly', 'url': '../yolofly/index.html'},
 	];
 	var sel = read(moreStuff);
-	return translate('Prueba también <a href="'+sel.url+'" target="_blank">'+sel.name+'</a>|Also try <a href="'+sel.url+'">'+sel.name+'</a>');
+	return translate('Prueba también <a href="'+sel.url+'" target="_blank">'+sel.name+'</a>|Also try <a href="'+sel.url+'" target="_blank">'+sel.name+'</a>');
 }
 
 
