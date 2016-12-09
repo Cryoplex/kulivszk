@@ -787,6 +787,86 @@ function showChangeLog() {
 
 	document.body.innerHTML += l;
 }
+function marketPrice(value = 1, base = 1, trend = 0) {
+	var min = base * 0.5;
+	var max = base * 2;
+
+	var upchances = min / value;
+	var downchances = value / max;
+
+	var maxchance = upchances + downchances;
+	var rng = Math.random() * maxchance;
+
+	var variation = (base * 0.1) * Math.random();
+	var mod = (rng <= upchances) ? 1 : -1;
+	if (trend != 0) mod = (trend < 0) ? -1 : 1;
+	value = value + (variation * mod);
+	if (value < 0.01) value = 0.01;
+
+	return value;
+}
+function flashText(where, text, color) {
+	var flasher = 'flasher-'+getID();
+	var flashel = document.createElement('flasher');
+	flashel.id = flasher;
+
+	where = $(where).offset();
+	flashel.style.top = where.top+'px';
+	flashel.style.left = (where.left - 10)+'px';
+
+	if (!color) color = '';
+
+	flashel.className = color;
+
+	flashel.innerHTML = text;
+
+	document.body.appendChild(flashel);
+
+	$(flashel).animate({top: '-=5'}, 2000).fadeOut(2000);
+	setTimeout(function() {
+		$(flashel).remove();
+	}, 4000);
+}
+function marketGraph(array = [0, 0], cwidth = 600, cheight = 100, customin, customax) {
+	var c = document.createElement('canvas');
+	c.style.width = cwidth+'px';
+	c.style.height = cheight+'px';
+	c.width = cwidth
+	c.height = cheight;
+	var ctx = c.getContext('2d');
+
+	var amin = Infinity;
+	var amax = -Infinity
+	for (var a in array) {
+		var aa = array[a];
+		if (aa > amax) amax = aa;
+		if (aa < amin) amin = aa;
+	}
+	if (customin != undefined) amin = customin;
+	if (customax != undefined) amax = customax;
+
+	var pointer;
+	for (var a in array) {
+		var value = array[a];
+		var rvalue = value - amin;
+
+		var posy = (1 - (rvalue / (amax - amin))) * cheight;
+		if (amin == amax) posy = 0;
+		var posx = (parseInt(a) / array.length) * cwidth;
+
+		if (!pointer) pointer = {'x': posx, 'y': posy};
+		canvasLine(ctx, pointer, {'x': posx, 'y': posy});
+		pointer = {'x': posx, 'y': posy};
+	}
+
+	return c;
+}
+function canvasLine(ctx, from, to) {
+	ctx.beginPath();
+	ctx.moveTo(from.x, from.y);
+	ctx.lineTo(to.x, to.y);
+	ctx.stroke();
+}
 function alsoTry() {
 	var moreStuff = [
 		{'name': 'artillery', 'url': '../artillery/index.html'},

@@ -1,0 +1,136 @@
+body {
+	background: linear-gradient(rgb(255, 255, 255), rgb(240, 220, 200));
+}
+
+flasher {
+	position: absolute;
+	text-shadow: -1px 0px 0px #000, 
+	1px 0px 0px #000, 
+	0px -1px 0px #000, 
+	-1px -1px 0px #000, 
+	1px -1px 0px #000, 
+	-1px 1px 0px #000, 
+	1px 1px 0px #000, 
+	0px 1px 0px #000;
+	display: inline-block;
+	color: #0f0;
+	font-weight: bolder;
+	font-size: 10px;
+}
+.iron {
+	color: rgb(192, 192, 220);
+}
+.stone {
+	color: rgb(96, 96, 96);
+}
+.gold {
+	color: rgb(255, 192, 64);
+}
+.wood {
+	color: rgb(192, 96, 0);
+}
+.food {
+	color: rgb(255, 32, 32);
+}
+#combat {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(rgb(0, 192, 192), rgb(255, 255, 255), rgb(192, 192, 192));
+	display: none;
+	z-index: 2;
+}
+lane {
+	background-color: rgba(0, 255, 0, 0.5);
+	width: 1120px;
+	height: 32px;
+	display: inline-block;
+	position: absolute;
+}
+square {
+	position: absolute;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	cursor: pointer;
+}
+.enemySpawn {
+	background-color: rgba(255, 0, 0, 0.5);
+}
+square:hover {
+	border: 1px solid rgba(0, 0, 0, 0.8);
+}
+closer {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+menu {
+	display: block;
+	border-radius: 0px;
+	background-color: rgb(0, 0, 0);
+	color: rgb(255, 255, 255);
+	position: absolute;
+	z-index: 11;
+}
+.menuItem {
+	padding: 8px;
+	margin-left: -32px;
+	margin-right: 8px;
+
+	clear: both;
+	float: left;
+
+	cursor: pointer;
+	font-size: 10px;
+}
+.menuItem:hover {
+	background-color: rgba(64, 64, 64, 0.5);
+}
+
+building {
+	position: absolute;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	z-index: 4;
+
+	pointer-events: none;
+}
+
+.tower {
+	width: 16px;
+	height: 64px;
+	margin-left: 8px;
+	background-color: rgb(255, 128, 0);
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+monster {
+	position: absolute;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	z-index: 5;
+
+	pointer-events: none;
+}
+
+.monster {
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	background-color: rgba(255, 0, 0, 0.5);
+	border-radius: 100%;
+
+	border: 4px solid black;
+}

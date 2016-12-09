@@ -1,0 +1,85 @@
+.rarity_normal { color: black; }
+.rarity_common { color: black; font-weight: bold; }
+.rarity_special { color: rgb(128, 128, 128); }
+.rarity_sparse { color: rgb(255, 128, 0); }
+.rarity_rare { color: rgb(128, 0, 0); }
+.rarity_epic {
+	color: rgb(255, 0, 0);
+	animation: epic 8s infinite;
+}
+@keyframes epic {
+	0%, 100% {
+		color: rgb(255, 0, 0);
+	}
+	25% {
+		color: rgb(64, 192, 0);
+	}
+	50% {
+		color: rgb(192, 64, 0);
+	}
+}
+.rarity_mythical {
+	color: rgb(0, 255, 0);
+	animation: mythical 4s infinite;
+}
+@keyframes legendary {
+	0%, 100% {
+		color: rgb(0, 255, 0);
+	}
+	25% {
+		color: rgb(255, 0, 255);
+	}
+	50% {
+		color: rgb(128, 128, 128);
+	}
+}
+.rarity_legendary {
+	color: rgb(0, 0, 255);
+	animation: legendary 2s infinite;
+
+	font-style: italic;
+}
+@keyframes mythical {
+	0%, 100% {
+		color: rgb(0, 0, 255);
+	}
+	50% {
+		color: rgb(255, 0, 255);
+	}
+}
+.rarity_unique {
+	animation: unique 1s infinite;
+	font-weight: bolder;
+
+	text-shadow:
+	-1px -1px 0 #000,  
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+@keyframes unique {
+	0%, 100% {color: hsl(0, 100%, 50%);}
+	10% {color: hsl(36, 100%, 50%);}
+	20% {color: hsl(72, 100%, 50%);}
+	30% {color: hsl(108, 100%, 50%);}
+	40% {color: hsl(144, 100%, 50%);}
+	50% {color: hsl(180, 100%, 50%);}
+	60% {color: hsl(216, 100%, 50%);}
+	70% {color: hsl(252, 100%, 50%);}
+	80% {color: hsl(288, 100%, 50%);}
+	90% {color: hsl(324, 100%, 50%);}
+}
+.rarity_shit { color: rgba(0, 0, 0, 0.5); font-style: italic; }
+
+.commonBlack {
+	background-color: rgba(0, 0, 0, 0.8);
+	color: transparent;
+}
+.commonFilled {
+	background-color: rgba(0, 255, 0, 0.8);
+	color: transparent;
+}
+.commonDepleted {
+	background-color: rgba(128, 128, 128, 0.5);
+	color: transparent;
+}

@@ -19,6 +19,12 @@
 	right: 32px;
 	top: 8px;
 }
+#myMoneyps {
+	position: absolute;
+	right: 32px;
+	top: 24px;
+	font-size: 10px;
+}
 .arrow_1 {
 	animation: 0.5s arr_1 steps(1) infinite;
 }
@@ -125,7 +131,7 @@ ul li {
 	left: 0;
 	bottom: 0;
 }
-#game_ads, #game_refer, #game_barker {
+.game_ads, .game_refer, #game_barker {
 	overflow-y: scroll;
 	height: 80vh;
 	display: inline-block;

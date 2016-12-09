@@ -22,6 +22,9 @@ var DELAY_PER_BARK = 10000;
 var nextBark = 0;
 var autobark = 3000;
 
+var moneyps = 0;
+var lastmoney = [];
+
 function resetVariables() {
 
 }
@@ -78,6 +81,15 @@ function update(step) {
 		var btnclass = (game.bux.money >= price) ? 'btn-success' : 'btn-danger';
 		lg += '<div class="btn '+btnclass+'" onclick="buyReferral()" id="refer_button">'+translate('Comprar un Referido ('+price.toFixed(8)+'ç)|Buy a Referer (ç'+price.toFixed(8)+')')+'</div><br><br>';
 
+		if (referButton(10, 1)) lg += referButton(10);
+		if (referButton(100, 1)) lg += referButton(100);
+		if (referButton(1000, 1)) lg += referButton(1000);
+		if (referButton(10000, 1)) lg += referButton(10000);
+		if (referButton(100000, 1)) lg += referButton(100000);
+		if (referButton(1000000, 1)) lg += referButton(1000000);
+		if (referButton(10000000, 1)) lg += referButton(10000000);
+		if (referButton(100000000, 1)) lg += referButton(100000000);
+
 		for (var r in game.bux.refer) {
 			var rr = game.bux.refer[r];
 			if (rr > 0) lg += '<div class="referr">'+translate('Referidos Nivel '+romanNumber((parseInt(r) + 1))+'|'+romanNumber((parseInt(r) + 1))+' Level Referrals')+': '+rr+' '+getReferCPT(r)+'</div>';
@@ -91,7 +103,7 @@ function update(step) {
 		for (var u in getUpgrades()) {
 			lu += displayUpgrade(u)+'<br>';
 		}
-		lg += '<br style="clear:both"><hr><h4>'+translate('Mejoras|Upgrades')+'</h4>'+lu;
+		lu = '<h4>'+translate('Mejoras|Upgrades')+'</h4>'+lu;
 
 		lg += '<h3>'+translate('Lista de Anuncios|Ad List')+'</h3>';
 		for (var a in game.bux.ads) {
@@ -105,11 +117,22 @@ function update(step) {
 
 
 		doc('game_ads').innerHTML = lg;
+		doc('game_upgrades').innerHTML = lu;
 	}
 
 
 
 	playerName.innerHTML = translate('Bienvenido, |Welcome, ')+game.userName;
+}
+function referButton(amt, peek) {
+	if (!amt) amt = 1;
+
+	var price = getReferralPrice(amt);
+	if (peek) {
+		return (game.bux.money >= price);
+	}
+	var btnclass = (game.bux.money >= price) ? 'btn-success' : 'btn-danger';
+	return '<div class="btn '+btnclass+'" onclick="buyReferral('+amt+')" id="refer_button">'+translate('Comprar '+amt+' Referido ('+price.toFixed(8)+'ç)|Buy '+amt+' Referer (ç'+price.toFixed(8)+')')+'</div><br><br>';
 }
 function arrows() {
 	return '<span class="arrow_1">&gt</span><span class="arrow_2">&gt</span><span class="arrow_3">&gt</span>';
@@ -152,11 +175,16 @@ function getUpgrades() {
 			'name': 'Popular',
 			'bonus': '~'+(getUpgradeBonus('bark_popularity'))+' '+arrows()+' '+'~'+(getUpgradeBonus('bark_popularity', 1))
 		},
-		'serial_barker': {'desc': 'Reduce el tiempo de espera entre Bark y Bark', 'name': 'serial_barker.name'},
-		'ad_clicker': {'desc': 'Tus enlaces reciben más clicks', 'name': 'ad_clicker.name'},
-		'autoclick': {'desc': 'Hace click automáticamente en anuncios', 'name': 'autoclick.name'},
-		'rare_ads': {'desc': 'Aumenta la probabilidad de anuncios raros', 'name': 'rare_ads.name'},
-		'autobark': {'desc': 'Barkea automáticamente cada cierto tiempo', 'name': 'autobark.name'},
+		'serial_barker': {'desc': 'Reduce el tiempo de espera entre Bark y Bark', 'name': translate('Ladrador en Serie|Serial Barker')},
+		'ad_clicker': {'desc': 'Tus enlaces reciben más clicks', 'name': translate('Clicanuncios|Ad Clicker')},
+		'autoclick': {'desc': 'Hace click automáticamente en anuncios', 'name': 'Autoclick'},
+		'rare_ads': {'desc': 'Aumenta la probabilidad de anuncios raros', 'name': translate('Anuncios Raros|Rare Ads')},
+		'autobark': {'desc': 'Barkea automáticamente cada cierto tiempo', 'name': 'Autobark'},
+		'ad_fusion': {
+			'desc': translate('Combina dos anuncios distintos para crear uno de mayor valor.|Combines two ads to form a higher value one.'),
+			'name': translate('Fusión de Anuncios|Ad Fusion'),
+			'bonus': getUpgradeBonus('ad_fusion')+' '+arrows()+' '+getUpgradeBonus('ad_fusion', 1),
+		}
 	}
 }
 function displayUpgrade(upgradeID) {
@@ -166,8 +194,38 @@ function displayUpgrade(upgradeID) {
 	var exbtn = (game.bux.money >= price) ? 'btn-warning' : 'btn-danger';
 	var ug = getUpgrades()[upgradeID];
 
-	var ul = '<b>'+ug.name+'</b><sup>'+game.bux.upgrades[upgradeID]+'</sup> <i>'+ug.desc+'</i><br>'+ug.bonus+'<br>';
-	return '<upgrade>'+ul+' <div class="btn '+exbtn+'" style="font-size: 8px" onclick="buyUpgrade(\''+upgradeID+'\')">'+translate('Comprar|Buy')+' (ç'+getUpgradePrice(upgradeID).toFixed(8)+')</div></upgrade> ';
+	var price2 = game.bux.upgrades[upgradeID];
+	var exbtn2 = (price2 > 0) ? 'btn-primary' : 'btn-danger';
+
+	var ul = '<b>'+ug.name+'</b><sup id="upgrade_amt_'+upgradeID+'">'+game.bux.upgrades[upgradeID]+'</sup> <i>'+ug.desc+'</i><br>'+ug.bonus+'<br>';
+	return '<upgrade>'+ul+' <div class="btn '+exbtn+'" id="upgrade_button_'+upgradeID+'" style="font-size: 10px" onclick="buyUpgrade(\''+upgradeID+'\')">'+translate('Comprar|Buy')+' (ç'+getUpgradePrice(upgradeID).toFixed(8)+')</div> <div class="btn '+exbtn2+'" id="upgrade_button_sell_'+upgradeID+'" style="font-size: 9px" onclick="sellUpgrade(\''+upgradeID+'\')">'+translate('Vender|Sell')+' (ç'+getUpgradePrice(upgradeID, 1).toFixed(8)+')</div></upgrade> ';
+}
+function updateUpgrade(upgradeID) {
+	var price = getUpgradePrice(upgradeID);
+	var exbtn = (game.bux.money >= price) ? 'btn-warning' : 'btn-danger';
+
+	doc('upgrade_button_'+upgradeID).className = 'btn '+exbtn;
+	doc('upgrade_button_'+upgradeID).innerHTML = translate('Comprar|Buy')+' (ç'+price.toFixed(8)+')';
+
+	var price = game.bux.upgrades[upgradeID];
+	var exbtn = (price > 0) ? 'btn-primary' : 'btn-danger';
+
+	doc('upgrade_button_sell_'+upgradeID).className = 'btn '+exbtn;
+	doc('upgrade_button_sell_'+upgradeID).innerHTML = translate('Vender|Sell')+' (ç'+getUpgradePrice(upgradeID, 1).toFixed(8)+')';
+
+	doc('upgrade_amt_'+upgradeID).innerHTML = game.bux.upgrades[upgradeID];
+}
+function sellUpgrade(upgradeID) {
+	if (game.bux.upgrades == undefined) game.bux.upgrades = {};
+	if (game.bux.upgrades[upgradeID] == undefined) game.bux.upgrades[upgradeID] = 0;
+
+	var price = getUpgradePrice(upgradeID, 1);
+
+	if (game.bux.upgrades[upgradeID] < 1) return;
+	increaseMoney(price);
+	game.bux.upgrades[upgradeID]--;
+
+	updateUpgrade(upgradeID);
 }
 function buyUpgrade(upgradeID, peek) {
 	if (game.bux.upgrades == undefined) game.bux.upgrades = {};
@@ -180,11 +238,12 @@ function buyUpgrade(upgradeID, peek) {
 	increaseMoney(-price);
 	game.bux.upgrades[upgradeID]++;
 
-	update();
+	updateUpgrade(upgradeID)
 }
-function getUpgradePrice(upgradeID) {
+function getUpgradePrice(upgradeID, sellmode) {
 	var level = game.bux.upgrades[upgradeID];
 	var price = BASE_UPGRADE_VALUE * Math.pow(1.2, level);
+	if (sellmode) price *= 0.25;
 
 	return price;
 }
@@ -250,10 +309,10 @@ function getReferButtonClass() {
 	var btnclass = (game.bux.money >= price) ? 'btn-success' : 'btn-danger';
 	refer_button.className = 'btn '+btnclass;
 }
-function clickAd(tier, id) {
+function clickAd(tier, id, del) {
 	var whatAd = game.bux.ads[tier][id];
 	if (whatAd != undefined) {
-		increaseMoney(whatAd.value);
+		if (!del) increaseMoney(whatAd.value);
 		game.bux.ads[tier].splice(id, 1);
 		update('ads');
 	}
@@ -264,30 +323,41 @@ function getReferrals(num, barkermode) {
 	if (game.bux.refer[tier] == undefined) game.bux.refer[tier] = 0;
 	game.bux.refer[tier] += num;
 }
-function buyReferral() {
-	var price = getReferralPrice();
+function buyReferral(amt) {
+	if (!amt) amt = 1;
+
+	var price = getReferralPrice(amt);
 	if (game.bux.money < price) return;
 	increaseMoney(-price);
-	getReferrals(1);
+	getReferrals(amt);
 
 	update('refer');
 }
-function getReferralPrice() {
-	if (game.bux.refer == undefined) game.bux.refer = [];
-	if (game.bux.refer[0] == undefined) game.bux.refer[0] = 0;
-	var total = game.bux.refer[0];
-	var mod = getUpgradeBonus('refer_discount');
+function getReferralPrice(qty) {
+	var totprice = 0;
+	if (!qty) qty = 1;
 
-	var pow = 1.1;
-	total *= mod;
+	for (var x = 0; x < qty; x++) {
+		if (game.bux.refer == undefined) game.bux.refer = [];
+		if (game.bux.refer[0] == undefined) game.bux.refer[0] = 0;
+		var total = game.bux.refer[0] + x;
+		var mod = getUpgradeBonus('refer_discount');
 
-	return (BASE_AD_VALUE * mod * Math.pow(pow, (total)));
+		var pow = 1.1;
+		total *= mod;
+
+		totprice += (BASE_AD_VALUE * mod * Math.pow(pow, (total)));
+	}
+	return totprice;
 }
 function increaseMoney(amount) {
 	game.bux.money = parseFloat(game.bux.money);
 	game.bux.money += Number(amount);
 	update('myMoney');
-
+	
+	for (var u in getUpgrades()) {
+		updateUpgrade(u);
+	}
 }
 function bark() {
 	var d = new Date().valueOf();
@@ -365,14 +435,68 @@ function updateAds() {
 		} while (rand(0,1));
 		for (var aaa = 0; aaa < getUpgradeBonus('ad_chance'); aaa++) addNewAd();
 	}
+	for (var aaa = 0; aaa < getUpgradeBonus('ad_fusion'); aaa++) fusionAd();
 
 	referTiers();
 
 	update('ads');
 }
-function addNewAd() {
-	var newAd = new ad();
+function updateMoneyps() {
+	var nowm = game.bux.money;
+	if (!lastmoney) lastmoney = [nowm];
+	var change = nowm - lastmoney[0];
+
+	if (!moneyps) moneyps = 0;
+	var mps = 0;
+	for (var lm in lastmoney) {
+		var c = lastmoney[lm] - lastmoney[lm-1];
+		if (c) {
+			mps += c;
+		}
+	}
+	moneyps = mps / lastmoney.length;
+
+	lastmoney.push(nowm);
+	if (lastmoney.length > 100) lastmoney.splice(0, 1);
+
+	myMoneyps.innerHTML = '('+(moneyps * 10).toFixed(8)+'/s)';
+}
+function addNewAd(proto) {
+	var newAd = new ad(proto);
 	game.bux.ads[newAd.tier].push(newAd);
+}
+function getRandomAd() {
+	var ad;
+	while (!ad) {
+		var tier = rand(1, game.bux.ads.length) - 1;
+		var adn = rand(1, game.bux.ads[tier].length) - 1;
+		var ad = game.bux.ads[tier][adn];
+
+		if (rand(1,100) == 1) break;
+	}
+	return {'tier': tier, 'index': adn, 'ad': ad};
+}
+function fusionAd() {
+	var ad1 = getRandomAd();
+	var ad2 = getRandomAd();
+
+	if (ad1.ad && ad2.ad && ad1.ad != ad2.ad) {
+		var tier = (ad1.tier > ad2.tier) ? ad1.tier : ad2.tier;
+		if (tier < 9) tier += rand(0,1);
+		var value = (parseFloat(ad1.ad.value) + parseFloat(ad2.ad.value));
+
+		var startwith = (ad1.index > ad2.index) ? ad1 : ad2;
+		var endwith = (ad1 == startwith) ? ad2 : ad1;
+
+		clickAd(startwith.tier, startwith.index, true);
+		clickAd(endwith.tier, endwith.index, true);
+
+		var newAd = {'tier': tier, 'value': value};
+		addNewAd(newAd);
+
+		update('ads');
+		return;
+	}
 }
 function getAdRarity(typ) {
 	var rarities = [512, 256, 128, 64, 32, 16, 8, 4, 2, 1];
@@ -404,11 +528,11 @@ function getAdRarity(typ) {
 	}
 	return 9;
 }
-function ad() {
-	this.tier = parseInt(getAdRarity());
+function ad(proto) {
+	this.tier = (proto && proto.tier) ? proto.tier : parseInt(getAdRarity());
 	this.name = 'MAKE TONS OF MONEY';
 	var bonus = getUpgradeBonus('ad_value');
-	this.value = (bonus * 0.000001 * getAdRarity(this.tier).stat).toFixed(8);
+	this.value = (proto && proto.value) ? proto.value.toFixed(8) : (bonus * 0.000001 * getAdRarity(this.tier).stat).toFixed(8);
 }
 function getUpgradeBonus(upgradeID, next) {
 	var level = buyUpgrade(upgradeID, true);
@@ -420,12 +544,13 @@ function getUpgradeBonus(upgradeID, next) {
 		'refer_popularity': (level * 1.5),
 		'refer_com': (level * 0.129) + 1,
 		'bark_popularity': level,
+		'ad_fusion': level,
 	}[upgradeID]
 }
 function goto(where) {
 	var tabs = ['home', 'register', 'tos', 'realGame'];
 	for (var tab in tabs) doc(tabs[tab]).style.display = 'none';
-	$('#'+where).slideDown(1000);
+	$('#'+where).slideDown(100);
 }
 function getFakeStats() {
 	var gfs = '<table>';
@@ -543,7 +668,6 @@ function referTiers() {
 		var r10 = rand(0, Math.ceil(refers * 1.077));
 		r10 += Math.ceil(rand(0, getUpgradeBonus('refer_popularity')));
 		var rr = rand(1,30);
-		console.log(rr);
 		if (r10 > 0 && rr == 1) {
 			if (game.bux.refer[nextTier] == undefined) game.bux.refer[nextTier] = 0;
 			game.bux.refer[nextTier] += r10;
@@ -565,8 +689,7 @@ function referTiers() {
 function tickStuff() {
 	if (game.bux.refer[0] > 0) {
 		var cpt = getReferCPT();
-		game.bux.money += cpt;
-		update('myMoney');
+		increaseMoney(cpt);
 	}
 	var ac = Math.ceil(buyUpgrade('autoclick', true) / 5);
 	if (ac) {
@@ -616,3 +739,4 @@ var t = setInterval(saveGame, 60000);
 setInterval(updateAds, 10000);
 setInterval(updateFakeStats, 100);
 setInterval(tickStuff, 100);
+setInterval(updateMoneyps, 100);

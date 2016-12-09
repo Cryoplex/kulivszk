@@ -1,0 +1,100 @@
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+drug {
+	width: 30%;
+	display: inline-block;
+	float: left;
+	padding: 8px;
+	margin: 8px;
+	background: linear-gradient(rgb(220, 220, 255), rgb(250, 250, 250));
+}
+.trend_down {
+	background: linear-gradient(rgb(255, 128, 128), rgb(250, 192, 192));
+}
+.trend_up {
+	background: linear-gradient(rgb(128, 255, 128), rgb(192, 250, 192));
+}
+.green {
+	color: rgb(128, 255, 128);
+	font-weight: bolder;
+}
+.red {
+	color: rgb(255, 128, 128);
+	font-weight: bolder;
+}
+.bestprice {
+	font-weight: bolder;
+}
+#mymoney {
+	display: block;
+	float: left;
+	width: 100%;
+}
+#mygraph {
+	width: 100%;
+}
+#pricechange {
+	width: 100%;
+	height: 8px;
+	display: block;
+	float: left;
+	background: linear-gradient(rgb(32, 64, 255), rgb(64, 128, 255));
+	transition: 0.2s all;
+}
+.btn {
+	width: 50%;
+}
+flasher {
+	color: rgb(128, 128, 255);
+	position: absolute;
+
+	text-shadow:
+	-1px 0px 0px black,
+	-1px -1px 0px black,
+	-1px 1px 0px black,
+
+	1px 0px 0px black,
+	1px 1px 0px black,
+	1px -1px 0px black,
+
+	0px 0px 0px black,
+	0px 1px 0px black,
+	0px -1px 0px black;
+}

@@ -449,9 +449,9 @@ function getPlayerStat(player) {
 	l += '<span title=""><b>Nivel</b>   '+player.level+'</span><br>';
 	l += '<span title=""><b>$</b> '+player.money+'</span><br>';
 	var lore = 'Los puntos de experiencia se obtienen al ganar combates. Si acumulas los suficientes subirás de nivel.';
-	l += '<span title="'+lore+'"><b>Experiencia</b>   '+player.experience+'/'+getMaxExp(player.level)+'</span><br>';
+	l += '<span title="'+lore+'"><b>Experiencia</b><br>'+realDrawBar(player.experience, getMaxExp(player.level))+' '+player.experience+'/'+getMaxExp(player.level)+'</span><br>';
 	var lore = 'Determinan tu salud. Si los Puntos de Impacto (PI) llegan a 0, mueres.';
-	l += '<span title="'+lore+'"><b>Puntos de Impacto</b>   '+player.hp+'/'+getCombatStat(player, 'hpx')+'</span><br>';
+	l += '<span title="'+lore+'"><b>Puntos de Impacto</b><br>'+realDrawBar(player.hp, getCombatStat(player, 'hpx'))+' '+player.hp+'/'+getCombatStat(player, 'hpx')+'</span><br>';
 	l += '<br>';
 	var lore = 'Influye en el daño que causas al atacar cuerpo a cuerpo y el peso que puedes soportar.';
 	l += '<span title="'+lore+'"><b>Fuerza</b>   '+player.str+'</span>';

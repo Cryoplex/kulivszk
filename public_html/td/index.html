@@ -35,7 +35,13 @@
         <hr>
         
         <h3>Resources</h3>
-        <span id="data_resources"></span>
+        <span id="data_resources">
+          <span id="data_food"></span>
+          <span id="data_gold"></span>
+          <span id="data_wood"></span>
+          <span id="data_stone"></span>
+          <span id="data_iron"></span>
+        </span>
 
         <input type="button" onclick="gather('food')" value="Harvest Farms">
         <br>
@@ -50,6 +56,12 @@
         <input type="button" onclick="build('house')" id="data_build_house">
         <br>
         <input type="button" onclick="build('stonehouse')" id="data_build_stonehouse">
+        <br>
+
+        <input type="button" onclick="build('ironhouse')" id="data_build_ironhouse">
+        <br>
+
+        <input type="button" onclick="build('goldhouse')" id="data_build_goldhouse">
         <br>
 
         <hr>
@@ -85,6 +97,16 @@
         >
         <input type="button" onclick="sellItem('iron')" id="data_ms_iron"><br>
         <br>
+
+        <input type="button" onclick="combat.style.display = 'inline-block'" value="Combat">
+      </div>
+
+      <div id="combat">
+        <input type="button" onclick="combat.style.display = 'none'" value="Go to Town">
+
+        <lane id="lane_1" style="left: 128px; bottom: 160px"></lane>
+        <lane id="lane_2" style="left: 128px; bottom: 96px"></lane>
+        <lane id="lane_3" style="left: 128px; bottom: 32px"></lane>
       </div>
 
       <div class="col-md-1">
