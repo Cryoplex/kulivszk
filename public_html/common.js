@@ -15,6 +15,13 @@ function swapLang(newLang) {
 	document.body.lang = newLang;
 	commonLang = newLang;
 }
+function collisionCheck(from, to) {
+	var c1 = from.x < to.x + to.width;
+	var c2 = from.x + from.width > to.x;
+	var c3 = from.y < to.y + to.height;
+	var c4 = from.y + from.height > to.y;
+	if (c1 && c2 && c3 && c4) return 1;
+}
 function b62e(num) {
 	if (!num) return 0;
     var str = '';
@@ -805,14 +812,14 @@ function marketPrice(value = 1, base = 1, trend = 0) {
 
 	return value;
 }
-function flashText(where, text, color) {
+function flashText(where, text, color, elmode) {
 	var flasher = 'flasher-'+getID();
 	var flashel = document.createElement('flasher');
 	flashel.id = flasher;
 
 	where = $(where).offset();
-	flashel.style.top = where.top+'px';
-	flashel.style.left = (where.left - 10)+'px';
+	flashel.style.top = (where.top + rand(-10, 10))+'px';
+	flashel.style.left = ((where.left - 10) + rand(-10, 10))+'px';
 
 	if (!color) color = '';
 

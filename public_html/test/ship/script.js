@@ -854,7 +854,6 @@ function fireball(type, from, strength, fworkMode) {
 	}
 	doc('container').appendChild(this.element);
 }
-
 function collision(from, to) {
 	var c1 = from.xx < to.xx + to.weight;
 	var c2 = from.xx + from.weight > to.xx;

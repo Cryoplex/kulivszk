@@ -83,3 +83,19 @@
 	background-color: rgba(128, 128, 128, 0.5);
 	color: transparent;
 }
+
+flasher {
+	position: absolute;
+	text-shadow: -1px 0px 0px #000, 
+	1px 0px 0px #000, 
+	0px -1px 0px #000, 
+	-1px -1px 0px #000, 
+	1px -1px 0px #000, 
+	-1px 1px 0px #000, 
+	1px 1px 0px #000, 
+	0px 1px 0px #000;
+	display: inline-block;
+	color: #0f0;
+	font-weight: bolder;
+	font-size: 10px;
+}

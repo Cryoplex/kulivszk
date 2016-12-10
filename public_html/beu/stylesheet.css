@@ -1,0 +1,118 @@
+.jumbotron {
+	background-image: url(jum.png);
+	height: 500px;
+}
+.jumbotron .container {
+	position: absolute;
+	top: 60px;
+	color: hsl(60, 40%, 80%);
+}
+.jumbotron a {
+	color: #fff;
+}
+.jumbotron h1 {
+	padding: 8px;
+	font-size: 48px;
+}
+body {
+	background: url(bg.png);
+	background-size: 100vw 100vh;
+	transition: background-position 0.2;
+
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+ul li {
+	display: inline;
+}
+.navbar a {
+	position: relative;
+	font-weight: bold;
+	color: #dfdfdf;
+	text-transform: uppercase;
+	padding: 8px;
+	top: 16px;
+}
+.rdm, .navbar a.rdm {
+	color: hsl(0, 40%, 60%);
+}
+#log {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	overflow-y: hidden;
+	height: 100vh;
+	font-size: 10px;
+	opacity: 0.8;
+	pointer-events: none;
+}
+sup {
+	color: hsla(0, 40%, 40%, 0.5);
+	font-size: 50%;
+	font-style: italic;
+	font-size: 10px;
+}
+.ourgames h2 {
+	font-size: 24px;
+}
+character {
+	position: absolute;
+	display: inline-block;
+	background-color: transparent;
+	width: 32px;
+	height: 64px;
+	background-image: url(sombi.png);
+}
+.player {
+	background-color: rgba(0, 192, 255, 0.8);
+	background-image: url(player.png);
+}
+.projectile {
+	width: 1px;
+	height: 1px;
+	border-radius: 100%;
+	background-color: rgba(255, 255, 0, 1);
+	box-shadow: 0 0 32px rgba(255, 255, 255, 1);
+	background-image: none;
+}
+d {
+	position: relative;
+	top: -8px;
+	font-size: 8px;
+}
+.bullet_0 {
+	background-color: rgb(255, 255, 255);
+}
+.bullet_1, .bullet_2, .bullet_3 {
+	background-color: rgb(255, 255, 0);
+	height: 2px;
+}
+.bullet_4 {
+	background-color: rgb(192, 255, 192);
+	box-shadow: 0 0 4px rgb(0, 255, 0);
+	border-radius: 10%;
+}
+.bullet_5 {
+	background-color: rgb(192, 255, 255);
+	box-shadow: 0 0 4px rgb(0, 255, 255);
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+.bullet_6, .bullet_10 {
+	background-color: transparent;
+	background: radial-gradient(rgb(255, 255, 0), rgb(255, 0, 0));
+}
+.bullet_7 {
+	background-color: rgba(255, 128, 0, 0.5);
+	box-shadow: 0 0 10px rgb(255, 0, 0);
+}
+.bullet_8 {
+	background-color: rgb(192, 255, 192);
+	box-shadow: 0 0 4px rgb(0, 255, 0);
+}
+.bullet_9 {
+	border-top-left-radius: 0px;
+	border-bottom-left-radius: 0px;
+	background-color: rgb(128, 128, 128);
+	box-shadow: -8px 0 4px rgb(255, 128, 0);
+}
