@@ -116,3 +116,78 @@ d {
 	background-color: rgb(128, 128, 128);
 	box-shadow: -8px 0 4px rgb(255, 128, 0);
 }
+
+/* Light Hybrids */
+.bullet_11 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(255, 0, 0);
+}
+.bullet_12 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(0, 255, 0);
+}
+.bullet_13 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(0, 0, 255);
+}
+.bullet_14 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(255, 255, 0);
+}
+.bullet_15 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(255, 0, 255);
+}
+.bullet_16 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(0, 255, 255);
+}
+.bullet_17 {
+	background-color: rgb(255, 255, 255);
+	box-shadow: 0 0 8px rgb(255, 255, 255);
+}
+
+/* Dark Hybrids */
+.bullet_18 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(255, 0, 0);
+}
+.bullet_19 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(0, 255, 0);
+}
+.bullet_20 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(0, 0, 255);
+}
+.bullet_21 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(255, 255, 0);
+}
+.bullet_22 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(255, 0, 255);
+}
+.bullet_23 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(0, 255, 255);
+}
+.bullet_24 {
+	background-color: rgb(0, 0, 0);
+	box-shadow: 0 0 8px rgb(0, 0, 0);
+}
+#craft {
+	position: fixed;
+	top: 10vh;
+	left: 10vw;
+	width: 80vw;
+	height: 80vh;
+	background-color: rgb(255, 255, 255);
+	color: rgb(0, 0, 0);
+	display: none;
+}
+ii {
+	font-size: 8px;
+	float: left;
+	width: 50%;
+}

@@ -11,6 +11,56 @@ var changelog = [
 var playing = false;
 var initialized = false;
 
+var STAT_GAIN_GOOD = 2;
+var STAT_LOSS_BAD = 1;
+
+var turn = 0;
+
+var STAT_NAMES = {'str': 'Fuerza', 'dex': 'Destreza', 'end': 'Resistencia', 'int': 'Inteligencia', 'wis': 'Sabiduría', 'cha': 'Carisma', 'agi': 'Agilidad', 'luk': 'Suerte'};
+
+var PLAYER_STATS = {
+	'exp': {
+		'name': 'Experiencia',
+		'desc': 'Los puntos de experiencia se obtienen al ganar combates. Si acumulas los suficientes subirás de nivel.',
+	},
+	'hp': {
+		'name': 'Puntos de Impacto',
+		'desc': 'Determinan tu salud. Si los Puntos de Impacto (PI) llegan a 0, mueres.',
+	},
+	'str': {
+		'name': STAT_NAMES.str,
+		'desc': 'Influye en el daño que causas al atacar cuerpo a cuerpo y el peso que puedes soportar.',
+	},
+	'dex': {
+		'name': STAT_NAMES.dex,
+		'desc': 'Influye en tu manejo de armas a distancia, la posibilidad de esquivar y tu AC.',
+	},
+	'end': {
+		'name': STAT_NAMES.end,
+		'desc': 'Mide tu resistencia a estados que reducen tus PI. Aumenta tus Puntos de Impacto.',
+	},
+	'int': {
+		'name': STAT_NAMES.int,
+		'desc': 'Aumenta los puntos de habilidad que consigues al subir de nivel.',
+	},
+	'wis': {
+		'name': STAT_NAMES.wis,
+		'desc': 'Aumenta el daño causado con hechizos y reduce las posibilidades de caer bajo el control de otro.',
+	},
+	'cha': {
+		'name': STAT_NAMES.cha,
+		'desc': 'Mide tu capacidad para mediar con la gente.',
+	},
+	'agi': {
+		'name': STAT_NAMES.agi,
+		'desc': 'Influye en el orden de acciones durante un combate, la rapidez con las que se ejecutan, el sigilo y el manejo de armas pequeñas.',
+	},
+	'luk': {
+		'name': STAT_NAMES.luk,
+		'desc': 'Aumenta la posibilidad de que te ocurran cosas buenas.',
+	},
+}
+
 function resetVariables() {
 	if (!game) game = {};
 	if (!game.tutorial) game.tutorial = 0;
@@ -128,6 +178,21 @@ function getClassBenefits(clas) {
 	if (classes[clas] == undefined) return classes['unemployed']
 	return classes[clas];
 }
+function displayClass(clas, html) {
+	var gcb = getClassBenefits(clas);
+	var st = {'str': 0, 'dex': 0, 'end': 0, 'int': 0, 'wis': 0, 'cha': 0, 'agi': 0, 'luk': 0};
+	for (var s in gcb.good) st[gcb.good[s]] += STAT_GAIN_GOOD;
+	for (var s in gcb.bad) st[gcb.bad[s]] -= STAT_LOSS_BAD;
+	var lb = (html) ? '<br>' : '\n';
+
+	var cn = (html) ? '<b>'+getJobList(1)[clas]+'</b>' : getJobList(1)[clas];
+	var str = cn+lb;
+	for (var s in st) {
+		var stat = st[s];
+		if (stat != 0) str += stat+' '+STAT_NAMES[s]+lb;
+	}
+	return str;
+}
 function statBonus(playerID, value) {
 	var player = game.players[playerID];
 	var stats = ['str', 'dex', 'end', 'int', 'wis', 'cha', 'agi', 'luk'];
@@ -171,6 +236,9 @@ function getJobList(name) {
 		'wizard': 'Mago',
 		'assasin': 'Asesino',
 		'hunter': 'Cazador',
+
+		'unemployed': 'Aprendiz',
+
 	};
 };
 	return [
@@ -227,11 +295,11 @@ function player(name, age, height, weight, job, alignment, sex, race) {
 	var cb = getClassBenefits(this.job);
 	for (var e in cb.good) {
 		var stat = cb.good[e];
-		this[stat] += 2;
+		this[stat] += STAT_GAIN_GOOD;
 	}
 	for (var e in cb.bad) {
 		var stat = cb.bad[e];
-		this[stat] -= 1;
+		this[stat] -= STAT_LOSS_BAD;
 	}
 	this.nextMove = 0;
 
@@ -421,7 +489,7 @@ function displayItem(item, simple, id) {
 	if (item.tier >= oldItem.tier && item.tier != 9 && item.level > oldItem.level) recommended = 'recommended';
 
 	var rarity = getItemRarity(item.tier);
-	var name = '<item class="'+rarity.color+'">'+item.name+' '+rarity.name+'</item>';
+	var name = '<item class="'+rarity.color+' item">'+item.name+' '+rarity.name+'</item>';
 
 	var el = '<div class="itemDisplay '+recommended+'" style="opacity: '+op+'" onclick="buyItem('+id+')">';
 	el += name+' ($'+item.price+')<br>';
@@ -443,11 +511,17 @@ function displayItem(item, simple, id) {
 
 	return el;
 }
+function getJobInfo() {
+	var j = formJob.value;
+	jobselector_benefits.innerHTML = displayClass(j, 1);
+}
 function getPlayerStat(player) {
 	var l = '';
-	l += '<span title=""><b>Nombre</b>   '+player.name+' el '+getJobList(1)[player.job]+'</span><br>';
+	l += '<span title=""><b>Nombre</b>   '+player.name+' el <job title="'+displayClass(player.job)+'">'+getJobList(1)[player.job]+'</job></span><br>';
 	l += '<span title=""><b>Nivel</b>   '+player.level+'</span><br>';
 	l += '<span title=""><b>$</b> '+player.money+'</span><br>';
+
+
 	var lore = 'Los puntos de experiencia se obtienen al ganar combates. Si acumulas los suficientes subirás de nivel.';
 	l += '<span title="'+lore+'"><b>Experiencia</b><br>'+realDrawBar(player.experience, getMaxExp(player.level))+' '+player.experience+'/'+getMaxExp(player.level)+'</span><br>';
 	var lore = 'Determinan tu salud. Si los Puntos de Impacto (PI) llegan a 0, mueres.';
@@ -582,7 +656,9 @@ function drawTile(map, x, y) {
 	return '<tile id="tile_'+x+'_'+y+'" style="top: '+(32 * y)+'px; left: '+(32 * x)+'px" class="sprite '+here+'" onclick="action('+x+', '+y+')"></tile>';
 }
 function action(x, y) {
-	setTimeout(tickMonsters, 100);
+	if (turn) return;
+	turn = 1;
+
 	var ppos = getPlayerPosition();
 	var direction = 'center';
 	if (x < ppos.x) direction = 'left';
@@ -596,6 +672,7 @@ function action(x, y) {
 	if (x > ppos.x && y > ppos.y) direction = 'bottomright';
 
 	movePlayer(0, direction, getLimit(getCurrentMap()));
+	tickMonsters();
 }
 function getCurrentMap() {
 	if (game.tower.floors[game.floor] == undefined) game.tower.floors[game.floor] = randomMap(19, 11);
@@ -786,7 +863,7 @@ function drawPlayerBar(player) {
 }
 function drawPlayer(player, id) {
 	var isMonster = (player.monster) ? 'scout_side' : '';
-	return '<player id="player_'+id+'" style="top: '+(32 * player.y)+'px; left: '+(32 * player.x)+'px" onclick="playerAction(0, '+id+'); setTimeout(tickMonsters, 100)" class="sprite '+player.race+' '+isMonster+'">'+drawPlayerBar(player)+'</player>';
+	return '<player id="player_'+id+'" style="top: '+(32 * player.y)+'px; left: '+(32 * player.x)+'px" onclick="playerAction(0, '+id+')" class="sprite '+player.race+' '+isMonster+'">'+drawPlayerBar(player)+'</player>';
 }
 function onUnitNotification(unit, text, coordinate) {
 	var textlength = text.length;
@@ -814,12 +891,18 @@ function isUnitWithinRange(from, to, range) {
 	var dist = Math.abs(distX + distY);
 	if (dist <= range) return true;
 }
-function playerAction(fromID, toID) {
+function playerAction(fromID, toID, peek) {
+	if (fromID == 0) {
+		if (turn) return;
+		turn = 1;
+		tickMonsters();
+	}
 	if (fromID != toID) {
 		var from = game.players[fromID];
 		var to = game.players[toID];
 
 		if (!isUnitWithinRange(from, to, 1)) return;
+		if (peek) return isUnitWithinRange(from, to, 1);
 
 		if (from.alignment != to.alignment) {
 			//Different alignment, combat occurs
@@ -934,7 +1017,6 @@ function goTo(where) {
 	update();
 	if (where == 'tower') {
 		if (!initialized) {
-			var svg = setInterval(saveGame, 60000);
 			initialized = true;
 		}
 		slideTrick('#town', '#tower');
@@ -968,6 +1050,7 @@ function goTo(where) {
 		slideTrick('#battle', '#tower');
 	}
 	update('floor');
+	tickMonsters();
 }
 function getAllTiles() {
 	return [
@@ -1053,6 +1136,7 @@ function randomTowerEvent() {
 }
 function tickMonsters() {
 	if (!playing) return;
+	if (!turn) return;
 
 	if (game.players.length <= 1 && !game.portal) {
 		var m = getCurrentMap();
@@ -1062,17 +1146,22 @@ function tickMonsters() {
 		game.portal = true;
 	}
 
-	if (game.players.length <= 1) return;
+	if (game.players.length <= 1) {
+		turn = 0;
+		return;
+	}
 
 	for (var mm in game.players) {
 		if (mm == 0) continue;
-		doTickMonster(mm);
+		var last = game.players.length - 1;
+		doTickMonster(mm, last);
 	}
 }
-function doTickMonster(num) {
+function doTickMonster(num, last) {
 	setTimeout(function() {
 		tickMonster(num);
-	}, (num * 100));
+		if (num == last) turn = 0;
+	}, (num * 250));
 }
 function tickMonster(num) {
 	var rm = num;
@@ -1086,13 +1175,18 @@ function tickMonster(num) {
 	target.x += rand(-1, 1);
 	target.y += rand(-1, 1);
 	checkLimits(target);
-	var dir = gps(game.players[rm], game.players[0]);
-	if (rand(0,1)) {
-		movePlayer(rm, dir, getLimit(getCurrentMap()));
-	}
-	else {
+
+	if (game.players[num] == undefined) return;
+	var dir = gps2(game.players[rm], game.players[0]).dir;
+
+	var withinrange = playerAction(rm, 0, 1);
+	if (withinrange) {
 		playerAction(rm, 0);
 	}
+	else {
+		movePlayer(rm, dir, getLimit(getCurrentMap()));
+	}
+	
 
 	var rms = game.players[rm];
 	if (rms.statPoints) autoAssignStatPoints(rms);
@@ -1106,6 +1200,7 @@ function checkLimits(object) {
 }
 function gps(from, to) {
 	var dir = 'center';
+	if (!from || !to) return 'top';
 	if (from.x > to.x) dir = 'left';
 	if (from.x < to.x) dir = 'right';
 	if (from.y < to.y) dir = 'bottom';
@@ -1117,6 +1212,40 @@ function gps(from, to) {
 	if (from.x < to.x && from.y > to.y) dir = 'topright';
 
 	return dir;
+}
+function gps2(from, to) {
+	var dirs = {
+		'top': {'x': from.x, 'y': from.y-1},
+		'left': {'x': from.x-1, 'y': from.y},
+		'right': {'x': from.x+1, 'y': from.y},
+		'bottom': {'x': from.x, 'y': from.y+1},
+
+		'bottomleft': {'x': from.x-1, 'y': from.y+1},
+		'bottomright': {'x': from.x+1, 'y': from.y+1},
+		'topleft': {'x': from.x-1, 'y': from.y-1},
+		'topright': {'x': from.x+1, 'y': from.y-1},
+	}
+
+	var lowest = {'dir': 'center', 'dist': Infinity};
+	for (var d in dirs) {
+		var dir = dirs[d];
+		var dist = distance(dir, to);
+		if (dist < lowest.dist) lowest = {
+			'dir': d,
+			'dist': dist,
+		}
+	}
+
+	return lowest;
+}
+function distance(from, to) {
+	var absx = Math.abs(from.x - to.x);
+	var absy = Math.abs(from.y - to.y);
+	var abs = absx + absy;
+	var iah = isAnyoneHere(from.x, from.y);
+	if (iah != undefined) abs += 10;
+
+	return abs;
 }
 function slideTrick(p1, p2) {
 	$(p1).slideUp(500);

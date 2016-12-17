@@ -45,11 +45,11 @@ function update(step) {
 
 	if (step == 'reg') {
 		if (!game.register) {
-			goto('home');
+			ggoto('home');
 			navbar_before_reg.style.display = 'block';
 		}
 		if (game.register) {
-			goto('realGame');
+			ggoto('realGame');
 			navbar_before_reg.style.display = 'none';
 			navbar_after_reg.style.display = 'block';
 		}
@@ -81,14 +81,10 @@ function update(step) {
 		var btnclass = (game.bux.money >= price) ? 'btn-success' : 'btn-danger';
 		lg += '<div class="btn '+btnclass+'" onclick="buyReferral()" id="refer_button">'+translate('Comprar un Referido ('+price.toFixed(8)+'ç)|Buy a Referer (ç'+price.toFixed(8)+')')+'</div><br><br>';
 
-		if (referButton(10, 1)) lg += referButton(10);
-		if (referButton(100, 1)) lg += referButton(100);
-		if (referButton(1000, 1)) lg += referButton(1000);
-		if (referButton(10000, 1)) lg += referButton(10000);
-		if (referButton(100000, 1)) lg += referButton(100000);
-		if (referButton(1000000, 1)) lg += referButton(1000000);
-		if (referButton(10000000, 1)) lg += referButton(10000000);
-		if (referButton(100000000, 1)) lg += referButton(100000000);
+		for (var po = 0; po < 10; po++) {
+			var p = Math.pow(10, po);
+			if (referButton(p, 1)) lg += referButton(p);
+		}
 
 		for (var r in game.bux.refer) {
 			var rr = game.bux.refer[r];
@@ -334,21 +330,21 @@ function buyReferral(amt) {
 	update('refer');
 }
 function getReferralPrice(qty) {
+	if (game.bux.refer == undefined) game.bux.refer = [];
+	if (game.bux.refer[0] == undefined) game.bux.refer[0] = 0;
+
 	var totprice = 0;
 	if (!qty) qty = 1;
+	var pow = 1.1;
+	var pow2 = 0.1;
+	var mod = getUpgradeBonus('refer_discount');
 
-	for (var x = 0; x < qty; x++) {
-		if (game.bux.refer == undefined) game.bux.refer = [];
-		if (game.bux.refer[0] == undefined) game.bux.refer[0] = 0;
-		var total = game.bux.refer[0] + x;
-		var mod = getUpgradeBonus('refer_discount');
+	var want = Math.pow(pow, qty);
+	var have = Math.pow(pow, game.bux.refer[0]);
 
-		var pow = 1.1;
-		total *= mod;
+	var price = (BASE_AD_VALUE * mod * (want * have)) / pow2;
 
-		totprice += (BASE_AD_VALUE * mod * Math.pow(pow, (total)));
-	}
-	return totprice;
+	return price;
 }
 function increaseMoney(amount) {
 	game.bux.money = parseFloat(game.bux.money);
@@ -442,6 +438,7 @@ function updateAds() {
 	update('ads');
 }
 function updateMoneyps() {
+	if (rand(0,1)) return;
 	var nowm = game.bux.money;
 	if (!lastmoney) lastmoney = [nowm];
 	var change = nowm - lastmoney[0];
@@ -467,7 +464,7 @@ function addNewAd(proto) {
 }
 function getRandomAd() {
 	var ad;
-	while (!ad) {
+	while (!ad && rand(0,100)) {
 		var tier = rand(1, game.bux.ads.length) - 1;
 		var adn = rand(1, game.bux.ads[tier].length) - 1;
 		var ad = game.bux.ads[tier][adn];
@@ -547,7 +544,7 @@ function getUpgradeBonus(upgradeID, next) {
 		'ad_fusion': level,
 	}[upgradeID]
 }
-function goto(where) {
+function ggoto(where) {
 	var tabs = ['home', 'register', 'tos', 'realGame'];
 	for (var tab in tabs) doc(tabs[tab]).style.display = 'none';
 	$('#'+where).slideDown(100);
@@ -578,7 +575,7 @@ function greet() {
 	l += '<h3>'+translate('¡Gane millones viendo anuncios, desde la comodidad de su casa!|Make millions watching internet advertisements, sitting at home!')+'</h3>';
 	l += '<h4>'+translate('En LemonBux, usted cobrará por cada anuncio que vea.|At LemonBux, you will earn cash for every ad you watch.')+'</h4>';
 	l += '<div class="btn btn-default">'+translate('Cuéntame más|Tell me more')+'</div> ';
-	l += '<div class="btn btn-primary" onclick="goto(\'register\')">'+translate('Regístrese|Register')+'</div>';
+	l += '<div class="btn btn-primary" onclick="ggoto(\'register\')">'+translate('Regístrese|Register')+'</div>';
 	l += '<hr>';
 	l += '<div class="col-md-12"><h4>'+translate('Estadísticas|Statistics')+'</h4>'+getFakeStats()+'</div>';
 
@@ -638,7 +635,7 @@ function registerTroll() {
 	register_troll.className = 'btn btn-primary';
 
 	register_troll.onclick = function() {
-		goto('realGame');
+		ggoto('realGame');
 		game.register = true;
 		update();
 		update('reg');
@@ -729,14 +726,19 @@ var gameInfo = {
 	'version': changes(changelog).latestVersion,
 	'changelog': changes(changelog).changelog,
 }
+
 loadGame();
 resetVariables();
 greet();
+
+
 update();
 update('reg');
 var fakestats = newFakeStats();
+
 var t = setInterval(saveGame, 60000);
 setInterval(updateAds, 10000);
+
 setInterval(updateFakeStats, 100);
 setInterval(tickStuff, 100);
 setInterval(updateMoneyps, 100);

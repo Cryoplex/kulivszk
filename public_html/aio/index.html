@@ -50,7 +50,7 @@
 
         <div class="bubble">
           <b>Profesión</b><br>
-          <select id="formJob">
+          <select id="formJob" onmouseleave="getJobInfo()">
             <option value="unemployed">Aprendiz</option>
             <option value="monk">Monje</option>
             <option value="fighter">Luchador</option>
@@ -63,6 +63,8 @@
             <option value="assasin">Asesino</option>
             <option value="hunter">Cazador</option>
           </select><br>
+
+          <span id="jobselector_benefits"></span>
         </div>
 
         <div class="bubble">

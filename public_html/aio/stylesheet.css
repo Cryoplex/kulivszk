@@ -50,8 +50,8 @@ sup {
 }
 #log {
 	opacity: 0.5;
-	width: 200px;
-	height: 480px;
+	width: 15vw;
+	height: 100vh;
 	background-color: #ddd;
 	position: absolute;
 	right: 0px;
@@ -59,7 +59,7 @@ sup {
 
 	overflow-y: scroll;
 	padding: 8px;
-	font-size: 12px;
+	font-size: 2.5vh;
 }
 #log:hover {
 	opacity: 1;
@@ -417,7 +417,7 @@ tile {
 }
 player {
 	z-index: 20;
-	transition: 0.25s all;
+	transition: 0.1s all;
 }
 
 #unitNotification, .unitNotification {
@@ -436,7 +436,9 @@ player {
 poison {
 	color: rgb(255, 0, 128);
 }
-
+.item {
+	cursor: help;
+}
 .itemDisplay {
 	float: left;
 	display: inline-block;
@@ -471,4 +473,10 @@ poison {
 		box-shadow: 0 0 8px solid rgba(255, 128, 0, 0.2);
 		background-color: rgba(255, 215, 0, 0.5);
 	}
+}
+job {
+	cursor: help;
+}
+.stats {
+	width: 100%;
 }

@@ -410,5 +410,5 @@ function read(array) {
 	return array[min];
 }
 
-setInterval(getRandomItems, 10000);
+setInterval(saveAll, 10000);
 loadAll();
