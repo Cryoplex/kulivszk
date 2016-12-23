@@ -176,7 +176,7 @@ var recommendedHeight = Math.floor(wind.height() / 32) - 3;
 var DEFAULT_WIDTH = 31;
 var DEFAULT_HEIGHT = 13;
 */
-var DEFAULT_WIDTH = (recommendedWidth / 2);
+var DEFAULT_WIDTH = (recommendedWidth);
 var DEFAULT_HEIGHT = 7;
 
 var UNIT_MAXHP = 30;
@@ -373,10 +373,10 @@ var prototypes = {
 	'sprite_boyScout': {'atk': 2, 'def': 4, 'mov': 4, 'range': 0, 'price': SCOUT_PRICE, 'name': 'Boy Scout'},
 	'sprite_coon': {'atk': 4, 'def': 2, 'mov': 4, 'range': 0, 'price': RACCOON_PRICE, 'name': translate('Mapache|Raccoon')},
 
-	'sprite_tower': {'atk': 2, 'def': 0, 'mov': 1, 'range': 7, 'price': TOWER_PRICE, 'name': translate('Torre|Tower')},
+	'sprite_tower': {'atk': 8, 'def': 2, 'mov': 1, 'range': 7, 'price': TOWER_PRICE, 'name': translate('Torre|Tower')},
 	'sprite_wall': {'atk': 0, 'def': 8, 'mov': 0, 'range': 0, 'price': WALL_PRICE, 'name': translate('Muralla|Wall')},
 
-	'sprite_cannon': {'atk': 2, 'def': 1, 'mov': 1, 'range': 7, 'price': TOWER_PRICE, 'name': translate('Ametralladora|Machine Gun')},
+	'sprite_cannon': {'atk': 10, 'def': 0, 'mov': 1, 'range': 7, 'price': TOWER_PRICE, 'name': translate('Ametralladora|Machine Gun')},
 	'sprite_barbedWire': {'atk': 0, 'def': 8, 'mov': 0, 'range': 0, 'price': WALL_PRICE, 'name': translate('Alambre de Espino|Barbed Wire Fence')},
 
 	'sprite_traitorBoyScout': {'atk': 3, 'def': 3, 'mov': 4, 'range': 0, 'price': 10, 'name': translate('Scout Traidor|Traitor Scout')},

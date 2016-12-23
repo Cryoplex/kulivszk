@@ -22,9 +22,9 @@ bot.onText(/\/echo (.+)/, function (msg, match) {
 
 function getWeeklyBudget(money) {
   var week = 3/13;
-  var n_rate = 0.5 * week;
-  var w_rate = 0.3 * week;
-  var s_rate = 1.0 * week;
+  var n_rate = 0.16 * week;
+  var w_rate = 0.04 * week;
+  var s_rate = 0.40 * week;
 
   return {
     '$_needs': (money * n_rate),
