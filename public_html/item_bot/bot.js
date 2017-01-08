@@ -214,6 +214,8 @@ bot.on('message', function (msg) {
         });
         for (var v in sorted) {
           var sor = sorted[v];
+          if (!sor.total) sor.total = 0;
+          if (!sor.trust) sor.trust = 0;
           str += '['+sor.name+'] \t $'+sor.total.toFixed(2)+' ('+sor.trust.toFixed(3)+')\n';
         }
         if (!str) str = 'No tienes ninguna cuenta. Establece una mediante /set (nombre) (valor)';
