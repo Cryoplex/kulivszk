@@ -1,0 +1,3 @@
+[submodule "public_html/Everyman"]
+	path = public_html/Everyman
+	url = https://github.com/kulivszk/Everyman/
